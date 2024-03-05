@@ -17,9 +17,9 @@ const Header = (props:any) => {
                     <Link href="/contact">Pricing</Link>
                     <Link href="/contact">API Docs</Link>
                 </div>
-                <div className="sm:flex sm:items-center sm:gap-2 xl:gap-4 2xl:gap-6">
-                    <button className="sm:text-sm sm:font-medium sm:px-3 lg:px-4 xl:px-5 2xl:px-6 sm:py-3 lg:py-4 xl:py-5 sm:rounded-[12px] secondary-btn ">LOG IN</button>
-                    <button className="sm:text-sm sm:font-medium sm:px-3 lg:px-4 xl:px-5 2xl:px-6 sm:py-3 lg:py-4 xl:py-5 sm:rounded-[12px] primary-btn">SIGN UP</button>
+                <div className=" lg:gap-[22px] sm:flex sm:items-center sm:gap-2 xl:gap-4 2xl:gap-6">
+                    <button className=" lg:px-[29px] lg:py-[16px] lg:text-[17px] md:px-[18px] md:py-[10px] sm:text-sm sm:font-medium sm:px-3 2xl:px-6 sm:py-3 sm:rounded-[12px] secondary-btn ">LOG IN</button>
+                    <button className=" lg:px-[29px] lg:py-[16px] lg:text-[17px] md:px-[18px] md:py-[10px] sm:text-sm sm:font-medium sm:px-3 2xl:px-6 sm:py-3 sm:rounded-[12px] primary-btn">SIGN UP</button>
                 </div>
             </div>
             <Image src={frame} alt="frame" className=" w-[20px] h-[20px] sm:hidden "></Image>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className='flex flex-col'>
+    <div className={`flex flex-col ${inter.className}`}>
       <Header/>
       <div className=" mt-[56px] sm:mt-[35px] md:mt-[50px] ">
         {children}

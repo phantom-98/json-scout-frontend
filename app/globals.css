@@ -27,6 +27,7 @@
 
 * {
   box-sizing: border-box;
+  /* font-family: 'Inter'; */
 }
 
 
@@ -139,6 +140,11 @@
   color: #828A91;
 
 }
+
+.title-font {
+  font-family: 'Space Grotesk'!important;
+}
+
 
 
 

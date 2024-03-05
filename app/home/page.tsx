@@ -11,6 +11,8 @@ import frame355 from "../../public/Frame 355.png"
 import request from "../../public/Request.svg"
 import highlightO from "../../public/Highlight_05.svg"
 import highlight1 from "../../public/Highlight_05 (1).svg"
+import request1 from "../../public/Request1.svg"
+import request2 from "../../public/Request2.svg"
 
 
 export default (props : any) => {
@@ -21,7 +23,7 @@ export default (props : any) => {
                 <div className="sm:w-1/2 xl:mt-[55px] 2xl:mt-[70px]">
                     <span className="px-[16px] py-[12px] text-[13px] sm:text-[11px] md:text-[14px] lg:text-[17px] rounded-[50px] font-semibold text-[#449D5D] quo1 ">Free Trial No Credit Card Required!</span>
                     <div className="mt-[28px]">
-                        <div className=" text-[40px] sm:text-[25px] md:text-[30px] lg:text-[40px] xl:text-[48px] 2xl:text-[65px] leading-[60px] sm:leading-[45px] lg:leading-[50px] xl:leading-[60px] 2xl:leading-[75px] font-bold text-wrap ">
+                        <div className=" text-[40px] sm:text-[25px] md:text-[30px] lg:text-[40px] xl:text-[48px] 2xl:text-[65px] leading-[60px] sm:leading-[45px] lg:leading-[50px] xl:leading-[60px] 2xl:leading-[75px] font-bold text-wrap title-font">
                            <span className="mr-12 px-2 sm:px-0 sm:mr-0">Escape the</span>  <span className=" text-[#FDA235] bg-orange-100 px-2 rounded-lg sm:mr-0">Regex</span> <span>Labyrinth</span>.
                         </div>
                         <div className="mt-6 xl:mt-8 font-normal text-[14px] sm:text-[13px] md:text-[15px] lg:text-[17px] xl:text-[18px] 2xl:text-[24px] text-[#828A91] leading-[32px]  sm:leading-[32px] sm:w-full sm:text-wrap">In the digital age, data is your most valuable asset, but extracting this gold from the mine of unstructured text can be as complex as it is crucial.</div>
@@ -71,26 +73,51 @@ export default (props : any) => {
                     <p className=" xl:text-[44px] xl:leading-[55px] lg:text-[35px] lg:leading-[50px] text-[32px] leading-[42px] text-[#000000] font-bold">How It Works</p>
                     <p className=" lg:text-[18px] lg:mt-[20px] text-[16px] leading-[35px] text-[#828A91] font-normal mt-[14px] ">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
                 </div>
-                <div className=" xl:leading-[21px] xl:text-[21px] lg:gap-[33px] lg:text-[19px] lg:leading-[19px] text-[17px] font-semibold leading-[17px] flex flex-col gap-[12px] sm:flex-row sm:justify-center sm:gap-[15px] sm:text-[13px] sm:leading-[13px] md:text-[15px] md:leading-[15px] md:gap-[20px]">
-                    <div className="lg:gap-[33px] flex justify-between sm:justify-center sm:gap-[15px]">
-                        <button className="xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] px-[53px] py-[18px] rounded-[8px] lorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
-                        <button className="xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] px-[53px] py-[18px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
+                <div className="w-full sm:w-auto xl:leading-[21px] xl:text-[21px] lg:gap-[33px] lg:text-[19px] lg:leading-[19px] text-[17px] font-semibold leading-[17px] flex flex-col justify-center gap-[12px] sm:flex-row sm:justify-center sm:gap-[15px] sm:text-[13px] sm:leading-[13px] md:text-[15px] md:leading-[15px] md:gap-[20px]">
+                    <div className=" w-full sm:w-auto lg:gap-[33px] flex justify-between sm:justify-center sm:gap-[15px]">
+                        <button className=" w-[48%] py-[13px] xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] rounded-[8px] lorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
+                        <button className=" w-[48%] py-[13px] xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
                     </div>
-                    <div className="lg:gap-[33px] flex justify-between sm:justify-center sm:gap-[15px]">
-                        <button className="xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] px-[27px] py-[18px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
-                        <button className="xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] px-[27px] py-[18px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
-                        <button className="xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] px-[27px] py-[18px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
+                    <div className="w-full sm:w-auto lg:gap-[33px] flex justify-between sm:justify-center sm:gap-[15px]">
+                        <button className=" w-[31%] xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] py-[13px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
+                        <button className=" w-[31%] xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] py-[13px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
+                        <button className=" w-[31%] xl:px-[40px] xl:py-[20px] lg:px-[23px] lg:py-[18px] py-[13px] rounded-[8px] unlorem-button sm:px-[11px] sm:py-[17px] md:px-[18px] md:py-[13px]">Lorem</button>
                     </div>
                 </div>
                     
                 <div className=" xl:gap-[30px] flex flex-col items-center justify-center gap-[40px] sm:flex-row sm:gap-[16px]">
                     <Image src={responsive} alt="responsive" className=" 2xl:h-[500px] xl:h-[400px] lg:h-[328px] w-full h-auto sm:w-2/5 sm:h-[184px] md:w-[45%] md:h-[270px]"></Image>
-                    <Image src={frame355} alt="frame355" className=" xl:w-[5%] lg:top-[710px] w-1/5 h-auto sm:w-[8%] md:w-[6%]"></Image>
+                    <Image src={frame355} alt="frame355" className=" xl:w-[5%] lg:top-[710px] w-[40px] h-auto sm:w-[8%] md:w-[6%]"></Image>
                     <Image src={request} alt="request" className=" 2xl:h-[500px] xl:h-[400px] lg:h-[328px] w-full h-auto sm:w-2/5 sm:h-[184px]  md:w-[45%] md:h-[270px]"></Image>
                 </div>
-                <button className="xl:px-[30px] xl:py-[15px] xl:text-[17px] xl:leading-[20px] xl:font-medium px-[20px] py-[10px] rounded-[8px] font-bold primary-btn">Test Data</button>
+                <button className="2xl:px-[25px] 2xl:py-[14px] 2xl:text-[25px] 2xl:leading-[33px] xl:px-[49px] xl:py-[18px] xl:text-[21px] xl:leading-[25px] xl:font-medium lg:px-[24px] lg:py-[11px] lg:text-[21px] lg:leading-[27px] px-[20px] py-[10px] rounded-[8px] font-semibold primary-btn">Test Data</button>
                 <Image src={highlightO} alt="highlight" className=" xl:w-[70px] hidden sm:absolute sm:block sm:w-[40px] sm:left-[47px] sm:top-[223px]"></Image>
                 <Image src={highlight1} alt="highlight" className="2xl:top-[906px] xl:w-[70px] xl:top-[824px] lg:top-[730px] hidden sm:absolute sm:block sm:w-[40px] sm:right-[55px] sm:top-[580px] md:top-[621px]"></Image>
+            </div>
+
+            <div className="2xl:px-[110px] 2xl:mt-[140px] xl:mt-[110px] sm:flex-row sm:px-[80px] sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] px-5 mt-[68px]">
+                <div className=" sm:w-[45%] flex flex-col justify-between">
+                    <p className="2xl:text-[59px] 2xl:leading-[70px] xl:text-[48px] xl:leading-[53px] md:text-[35px] md:leading-[85px] sm:mt-0 sm:text-[25px] sm:leading-[42px] mt-[15px] text-[30px] font-bold leading-[70px]">Old way of doing it.</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift now.</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage.</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage.</p>
+                </div>
+                <Image src={request1} alt="request1" className="sm:w-[45%]"></Image>
+            </div>
+
+            <div className="2xl:px-[110px] 2xl:mt-[140px] xl:mt-[110px] sm:flex-row sm:px-[80px] sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] px-5 mt-[68px]">
+                <div className=" sm:w-[45%] flex flex-col justify-between items-start">
+                    <p className=" leading-[40px] mb-[12px] 2xl:text-[59px] 2xl:leading-[70px] xl:text-[48px] xl:leading-[53px] md:text-[35px] md:leading-[85px] sm:mt-0 sm:text-[25px] sm:leading-[42px] mt-[15px] text-[30px] font-bold ">New way of doing it using JSON Scout.</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift now.</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
+                    <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage.</p>
+                    <button className="primary-btn mt-[34px] px-[17px] py-[10px] rounded-[8px] font-medium">Get Started</button>
+
+
+                </div>
+                <Image src={request2} alt="request2" className="sm:w-[45%]"></Image>
             </div>
 
             </>
