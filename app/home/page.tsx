@@ -13,6 +13,8 @@ import highlightO from "../../public/Highlight_05.svg"
 import highlight1 from "../../public/Highlight_05 (1).svg"
 import request1 from "../../public/Request1.svg"
 import request2 from "../../public/Request2.svg"
+import rectangle91 from "../../public/Rectangle 91.jpg"
+import frame117 from "../../public/Frame 117.svg"
 
 
 export default (props : any) => {
@@ -96,7 +98,7 @@ export default (props : any) => {
             </div>
 
             <div className="2xl:px-[110px] 2xl:mt-[140px] xl:mt-[110px] sm:flex-row sm:px-[80px] sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] px-5 mt-[68px]">
-                <div className=" sm:w-[45%] flex flex-col justify-between">
+                <div className=" sm:w-[45%] flex flex-col justify-between w-full">
                     <p className="2xl:text-[59px] 2xl:leading-[70px] xl:text-[48px] xl:leading-[53px] md:text-[35px] md:leading-[85px] sm:mt-0 sm:text-[25px] sm:leading-[42px] mt-[15px] text-[30px] font-bold leading-[70px]">Old way of doing it.</p>
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift now.</p>
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
@@ -104,11 +106,11 @@ export default (props : any) => {
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage.</p>
                 </div>
-                <Image src={request1} alt="request1" className="sm:w-[45%]"></Image>
+                <Image src={request1} alt="request1" className="sm:w-[45%] w-full"></Image>
             </div>
 
             <div className="sm:flex-row-reverse 2xl:px-[110px] 2xl:mt-[140px] xl:mt-[110px] sm:px-[80px] sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] px-5 mt-[68px]">
-                <div className=" sm:w-[45%] flex flex-col justify-between items-start">
+                <div className=" sm:w-[45%] flex flex-col justify-between items-start w-full">
                     <p className=" 2xl:leading-[84px] xl:leading-[67px] lg:leading-[50px] md:leading-[48px] leading-[40px] mb-[12px] 2xl:text-[59px] xl:text-[48px] md:text-[35px] sm:mt-0 sm:text-[25px] sm:leading-[35px] mt-[15px] text-[30px] font-bold ">New way of doing it using JSON Scout.</p>
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift now.</p>
                     <p className=" 2xl:text-[32px] 2xl:leading-[45px] xl:text-[19px] xl:leading-[37px] lg:text-[18px] lg:leading-[33px] md:text-[16px] md:leading-[29px] sm:mt-0 sm:text-[14px] sm:leading-[20px] mt-[15px] text-[17px] font-normal leading-[24px] text-[#828A91]">JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it</p>
@@ -116,7 +118,7 @@ export default (props : any) => {
                     <button className="mb-[10px] 2xl:text-[25px] xl:text-[19px] lg:px-[24px] lg:py-[13px] md:px-[19px] md:py-[12px] sm:mt-[10px] primary-btn mt-[34px] px-[17px] py-[10px] rounded-[8px] font-medium">Get Started</button>
 
                 </div>
-                <Image src={request2} alt="request2" className="sm:w-[45%]"></Image>
+                <Image src={request2} alt="request2" className="sm:w-[45%] w-full"></Image>
             </div>
 
             <div className="lg:px-[110px] sm:mt-[86px] sm:px-[80px] text-center mt-[56px] px-[20px]">
@@ -124,8 +126,24 @@ export default (props : any) => {
                 <p className="2xl:text-[26px] 2xl:leading-[43px] xl:text-[20px] xl:leading-[33px] lg:text-[18px] lg:pt-[40px] lg:leading-[31px] sm:pt-[30px] text-[16px] pt-[23px] leading-[26px] text-[#828A91]">Stop the endless cycle of writing and rewriting complex regex. Our LLM intuitively understands and locates the data you need with human-like precision.</p>
             </div>
 
-            <div>
-                <div></div>
+            <div className="px-[20px] mt-[100px]">
+                <div className="flex flex-col justify-center gap-[40px]">
+                    <div className=" back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className=" font-bold text-[21px] leading-[25px]">Expand beyond limits</p>
+                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns.</p>
+                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+                    </div>
+                    <div className=" back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className=" font-bold text-[21px] leading-[25px]">Boost Productivity</p>
+                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward.</p>
+                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+                    </div>
+                    <div className=" mb-[20px] back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className=" font-bold text-[21px] leading-[25px]">Future-Proof Your Data Strategy</p>
+                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">As your data grows and changes, JSON Scout evolves with it, continuously learning from interactions to provide better, more accurate extractions.</p>
+                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+                    </div>
+                </div>
                 <div></div>
             </div>
 

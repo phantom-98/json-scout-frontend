@@ -145,6 +145,11 @@
   font-family: 'Space Grotesk'!important;
 }
 
+.back {
+  background-image: url("../public/Rectangle\ 91.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 
 
 
