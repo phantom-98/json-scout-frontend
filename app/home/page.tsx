@@ -1,5 +1,6 @@
 import frame13 from "../../public/Frame 13.svg"
 import Image from "next/image"
+import { Space_Grotesk } from "next/font/google";
 import card from "../../public/Card.svg"
 import frame17 from "../../public/Frame 17.svg"
 import vector3 from "../../public/Vector 3.svg"
@@ -13,8 +14,14 @@ import highlightO from "../../public/Highlight_05.svg"
 import highlight1 from "../../public/Highlight_05 (1).svg"
 import request1 from "../../public/Request1.svg"
 import request2 from "../../public/Request2.svg"
-import rectangle91 from "../../public/Rectangle 91.jpg"
+import rectangle91 from "../../public/Rectangle 91.svg"
 import frame117 from "../../public/Frame 117.svg"
+import frame191 from "../../public/Frame 119(2).svg"
+import frame1192 from "../../public/Frame 119 (1).svg"
+import frame1193 from "../../public/Frame 119(3).svg"
+import frame1194 from "../../public/Frame 118.svg"
+
+const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
 
 export default (props : any) => {
@@ -126,27 +133,47 @@ export default (props : any) => {
                 <p className="2xl:text-[26px] 2xl:leading-[43px] xl:text-[20px] xl:leading-[33px] lg:text-[18px] lg:pt-[40px] lg:leading-[31px] sm:pt-[30px] text-[16px] pt-[23px] leading-[26px] text-[#828A91]">Stop the endless cycle of writing and rewriting complex regex. Our LLM intuitively understands and locates the data you need with human-like precision.</p>
             </div>
 
-            <div className="px-[20px] mt-[100px]">
-                <div className="flex flex-col justify-center gap-[40px]">
-                    <div className=" back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
-                        <p className=" font-bold text-[21px] leading-[25px]">Expand beyond limits</p>
-                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns.</p>
-                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+            <div className="lg:px-[110px] sm:px-[80px] px-[20px] mt-[100px] flex flex-col justify-center gap-[70px]">
+                <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[70px]">
+                    <div className="md:pt-[55px] md:px-[18px] md:pb-[18px] sm:w-[30%] sm:pt-[50px] sm:px-[15px] sm:pb-[15px]  border-[2px] border-[#E9E9E9]  pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className="md:text-[23px] md:leading-[30px] sm:text-[19px] font-bold text-[21px] leading-[25px]">Expand beyond limits</p>
+                        <p className="md:text-[14px] md:leading-[21px] sm:text-[12px] sm:leading-[18px] mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns.</p>
+                        <Image src={frame117} alt="frame117" className=" sm:-top-[34px] sm:h-[68px] absolute -top-[40px]"></Image>
+                        <div className="w-[50px] h-[50px] border-l-[2px] absolute -right-[25px] -bottom-[25px] rotate-45 z-10 border-[#E9E9E9] bg-white"></div>
                     </div>
-                    <div className=" back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
-                        <p className=" font-bold text-[21px] leading-[25px]">Boost Productivity</p>
-                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward.</p>
-                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+                    <div className="md:pt-[55px] md:px-[18px] md:pb-[18px] sm:w-[30%] sm:pt-[50px] sm:px-[15px] sm:pb-[15px] border-2 border-[#E9E9E9] pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className="md:text-[23px] md:leading-[30px] sm:text-[19px] font-bold text-[21px] leading-[25px]">Boost Productivity</p>
+                        <p className="md:text-[14px] md:leading-[21px] sm:text-[12px] sm:leading-[18px] mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward.</p>
+                        <Image src={frame191} alt="frame117" className=" sm:-top-[34px] sm:h-[68px] absolute -top-[40px]"></Image>
+                        <div className="w-[50px] h-[50px] border-l-[2px] absolute -right-[25px] -bottom-[25px] rotate-45 z-10 border-[#E9E9E9] bg-white"></div>
                     </div>
-                    <div className=" mb-[20px] back pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
-                        <p className=" font-bold text-[21px] leading-[25px]">Future-Proof Your Data Strategy</p>
-                        <p className=" mt-[15px] text-[#828A91] text-[16px] leading-[25px]">As your data grows and changes, JSON Scout evolves with it, continuously learning from interactions to provide better, more accurate extractions.</p>
-                        <Image src={frame117} alt="frame117" className="absolute -top-[40px]"></Image>
+                    <div className="md:pt-[55px] md:px-[18px] md:pb-[18px] sm:w-[30%] sm:pt-[50px] sm:px-[15px] sm:pb-[15px] border-2 border-[#E9E9E9] pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className="md:text-[23px] md:leading-[30px] sm:text-[19px] font-bold text-[21px] leading-[25px]">Future-Proof Your Data Strategy</p>
+                        <p className="md:text-[14px] md:leading-[21px] sm:text-[12px] sm:leading-[18px] mt-[15px] text-[#828A91] text-[16px] leading-[25px]">As your data grows and changes, JSON Scout evolves with it, continuously learning from interactions to provide better, more accurate extractions.</p>
+                        <Image src={frame1192} alt="frame117" className=" sm:-top-[34px] sm:h-[68px] absolute -top-[40px]"></Image>
+                        <div className="w-[50px] h-[50px] border-l-[2px] absolute -right-[25px] -bottom-[25px] rotate-45 z-10 border-[#E9E9E9] bg-white"></div>
                     </div>
                 </div>
-                <div></div>
+                <div className="sm:flex-row sm:justify-center sm:gap-[5%] flex flex-col justify-center gap-[70px]">
+                    <div className="md:pt-[55px] md:px-[18px] md:pb-[18px]  sm:w-[30%] sm:pt-[50px] sm:px-[15px] sm:pb-[15px]  border-2 border-[#E9E9E9]  pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                       <p className="md:text-[23px] md:leading-[30px] sm:text-[19px] font-bold text-[21px] leading-[25px]">Expand beyond limits</p>
+                        <p className="md:text-[14px] md:leading-[21px] sm:text-[12px] sm:leading-[18px] mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns.</p>
+                        <Image src={frame1193} alt="frame117" className="sm:-top-[34px] sm:h-[68px] absolute -top-[40px]"></Image>
+                        <div className="w-[50px] h-[50px] border-l-[2px] absolute -right-[25px] -bottom-[25px] rotate-45 z-10 border-[#E9E9E9] bg-white"></div>
+                    </div>
+                    <div className="md:pt-[55px] md:px-[18px] md:pb-[18px] sm:w-[30%] sm:pt-[50px] sm:px-[15px] sm:pb-[15px] border-2 border-[#E9E9E9] pt-[60px] pr-[25px] pb-[25px] pl-[25px] relative" >
+                        <p className="md:text-[23px] md:leading-[30px] sm:text-[19px] font-bold text-[21px] leading-[25px]">Boost Productivity</p>
+                        <p className="md:text-[14px] md:leading-[21px] sm:text-[12px] sm:leading-[18px] mt-[15px] text-[#828A91] text-[16px] leading-[25px]">Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward.</p>
+                        <Image src={frame1194} alt="frame117" className="sm:-top-[34px] sm:h-[68px] absolute -top-[40px]"></Image>
+                        <div className="w-[50px] h-[50px] border-l-[2px] absolute -right-[25px] -bottom-[25px] rotate-45 z-10 border-[#E9E9E9] bg-white"></div>
+                    </div>
+                </div>
             </div>
-
+            
+            <div className=" sm:px-[80px] px-[20px] mt-[70px]">
+                <p className={`text-[25px] leading-[35px] text-center font-semibold ${space_grotesk.className}`}>Start today with our premium plan you choose</p>
+                <p className=" text-center text-[15px] text-[#828A91] mt-[25px]">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
+            </div>
             </>
         
     )
