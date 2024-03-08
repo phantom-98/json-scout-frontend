@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <div className={`flex flex-col ${inter.className}`}>
       <Header/>
-      <div className=" mt-[56px] sm:mt-[35px] md:mt-[50px] ">
+      <div className=" mt-[56px] sm:mt-[7rem] ">
         {children}
       </div>
     </div>
