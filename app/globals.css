@@ -59,7 +59,6 @@ html {
 }
 .login {
   box-shadow: 0px 36.66666793823242px 166.66665649414062px 0px #051A440A;
-  font-family: Roboto;
 }
 
 .login-button {
@@ -162,6 +161,17 @@ html {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
+
+.slide-shadow-1 {
+  box-shadow: 0px 8px 80px 0px #051A440A;
+}
+
+.drop-shadow-1 {
+  box-shadow: 0px 24.556211471557617px 32.741615295410156px -14.73372745513916px #95959540;
+}
+
+
+
 
 /**
  * GHColors theme by Avi Aryan (http://aviaryan.in)
