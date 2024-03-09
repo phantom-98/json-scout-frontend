@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`flex flex-col ${inter.className}`}>
+    <div className={`flex flex-col ${inter.className} pl-[13%] pr-[13%]`}>
       <Header/>
       <div className=" mt-[56px] sm:mt-[7rem] ">
         {children}

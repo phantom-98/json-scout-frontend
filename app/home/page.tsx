@@ -24,6 +24,7 @@ import frame1192 from "../../public/Frame 119 (1).svg"
 import frame1193 from "../../public/Frame 119(3).svg"
 import frame1194 from "../../public/Frame 118.svg"
 import { space } from "postcss/lib/list";
+import { CustomCodeBlock } from "../components/CustomCodeBlock/page";
 
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -34,10 +35,14 @@ const htmlSnippet: string =`
     payload = {
         "api_key": "SOME_API_KEY",
         "desired_output": "date_purchased (mm-dd-yyyy)"
-        "content": [“My purchase was made back in january 12, 2012. i am not sure if 
-            i am eligible for a refund, but i would like to know.”,
-                    “Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.”,
-                    ]
+        "content": [
+            "My purchase was made back in january 12, 2012. i 
+            am not sure if i am eligible for a refund, but i 
+            would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 
+            weeks ago and wanted to know about warranty 
+            information.",
+        ]
     } `;
 
 
@@ -54,18 +59,18 @@ export default (props : any) => {
                     
                     <div className="">
                         <div className={` text-[15.5rem] leading-[23rem] sm:text-[7rem] sm:leading-[10rem] font-bold text-wrap ${space_grotesk.className} `}>
-                           <span className="mr-12 px-2 sm:px-0 sm:mr-0">Escape the</span>  <span className=" text-[#FDA235] bg-orange-100 px-2 rounded-lg sm:mr-0">Regex</span> <span>Labyrinth</span>.
+                           <span className="mr-12 px-2 sm:px-0 sm:mr-0">Escape the</span>  <span className=" text-[#FDA235] bg-[#ffcbb7c9] px-4 rounded-[1.6rem] sm:mr-0">Regex</span> <span>Labyrinth</span>.
                         </div>
                         <div className="mt-[6rem] text-[6rem] leading-[9rem] font-normal sm:mt-[2rem] sm:text-[3rem] sm:leading-[5rem] text-[#828A91] sm:w-full sm:text-wrap">In the digital age, data is your most valuable asset, but extracting this gold from the mine of unstructured text can be as complex as it is crucial.</div>
                     </div>
                     <div className="gap-[6rem] mt-[19rem] sm:mt-[6rem] flex flex-col justify-center sm:flex-row sm:justify-start sm:gap-[4rem]">
-                        <button className=" text-[7rem] leading-[14rem] w-full sm:w-auto rounded-[8px] px-[41px] sm:text-[3rem] sm:leading-[4rem] sm:px-[2rem] sm:py-[2rem] py-5 primary-btn  font-semibold ">Get Started</button>
-                        <button className=" text-[7rem] leading-[14rem] w-full sm:w-auto rounded-[8px] px-[41px] sm:text-[3rem] sm:leading-[4rem] sm:px-[2rem] py-5 sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button>
+                        <button className=" text-[4rem] leading-[14rem] w-full sm:w-auto rounded-[8px] px-[41px] sm:text-[3rem] sm:leading-[4rem] sm:px-[2rem] sm:py-[2rem] py-5 primary-btn  font-semibold ">Get Started</button>
+                        <button className=" text-[4rem] leading-[14rem] w-full sm:w-auto rounded-[8px] px-[41px] sm:text-[3rem] sm:leading-[4rem] sm:px-[2rem] py-5 sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button>
                     </div>
                 </div>
                 <div className="hidden sm:block sm:w-1/2 sm:relative sm:text-[2rem] sm:font-normal">
                     
-                <CodeBlock  code={htmlSnippet} language="json" />
+                <CustomCodeBlock  code={htmlSnippet} leftTitle="" rightTitle="JSON" centerTitle="Example"/>
                     
                     {/* <div className="w-[30%] px-[30px] pt-[20px] pb-[30px] bg-gray-500">
                         <p className="text-[2rem]">Our Advantages</p>
