@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
+import { Footer } from "./components/Footer/page";
 
 const inter = Inter({ subsets: ["latin"] });
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -18,11 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`flex flex-col ${inter.className} pl-[13%] pr-[13%]`}>
+    <div className={`flex flex-col ${inter.className}`}>
       <Header/>
-      <div className=" mt-[56px] sm:mt-[7rem] ">
+      <div className="sm:mt-[6rem] mt-[18rem] sm:px-[14%] px-[12rem] overflow-hidden">
         {children}
       </div>
+      <Footer/>
     </div>
   );
 }
