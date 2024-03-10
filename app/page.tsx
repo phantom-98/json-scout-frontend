@@ -1,7 +1,7 @@
-import Image from "next/image";
-
-export default function Home() {
-  return (
-    <></>
-  );
+'use server'
+ 
+import { redirect } from 'next/navigation'
+ 
+export default async function navigate(data: FormData) {
+  redirect(`/home`)
 }
