@@ -10,6 +10,7 @@ import frame19 from "../../public/Frame 19.svg"
 import frame355 from "../../public/Frame 355.png"
 import highlightO from "../../public/Highlight_05.svg"
 import highlight1 from "../../public/Highlight_05 (1).svg"
+import highlight from "../../public/Highlight_05 (2).svg"
 import request1 from "../../public/Request1.svg"
 import request2 from "../../public/Request2.svg"
 import rectangle91 from "../../public/Rectangle 91.svg"
@@ -18,6 +19,8 @@ import frame191 from "../../public/Frame 119(2).svg"
 import frame1192 from "../../public/Frame 119 (1).svg"
 import frame1193 from "../../public/Frame 119(3).svg"
 import frame1194 from "../../public/Frame 118.svg"
+import check from "../../public/CheckMark.svg"
+import laby from "../../public/lyn.svg"
 import { space } from "postcss/lib/list";
 import { CustomCodeBlock } from "../components/CustomCodeBlock/page";
 import green_check from "../../public/check-circle (2).svg"
@@ -77,17 +80,20 @@ date_2 = re.search(r'\d{1,2}\/\d{1,2}\/\d{4}', content_2).group(0)
 
 export default (props : any) => {
     return (
-       
-            <>
-            <div>
-                <span className="text-[8rem] leading-[5rem] px-[16px] py-[10px] sm:text-[2rem] rounded-[50px] font-semibold text-[#449D5D] quo1 ">Free Trial No Credit Card Required!</span>
+        <>
+            <div className="my-[10rem] sm:my-[2.8rem]">
+                <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Free Trial No Credit Card Required!</span>
             </div>
             <div className="mt-[10rem] sm:mt-[2rem] sm:flex sm:justify-between">
                 
                 <div className="sm:w-1/2 w-full">
                     <div className="">
                         <div className={`text-[22rem] leading-[32rem] sm:text-[7rem] sm:leading-[10rem] font-bold text-wrap ${space_grotesk.className}`}>
-                           <span className="mr-12 px-2 sm:px-0 sm:mr-0">Escape the</span>  <span className=" text-[#FDA235] bg-[#ffcbb7c9] px-4 rounded-[1.6rem] sm:mr-0">Regex</span> <span>Labyrinth</span>.
+                           <span className="mr-12 px-2 sm:px-0 sm:mr-0">Escape the</span>  <span className=" text-[#FDA235] bg-[#ffcbb7c9] px-4 rounded-[1.6rem] mr-0">Regex </span>
+                           <span className="relative">
+                                Labyrinth
+                                <Image src={laby} alt="laby" className="absolute left-0"/>
+                            </span>.
                         </div>
                         <div className="mt-[6rem] text-[8rem] leading-[18rem] font-normal sm:mt-[2rem] sm:text-[1.8rem] sm:leading-[5rem] text-[#828A91] sm:w-[80%] sm:text-wrap">In the digital age, data is your most valuable asset, but extracting this gold from the mine of unstructured text can be as complex as it is crucial.</div>
                     </div>
@@ -96,32 +102,33 @@ export default (props : any) => {
                         <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button>
                     </div>
                 </div>
-                <div className="hidden sm:block sm:relative sm:font-normal">
+                <div className="hidden sm:block sm:relative sm:font-normal relative">
                     
                     <CustomCodeBlock  code={`/* it can handle user typing errors very well. */` + jsonSnippet} leftTitle="" rightTitle="JSON" centerTitle="Example"/>
                     
-                    {/* <div className="w-[30%] px-[30px] pt-[20px] pb-[30px] bg-gray-500">
-                        <p className="text-[2rem]">Our Advantages</p>
-                        <div>
-                            <div>
-                               
+                    <div className="p-[4rem] bg-white shadow-lg font-semibold absolute left-[-35%] bottom-[-25%] rounded-[2rem] flex flex-col justify-between gap-10">
+                        <h1 className="text-[2.8rem] text-center">Our Advantages</h1>
+                        <div className="flex flex-row justify-start items-center gap-8">
+                            <div className="w-[5rem] h-[5rem] rounded-full shadow-lg flex justify-center items-center">
+                               <Image src={check} alt=""/>
                             </div>
-                            <span>Scale with ease</span>
+                            <span className="text-[2rem]">Scale with ease</span>
                         </div>
-                        <div>
-                            <div>
-                                
+                        <div className="flex flex-row justify-start items-center gap-8">
+                            <div className="w-[5rem] h-[5rem] rounded-full shadow-lg flex justify-center items-center">
+                               <Image src={check} alt=""/>
                             </div>
-                            <span>Boost Productivity</span>
+                            <span className="text-[2rem]">Boost Productivity</span>
                         </div>
-                        <div>
-                            <div>
-                                
+                        <div className="flex flex-row justify-start items-center gap-8">
+                            <div className="w-[5rem] h-[5rem] rounded-full shadow-lg flex justify-center items-center">
+                               <Image src={check} alt=""/>
                             </div>
-                            <span>Easy to use</span>
+                            <span className="text-[2rem]">Easy to use</span>
                         </div>
-                        <div>See More</div>
-                    </div> */}
+                        <div className="text-[1.6rem] text-[#FF8132]">See More</div>
+                    </div>
+                    <Image src={highlight} alt="" className="absolute left-[-45%] bottom-[-35%] w-[14%] h-auto"/>
                 </div>
             </div> 
 
@@ -167,8 +174,8 @@ export default (props : any) => {
                     <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle="JSON" code={`/* ENTER YOUR DATA */ ` + jsSnippert}/>
                 </div>
                 <button className="sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn">Test Data</button>
-                <Image src={highlightO} alt="highlight" className=" xl:w-[70px] hidden sm:absolute sm:block sm:w-[40px] sm:left-[47px] sm:top-[223px]"></Image>
-                <Image src={highlight1} alt="highlight" className="2xl:top-[906px] xl:w-[70px] xl:top-[824px] lg:top-[730px] hidden sm:absolute sm:block sm:w-[40px] sm:right-[55px] sm:top-[580px] md:top-[621px]"></Image>
+                <Image src={highlightO} alt="highlight" className="hidden sm:block absolute sm:left-[20rem] sm:top-[30rem] w-[4%] h-auto"></Image>
+                <Image src={highlight1} alt="highlight" className="hidden sm:block absolute sm:right-[20rem] sm:bottom-[10rem] w-[4%] h-auto"></Image>
             </div>
 
             <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
@@ -208,33 +215,35 @@ export default (props : any) => {
                 </div>
             </div>
 
-            <div className="sm:mt-[12rem] mt-[36rem]">
+            <div className="sm:mt-[12rem] mt-[36rem] flex flex-col items-center">
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:w-[44%] sm:leading-[8rem] ${space_grotesk.className}`}>Start today with our premium plan you choose</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
                 
-                <div className="sm:my-[13rem] sm:w-full w-[fit-content] flex flex-row gap-[8rem] sm:gap-[1rem] justify-between mt-[27rem] mb-[20rem] overflow-auto p-[24px]">
+                <div className="sm:my-[13rem] w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
+                    <div className="flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                       
                     <CardMembership title="FREE TRIAL" price="0" description="Get started for 100 requests" allowed={[
                         "100 Requests"
                     ]} unallowed={[
                         "Basic Data Extraction",
                         "Character Limit",
                         "GPT - 4"
-                    ]} button="Choose Free Trial"/>
+                    ]} button="Choose Free Trial" id="trial"/>
                     <CardMembership title="STARTER" price="9" description="Great for getting started!" allowed={[
                         "1000 Requests",
                         "250 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4"
-                    ]} unallowed={[]} button="Choose Starter"/>
+                    ]} unallowed={[]} button="Choose Starter" id="starter"/>
                     <CardMembership title="STANDARD" price="24" description="Our most popular plan!" allowed={[
                         "2500 Requests",
                         "500 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4",
                         "Array Content Input"
-                    ]} unallowed={[]} button="Choose Standard" standard/>
+                    ]} unallowed={[]} button="Choose Standard" standard id="standard"/>
                     <CardMembership title="PREMIUM" price="49" description="For the power user!" allowed={[
                         "5000 Requests",
                         "1000 Character Limit",
@@ -242,13 +251,15 @@ export default (props : any) => {
                         "GPT - 4",
                         "Array Content Input",
                         "Suggested For Long Form Content"
-                    ]} unallowed={[]} button="Choose Premium"/>
-                    
+                    ]} unallowed={[]} button="Choose Premium" id="premium"/>
+
+                    </div>
                 </div>
                 <div className="sm:hidden flex justify-center gap-[11rem]">
-                    <span className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full"></span>
-                    <span className="w-[10rem] h-[10rem] bg-[#000000] rounded-full"></span>
-                    <span className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full"></span>
+                    <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#trial"></a>
+                    <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#starter"></a>
+                    <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#standard"></a>
+                    <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#premium"></a>
                 </div>
             </div>
 

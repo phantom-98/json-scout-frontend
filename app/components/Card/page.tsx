@@ -33,15 +33,15 @@ export const CardCan = (props:{title: string, description: string, font: string 
     );
 }
 
-export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any}) => {
+export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string}) => {
 
     return (
-        <div className={`flex flex-col justify-between gap-[36px] sm:px-[4rem] sm:py-[4rem] sm:w-[23%] w-[80vw] p-[15rem] rounded-[16px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
+        <div id={props.id} className={`flex flex-col justify-between gap-[36px] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[16px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
             <div className="flex flex-col gap-[3rem]">
                 <div className={`border-b-[1px] pb-[8rem] sm:pb-[4rem] ${props.standard?"":"border-b-[#8593A3]"}`}>
                     <p className={`sm:text-[2rem] text-[7rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
                     <div className="sm:text-[2rem] text-[8rem]">
-                        <span className={`sm:text-[8rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
+                        <span className={`sm:text-[7.2rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
                         Per month
                     </div>
                     <div className="sm:text-[2rem] text-[8rem]">{props.description}</div>
