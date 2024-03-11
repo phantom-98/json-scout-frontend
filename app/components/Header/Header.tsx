@@ -1,5 +1,6 @@
 'use client'
 import Link from "next/link";
+import { useRouter } from 'next/navigation'
 
 import Image from "next/image";
 import logoimg from "../../../public/JSON-LOGO 1.svg"
@@ -7,6 +8,7 @@ import frame from "../../../public/Frame.svg"
 import React from "react";
 const Header = (props:any) => {
     const [show, setShow] = React.useState(false);
+    const router = useRouter()
 
     return(
         <div className="w-full flex justify-between items-center p-[8rem] sm:px-[14%] sm:py-12">
@@ -19,8 +21,8 @@ const Header = (props:any) => {
                     <Link href="/docs">API Docs</Link>
                 </div>
                 <div className="justify-between flex items-center sm:gap-16">
-                    <button className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] secondary-btn ">LOG IN</button>
-                    <button className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] primary-btn">SIGN UP</button>
+                    <button onClick={() => router.push('/login')} className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] secondary-btn ">LOG IN</button>
+                    <button onClick={() => router.push('/register')} className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] primary-btn">SIGN UP</button>
                 </div>
             </div>
             <Image src={frame} alt="frame" className="w-[20px] h-[20px] sm:hidden" onClick={() => {

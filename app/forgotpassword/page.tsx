@@ -21,13 +21,13 @@ export default (props : any) =>{
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[30rem]`}>
 
-            <div className="sm:mx-[27rem] sm:mb-0 flex justify-center mb-[5rem] px-[10rem] py-[10rem] rounded-[2rem]">
-                <div className="sm:w-[8rem] sm:h-[8rem] sm:leading-[8rem] sm:text-[3rem] w-[20rem] h-[20rem] rounded-full text-[7rem] leading-[20rem] text-center primary-btn font-semibold">1</div>
-                <div className="sm:w-[50%] sm:h-[4rem] h-[10rem] w-[55rem] border-b-[#DADADA] border-b-[2px]"></div>
-                <div className="sm:w-[8rem] sm:h-[8rem] sm:leading-[8rem] sm:text-[3rem] w-[20rem] h-[20rem] rounded-full text-[7rem] leading-[20rem] text-center secondary-btn font-semibold">2</div>
+            <div className="sm:mx-[32rem] sm:mb-0 flex justify-center mb-[5rem] px-[10rem] py-[10rem] rounded-[2rem]">
+                <div className="sm:w-[10rem] sm:h-[10rem] sm:leading-[10rem] sm:text-[3rem] w-[20rem] h-[20rem] rounded-full text-[7rem] leading-[20rem] text-center primary-btn font-semibold">1</div>
+                <div className="sm:w-[50%] sm:h-[5rem] h-[10rem] w-[55rem] border-b-[#DADADA] border-b-[2px]"></div>
+                <div className="sm:w-[10rem] sm:h-[10rem] sm:leading-[10rem] sm:text-[3rem] w-[20rem] h-[20rem] rounded-full text-[7rem] leading-[20rem] text-center secondary-btn font-semibold">2</div>
             </div>
 
-            <div className="sm:mx-[27rem] login px-[10rem] py-[10rem] rounded-[2rem]">
+            <div className="sm:mx-[32rem] login px-[10rem] py-[10rem] rounded-[2rem]">
                 
                 <div className="sm:mb-[5rem] flex flex-col items-center mb-[12rem]">
                     <div className="sm:w-[8rem] sm:h-[8rem] sm:rounded-[2rem] w-[17rem] h-[17rem] border-[1px] border-[#F2F3F5] rounded-[5rem] flex justify-center items-center">
