@@ -43,12 +43,12 @@ export default (props : any) =>{
                 </div>
                 <div className="sm:mb-[4.5rem] flex items-center mb-[11rem]">
                     <p className="sm:text-[2.1rem] sm:mr-[1.5rem] text-[6.5rem] text-[#828A91] mr-[3rem]">Forgot your password?</p>
-                    <Link href="#" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Recover Password</Link>
+                    <Link href="/forgotpassword" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Recover Password</Link>
                 </div>
                 <button className="sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">Sign In</button>
                 <div className=" sm:mt-[4rem] sm:gap-[2rem] flex justify-center items-center gap-[5rem] text-[6.5rem] mt-[8rem]">
                     <p className=" sm:text-[2.3rem] text-[#828A91]">Don’t have an account?</p>
-                    <Link href="#" className="sm:text-[2.3rem] font-semibold">Sign up</Link>
+                    <Link href="/register" className="sm:text-[2.3rem] font-semibold">Sign up</Link>
                 </div>
             </div>
         </div>

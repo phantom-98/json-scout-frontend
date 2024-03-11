@@ -81,7 +81,7 @@ date_2 = re.search(r'\d{1,2}\/\d{1,2}\/\d{4}', content_2).group(0)
 export default (props : any) => {
     return (
         <>
-            <div className="my-[10rem] sm:my-[2.8rem]">
+            <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
                 <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Free Trial No Credit Card Required!</span>
             </div>
             <div className="mt-[10rem] sm:mt-[2rem] sm:flex sm:justify-between">

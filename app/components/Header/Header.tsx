@@ -21,8 +21,8 @@ const Header = (props:any) => {
                     <Link href="/docs">API Docs</Link>
                 </div>
                 <div className="justify-between flex items-center sm:gap-16">
-                    <button onClick={() => router.push('/login')} className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] secondary-btn ">LOG IN</button>
-                    <button onClick={() => router.push('/register')} className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] primary-btn">SIGN UP</button>
+                    <Link href={"/login"}><button className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] secondary-btn ">LOG IN</button></Link>
+                    <Link href={"/register"}><button className="sm:text-[2rem] sm:leading-[2rem] sm:px-[4rem] sm:py-[2rem] sm:font-medium sm:rounded-[1rem] primary-btn">SIGN UP</button></Link>
                 </div>
             </div>
             <Image src={frame} alt="frame" className="w-[20px] h-[20px] sm:hidden" onClick={() => {
