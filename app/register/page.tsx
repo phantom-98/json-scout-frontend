@@ -39,16 +39,23 @@ export default (props : any) =>{
         const { first_name, last_name } = splitName(name);
         try {
             console.log('handle submit=====>',name)
-            const res = await axios.post("https://backend-pgnweb265a-uc.a.run.app/register", {
-                first_name, last_name, email, password
-            });
+            // const res = await axios.post("https://backend-pgnweb265a-uc.a.run.app/register", {
+            //     first_name, last_name, email, password
+            // });
+            const url = `https://backend-pgnweb265a-uc.a.run.app/register`;
+            const options = {
+                method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify({first_name, last_name, email, password})
+            };
+            const res = await fetch(url, options);
             console.log("this is response", res);
         } catch (error) {
             console.log(error);
         }
     }
-    // const handleSubmit = () => console.log('handle submit===>')
-    // console.log('this is console')
 
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>
@@ -77,7 +84,9 @@ export default (props : any) =>{
                     </div>
                 </div>
                 
-                <button onClick={handleSubmit} className="sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">Sign Up</button>
+                <button onClick={() => {
+                    handleSubmit();
+                }} className="sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">Sign Up</button>
                 <div className=" sm:mt-[4rem] sm:gap-[2rem] flex justify-center items-center gap-[5rem] text-[6.5rem] mt-[8rem]">
                     <p className=" sm:text-[2.3rem] text-[#828A91]">Already have an account?</p>
                     <Link href="/login" className="sm:text-[2.3rem] font-semibold">Sign In</Link>

@@ -116,6 +116,10 @@ html {
   /* font-family: 'Inter'; */
 }
 
+.selected {
+  border-bottom: 2px solid #FF8132;
+  color: #FF8132;
+}
 
 .secondary-btn {
   background-color: white;

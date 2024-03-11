@@ -21,21 +21,8 @@ import frame1193 from "../../public/Frame 119(3).svg"
 import frame1194 from "../../public/Frame 118.svg"
 import check from "../../public/CheckMark.svg"
 import laby from "../../public/lyn.svg"
-import { space } from "postcss/lib/list";
 import { CustomCodeBlock } from "../components/CustomCodeBlock/page";
-import green_check from "../../public/check-circle (2).svg"
-import blue_check from "../../public/check-circle (1).svg"
-import white_check from "../../public/check-circle.svg"
-import minus from "../../public/Icon.svg"
 import plus from "../../public/Group 1000001523.svg"
-import Logo from "../components/Icons/Logo";
-import logo from "../../public/JSON-LOGO 1.svg"
-import frame318 from "../../public/Frame 318.svg"
-import frame319 from "../../public/Frame 319.svg"
-import frame320 from "../../public/Frame 320.svg"
-import frame321 from "../../public/Frame 321.svg"
-import Link from "next/link";
-import logo1 from "../../public/JSON-LOGO 1 (1).svg"
 import { Step } from "../components/Step/page";
 import { Card, CardCan, CardMembership } from "../components/Card/page";
 
