@@ -5,11 +5,12 @@ import frame318 from "../../../public/Frame 318.svg"
 import frame319 from "../../../public/Frame 319.svg"
 import frame320 from "../../../public/Frame 320.svg"
 import frame321 from "../../../public/Frame 321.svg"
+import background from "../../../public/Background.svg"
 
 export const Footer = () => {
     
     return (
-        <div className=" sm:pt-[15rem] sm:px-[14%] sm:pb-[10rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white">
+        <div className=" sm:pt-[15rem] sm:px-[14%] sm:pb-[10rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative">
             <div className="flex flex-col items-center">
                 <p className=" sm:text-[9rem] sm:mb-[9rem] text-[15rem] items-center leading-[23rem] mb-[19rem] font-semibold">Ready to Get Started</p>
                 <button className=" sm:text-[2.8rem] sm:px-[4rem] sm:py-[2rem] sm:leading-[6rem] sm:rounded-[2rem] text-[8rem] rounded-[5rem] leading-[10rem] px-[12rem] py-[7rem] primary-btn">Sign Up Now</button>
@@ -42,6 +43,7 @@ export const Footer = () => {
                 
             </div>
             <div className=" sm:text-[2.5rem] sm:leading-[4rem] text-[7rem] text-center">© 2024 Json Scout. All rights reserved</div>
+            <Image src={background} alt="" className="absolute right-0 top-0 w-[27%] h-auto"></Image>
         </div>
     );
 }
