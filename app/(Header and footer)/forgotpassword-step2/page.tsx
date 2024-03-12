@@ -1,13 +1,10 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import sms from "../../public/sms-notification.svg"
-import secure from "../../public/shield-security.svg"
-import profile from "../../public/profile.svg"
-import eye from "../../public/eye-slash.svg"
+import secure from "../../../public/shield-security.svg"
+import eye from "../../../public/eye-slash.svg"
 import { Roboto } from "next/font/google"
-import smss from "../../public/sms.svg"
-import arrowleft from "../../public/arrow-left.svg"
+import arrowleft from "../../../public/arrow-left.svg"
 
 const roboto = Roboto({
     weight: '400',

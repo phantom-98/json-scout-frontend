@@ -22,12 +22,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
       <div className={`flex flex-col ${inter.className}`}>
-      <Header/>
-      <div className="sm:mt-0 mt-[18rem] sm:px-[14%] px-[12rem] overflow-hidden">
-        {children}
+      {children}
       </div>
-      <Footer/>
-    </div>
       </body>
     </html>
   );

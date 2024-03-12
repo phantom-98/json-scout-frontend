@@ -2,9 +2,9 @@
 import React from "react"
 import Image from "next/image"
 import Link from "next/link"
-import sms from "../../public/sms-notification.svg"
-import secure from "../../public/shield-security.svg"
-import eye from "../../public/eye-slash.svg"
+import sms from "../../../public/sms-notification.svg"
+import secure from "../../../public/shield-security.svg"
+import eye from "../../../public/eye-slash.svg"
 import { Roboto } from "next/font/google"
 import axios from "axios"
 

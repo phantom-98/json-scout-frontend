@@ -2,32 +2,29 @@
 import Image from "next/image"
 import { Space_Grotesk } from "next/font/google";
 import { Manrope } from "next/font/google";
-import frame17 from "../../public/Frame 17.svg"
-import vector3 from "../../public/Vector 3.svg"
-import vector4 from "../../public/Vector 4.svg"
-import frame18 from "../../public/Frame 18.svg"
-import frame19 from "../../public/Frame 19.svg"
-import frame355 from "../../public/Frame 355.png"
-import highlightO from "../../public/Highlight_05.svg"
-import highlight1 from "../../public/Highlight_05 (1).svg"
-import highlight from "../../public/Highlight_05 (2).svg"
-import request1 from "../../public/Request1.svg"
-import request2 from "../../public/Request2.svg"
-import rectangle91 from "../../public/Rectangle 91.svg"
-import frame117 from "../../public/Frame 117.svg"
-import frame191 from "../../public/Frame 119(2).svg"
-import frame1192 from "../../public/Frame 119 (1).svg"
-import frame1193 from "../../public/Frame 119(3).svg"
-import frame1194 from "../../public/Frame 118.svg"
-import check from "../../public/CheckMark.svg"
-import laby from "../../public/lyn.svg"
-import { CustomCodeBlock } from "../components/CustomCodeBlock/page";
-import plus from "../../public/Group 1000001523.svg"
-import { Step } from "../components/Step/page";
-import { Card, CardCan, CardMembership } from "../components/Card/page";
-import minus from "../../public/minus.svg"
+import frame17 from "../../../public/Frame 17.svg"
+import vector3 from "../../../public/Vector 3.svg"
+import vector4 from "../../../public/Vector 4.svg"
+import frame18 from "../../../public/Frame 18.svg"
+import frame19 from "../../../public/Frame 19.svg"
+import frame355 from "../../../public/Frame 355.png"
+import highlightO from "../../../public/Highlight_05.svg"
+import highlight1 from "../../../public/Highlight_05 (1).svg"
+import highlight from "../../../public/Highlight_05 (2).svg"
+import frame117 from "../../../public/Frame 117.svg"
+import frame191 from "../../../public/Frame 119(2).svg"
+import frame1192 from "../../../public/Frame 119 (1).svg"
+import frame1193 from "../../../public/Frame 119(3).svg"
+import frame1194 from "../../../public/Frame 118.svg"
+import check from "../../../public/CheckMark.svg"
+import laby from "../../../public/lyn.svg"
+import { CustomCodeBlock } from "../../components/CustomCodeBlock/page";
+import plus from "../../../public/Group 1000001523.svg"
+import { Step } from "../../components/Step/page";
+import { Card, CardCan, CardMembership } from "../../components/Card/page";
+import minus from "../../../public/minus.svg"
 import React from "react";
-import { Question } from "../components/question/page";
+import { Question } from "../../components/question/page";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -161,7 +158,7 @@ const codeRight:string[] = [
 
 
 
-export default (props : any) => {
+export const Home = (props : any) => {
 
     const [num, setNum] = React.useState(0) 
 

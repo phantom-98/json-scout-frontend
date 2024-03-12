@@ -2,12 +2,11 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import axios from 'axios'
-import formData from "form-data"
 import Link from "next/link"
-import sms from "../../public/sms-notification.svg"
-import secure from "../../public/shield-security.svg"
-import profile from "../../public/profile.svg"
-import eye from "../../public/eye-slash.svg"
+import sms from "../../../public/sms-notification.svg"
+import secure from "../../../public/shield-security.svg"
+import profile from "../../../public/profile.svg"
+import eye from "../../../public/eye-slash.svg"
 import { Roboto } from "next/font/google"
 
 const roboto = Roboto({
