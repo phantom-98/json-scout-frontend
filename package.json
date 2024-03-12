@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "axios": "^1.6.7",
+    "form-data": "^4.0.0",
     "geist": "^1.2.2",
     "next": "14.1.0",
     "prism-react-renderer": "^2.3.1",

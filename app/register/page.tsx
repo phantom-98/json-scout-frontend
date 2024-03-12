@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 import axios from 'axios'
+import formData from "form-data"
 import Link from "next/link"
 import sms from "../../public/sms-notification.svg"
 import secure from "../../public/shield-security.svg"
@@ -20,11 +21,7 @@ export default (props : any) =>{
     const [name, setName] = useState("")
     const [password, setPassword] = useState("")
 
-    useEffect(() => {
-        if (process.env.NODE_ENV === 'development') {
-            console.log('console.log=====>', email, name, password);
-        }
-    }, [name, email, password]);
+    
 
     function splitName(fullName: string) {
         const parts = fullName.trim().split(' ');
@@ -37,27 +34,24 @@ export default (props : any) =>{
     const handleSubmit = async () => {
         console.log('handle submit funtion=====>')
         const { first_name, last_name } = splitName(name);
-        try {
-            console.log('handle submit=====>',name)
-            // const res = await axios.post("https://backend-pgnweb265a-uc.a.run.app/register", {
-            //     first_name, last_name, email, password
-            // });
-            const url = `https://backend-pgnweb265a-uc.a.run.app/register`;
-            const options = {
-                method: "POST",
-                headers: {
-                "Content-Type": "application/json",
-                },
-                body: JSON.stringify({first_name, last_name, email, password})
-            };
+        
 
-            
-
-            const res = await fetch(url, options);
-            console.log("this is response", res);
-        } catch (error) {
-            console.log(error);
-        }
+        axios.post('https://backend-pgnweb265a-uc.a.run.app/register', {
+            first_name,
+            last_name,
+            email,
+            password
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then((response) => {
+                console.log(JSON.stringify(response.data));
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     return(
@@ -68,14 +62,14 @@ export default (props : any) =>{
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Name</p>
                     <div className="sm:px-[2rem] sm:py-[1.5rem] sm:rounded-[1rem] sm:gap-[3rem] items-center flex px-[7rem] py-[4rem] gap-[7rem] border-[1px] border-[#F2F3F5] rounded-[4rem]">
                         <Image src={profile} alt="asvg" className=" sm:h-[3.5rem] h-[11rem] w-auto" />
-                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none" placeholder="Enter your name" />
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none w-[80%]" placeholder="Enter your name" />
                     </div>
                 </div>
                 <div className="sm:mb-[3rem] mb-[8rem]">
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Email</p>
                     <div className="sm:px-[2rem] sm:py-[1.5rem] sm:rounded-[1rem] sm:gap-[3rem] items-center flex px-[7rem] py-[4rem] gap-[7rem] border-[1px] border-[#F2F3F5] rounded-[4rem]">
                         <Image src={sms} alt="asvg" className=" sm:h-[3.5rem] h-[11rem] w-auto" />
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none" placeholder="Enter your email" />
+                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none w-[80%]" placeholder="Enter your email" />
                     </div>
                 </div>
                 <div className="sm:mb-[6rem] mb-[10rem]">
