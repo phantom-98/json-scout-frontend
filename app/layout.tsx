@@ -19,12 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`flex flex-col ${inter.className}`}>
+    <html lang="en">
+      <body>
+      <div className={`flex flex-col ${inter.className}`}>
       <Header/>
       <div className="sm:mt-0 mt-[18rem] sm:px-[14%] px-[12rem] overflow-hidden">
         {children}
       </div>
       <Footer/>
     </div>
+      </body>
+    </html>
   );
 }

@@ -29,12 +29,6 @@ html {
   font-size: 0.46vw;
 }
 
-@media (min-width:1024px) {
-  html {
-    font-size: 0.694vm;
-  }
-}
-
 @media (min-width:640px){
 
       /* Customize the label (the container) */

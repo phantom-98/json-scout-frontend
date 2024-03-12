@@ -25,6 +25,9 @@ import { CustomCodeBlock } from "../components/CustomCodeBlock/page";
 import plus from "../../public/Group 1000001523.svg"
 import { Step } from "../components/Step/page";
 import { Card, CardCan, CardMembership } from "../components/Card/page";
+import minus from "../../public/minus.svg"
+import React from "react";
+import { Question } from "../components/question/page";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -64,8 +67,104 @@ content_2 = "Date submitted; 01/01/2024. I made my purchase 2 weeks ago and want
 date_2 = re.search(r'\d{1,2}\/\d{1,2}\/\d{4}', content_2).group(0)
 `;
 
+const  codeLeft: string[] = [
+    `payload = {
+        "api_key": "SOME_API_KEY",
+        "desired_output": "date_purchased (mm-dd-yyyy)"
+        "content": [
+            "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.",
+        ]
+    }`,
+    `/* Old way of doing it 222 */
+    Import re, datetime
+    content_1 = “My purchase was made back in january 12, 2012. I am not sure if I am eligible for a refund, but I would like to know.”,
+    /* Grab the date from the content*/
+    date_1 = re.search(r'[a-zA-Z]+\s\d{1,2},\s\d{4}', content_1).group(0)
+    /* Convert the date to a datetime object */
+    date_object_1 = datetime.datetime.strptime(date_1, '%B %d, %Y').date()
+    date_string_1 = date_object_1.strftime('%m-%d-%Y')
+    print(date_string_1)
+    content_2 = "Date submitted; 01/01/2024. I made my purchase 2 weeks ago and wanted to know about warranty information."
+    date_2 = re.search(r'\d{1,2}\/\d{1,2}\/\d{4}', content_2).group(0)`,
+    `payload = {
+        "api_key": "SOME_API_KEY",
+        "desired_output": "date_purchased (mm-dd-yyyy)"
+        "content": [
+            "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.",
+        ]
+    }`,
+    `/* Old way of doing it 444 */
+    Import re, datetime
+    content_1 = “My purchase was made back in january 12, 2012. I am not sure if I am eligible for a refund, but I would like to know.”,
+    /* Grab the date from the content*/
+    date_1 = re.search(r'[a-zA-Z]+\s\d{1,2},\s\d{4}', content_1).group(0)
+    /* Convert the date to a datetime object */
+    date_object_1 = datetime.datetime.strptime(date_1, '%B %d, %Y').date()
+    date_string_1 = date_object_1.strftime('%m-%d-%Y')
+    print(date_string_1)
+    content_2 = "Date submitted; 01/01/2024. I made my purchase 2 weeks ago and wanted to know about warranty information."
+    date_2 = re.search(r'\d{1,2}\/\d{1,2}\/\d{4}', content_2).group(0)`,
+    `payload = {
+        "api_key": "SOME_API_KEY",
+        "desired_output": "date_purchased (mm-dd-yyyy)"
+        "content": [
+            "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.",
+        ]
+    }`,
+
+
+]
+
+const codeRight:string[] = [
+    `data = response.json()['data']
+    [
+        {
+            "classification": "Purchase Inquiry",
+            "data_purchased": "01-12-2012",
+        }
+    ]`,
+    `payload = {
+        "api_key": "SOME_API_KEY",
+        "desired_output": "date_purchased (mm-dd-yyyy)"
+        "content": [
+            "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.",
+        ]
+    }`,
+    `data = response.json()['data']
+    [
+        {
+            "classification": "Purchase Inquiry",
+            "data_purchased": "01-12-2012",
+        }
+    ]`,
+    `payload = {
+        "api_key": "SOME_API_KEY",
+        "desired_output": "date_purchased (mm-dd-yyyy)"
+        "content": [
+            "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
+            "Date submitted: 01/01/2024, i made my purchase 2 weeks ago and wanted to know about warranty information.",
+        ]
+    }`,
+    `data = response.json()['data']
+    [
+        {
+            "classification": "Purchase Inquiry",
+            "data_purchased": "01-12-2012",
+        }
+    ]`,
+] 
+
+
+
 
 export default (props : any) => {
+
+    const [num, setNum] = React.useState(0) 
+
     return (
         <>
             <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
@@ -138,31 +237,31 @@ export default (props : any) => {
                 </div>
             </div>
 
-            <div className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:gap-[10rem] bg-[#F9FAFC] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
+            <div className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>How It Works</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
                 </div>
                 <div className="w-full text-[7rem] leading-[7rem] font-semibold flex flex-col justify-center gap-[7rem] sm:flex-row sm:justify-center sm:gap-[4rem] sm:text-[13px] sm:leading-[13px] ">
                     <div className="w-full sm:w-auto flex justify-between sm:justify-center sm:gap-[4rem]">
-                        <button className="sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] lorem-button">Lorem</button>
-                        <button className="sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] unlorem-button">Lorem</button>
+                        <button onClick={()=>{setNum(0)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 0?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(1)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 1?'lorem-button':'unlorem-button'}`}>Lorem</button>
                     </div>
                     <div className="w-full sm:w-auto flex justify-between sm:justify-center sm:gap-[4rem]">
-                        <button className="sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] unlorem-button">Lorem</button>
-                        <button className="sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] unlorem-button">Lorem</button>
-                        <button className="sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] unlorem-button">Lorem</button>
+                        <button onClick={()=>{setNum(2)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 2?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(3)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 3?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(4)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 4?'lorem-button':'unlorem-button'}`}>Lorem</button>
                     </div>
                 </div>
                     
                 <div className="flex flex-col items-center justify-between gap-[12rem] sm:flex-row sm:gap-[16px] sm:h-[56rem]">
-                    <CustomCodeBlock leftTitle="INPUT" centerTitle="Example 1" rightTitle="JSON" code={`/* ENTER YOUR DATA */ ` + jsonSnippet}/>
+                    <CustomCodeBlock leftTitle="INPUT" centerTitle="Example 1" rightTitle="JSON" code={codeLeft[num]}/>
                     <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
-                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle="JSON" code={`/* ENTER YOUR DATA */ ` + jsSnippert}/>
+                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle="JSON" code={codeRight[num]}/>
                 </div>
-                <button className="sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn">Test Data</button>
+                <button className="sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn sm:hidden">Test Data</button>
                 <Image src={highlightO} alt="highlight" className="hidden sm:block absolute sm:left-[20rem] sm:top-[30rem] w-[4%] h-auto"></Image>
-                <Image src={highlight1} alt="highlight" className="hidden sm:block absolute sm:right-[20rem] sm:bottom-[10rem] w-[4%] h-auto"></Image>
+                <Image src={highlight1} alt="highlight" className="hidden sm:block absolute sm:right-[20rem] sm:top-[122rem] w-[4%] h-auto"></Image>
             </div>
 
             <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
@@ -208,8 +307,8 @@ export default (props : any) => {
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
                 
-                <div className="sm:my-[13rem] w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
-                    <div className="flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                <div className="sm:my-[13rem] sm:w-full w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
+                    <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
                     <CardMembership title="FREE TRIAL" price="0" description="Get started for 100 requests" allowed={[
                         "100 Requests"
@@ -254,33 +353,14 @@ export default (props : any) => {
 
             <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
                 <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <div className="sm:py-[4rem] sm:pr-[4rem] sm:pl-[12rem] sm:rounded-[3rem] drop-shadow-1 pl-[28rem] py-[12rem] pr-[12rem] relative rounded-[10rem]">
-                        <Image src={plus} alt="" className="sm:h-[3.5rem] sm:left-[6rem] h-[11rem] w-auto absolute left-[11rem]"></Image>
-                        <p className="sm:text-[3rem] sm:leading-[4rem] font-semibold text-[9rem] leading-[11rem]">How do you determine the correct data to extract?</p>
-                        <p className="sm:text-[2.5rem] sm:leading-[4rem] sm:pt-[2rem] leading-[11rem] text-[8rem] pt-[4rem]  text-[#363049] hidden">Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly.</p>
-                    </div>
-                    <div className="sm:py-[4rem] sm:pr-[4rem] sm:pl-[12rem] sm:rounded-[3rem] drop-shadow-1 pl-[28rem] py-[12rem] pr-[12rem] relative rounded-[10rem]">
-                        <Image src={plus} alt="" className="sm:h-[3.5rem] sm:left-[6rem] h-[11rem] w-auto absolute left-[11rem]"></Image>
-                        <p className="sm:text-[3rem] sm:leading-[4rem] font-semibold text-[9rem] leading-[11rem]">In there a discount for yearly plans?</p>
-                        <p className="sm:text-[2.5rem] sm:leading-[4rem] sm:pt-[2rem] leading-[11rem] text-[8rem] pt-[4rem]  text-[#363049] hidden">Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly.</p>
-                    </div>
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    
                 </div>
                 <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <div className="sm:py-[4rem] sm:pr-[4rem] sm:pl-[12rem] sm:rounded-[3rem] drop-shadow-1 pl-[28rem] py-[12rem] pr-[12rem] relative rounded-[10rem]">
-                        <Image src={plus} alt="" className="sm:h-[3.5rem] sm:left-[6rem] h-[11rem] w-auto absolute left-[11rem]"></Image>
-                        <p className="sm:text-[3rem] sm:leading-[4rem] font-semibold text-[9rem] leading-[11rem]">How do I cancel my subscription?</p>
-                        <p className="sm:text-[2.5rem] sm:leading-[4rem] sm:pt-[2rem] leading-[11rem] text-[8rem] pt-[4rem]  text-[#363049] hidden">Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly.</p>
-                    </div>
-                    <div className="sm:py-[4rem] sm:pr-[4rem] sm:pl-[12rem] sm:rounded-[3rem] drop-shadow-1 pl-[28rem] py-[12rem] pr-[12rem] relative rounded-[10rem]">
-                        <Image src={plus} alt="" className="sm:h-[3.5rem] sm:left-[6rem] h-[11rem] w-auto absolute left-[11rem]"></Image>
-                        <p className="sm:text-[3rem] sm:leading-[4rem] font-semibold text-[9rem] leading-[11rem]">How does the pricing work?</p>
-                        <p className="sm:text-[2.5rem] sm:leading-[4rem] sm:pt-[2rem] leading-[11rem] text-[8rem] pt-[4rem]  text-[#363049] hidden">Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly.</p>
-                    </div>
-                    <div className="sm:py-[4rem] sm:pr-[4rem] sm:pl-[12rem] sm:rounded-[3rem] drop-shadow-1 pl-[28rem] py-[12rem] pr-[12rem] relative rounded-[10rem]">
-                        <Image src={plus} alt="" className="sm:h-[3.5rem] sm:left-[6rem] h-[11rem] w-auto absolute left-[11rem]"></Image>
-                        <p className="sm:text-[3rem] sm:leading-[4rem] font-semibold text-[9rem] leading-[11rem]">Can I switch plans?</p>
-                        <p className="sm:text-[2.5rem] sm:leading-[4rem] sm:pt-[2rem] leading-[11rem] text-[8rem] pt-[4rem]  text-[#363049] hidden">Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly.</p>
-                    </div>
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
                 </div>
             </div>
         </>

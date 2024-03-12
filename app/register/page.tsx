@@ -83,7 +83,7 @@ export default (props : any) =>{
                         <Image src={eye} alt="aeye" className=" sm:h-[3.5rem] h-[11rem] w-auto " />
                     </div>
                 </div>
-                
+                {/* <div onClick={()=> console.log('onclick console===>')} className="text-[30px] cursor-pointer">Click me!</div> */}
                 <button onClick={() => {
                     handleSubmit();
                 }} className="sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">Sign Up</button>
