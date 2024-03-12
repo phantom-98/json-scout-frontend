@@ -62,7 +62,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91]">Delete</p>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
 
         </div>
