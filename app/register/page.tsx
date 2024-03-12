@@ -50,6 +50,9 @@ export default (props : any) =>{
                 },
                 body: JSON.stringify({first_name, last_name, email, password})
             };
+
+            
+
             const res = await fetch(url, options);
             console.log("this is response", res);
         } catch (error) {

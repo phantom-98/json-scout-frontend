@@ -13,7 +13,7 @@ export const Footer = () => {
         <div className=" sm:pt-[15rem] sm:px-[14%] sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative">
             <div className="flex flex-col items-center">
                 <p className=" sm:text-[8rem] sm:mb-[12rem] sm:leading-[10rem] text-[15rem] items-center leading-[23rem] mb-[19rem] font-semibold">Ready to Get Started</p>
-                <button className=" sm:text-[2.5rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[5rem] sm:rounded-[1rem] text-[8rem] rounded-[5rem] leading-[10rem] px-[12rem] py-[7rem] primary-btn">Sign Up Now</button>
+                <Link href="/register"><button className=" sm:text-[2.5rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[5rem] sm:rounded-[1rem] text-[8rem] rounded-[5rem] leading-[10rem] px-[12rem] py-[7rem] primary-btn">Sign Up Now</button></Link>
             </div>
             <div className=" sm:mt-[8rem] sm:flex-row sm:justify-between flex flex-col mt-[26rem] items-center gap-[8rem]">
                 <Image src={logo1} alt="" className="sm:h-[6rem] h-[29rem] w-auto"></Image>
