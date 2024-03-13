@@ -16,6 +16,9 @@ import sms from "../../../public/sms.svg"
 import unlock from "../../../public/unlock.svg"
 import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
+import { Request } from "@/app/components/Request/page"
+import { Cell } from "@/app/components/Cell/page"
+import { Console } from "console"
 
 
 
@@ -23,6 +26,10 @@ export default (props:any) => {
 
     const [state, setState] = React.useState(1)
     const [visible, setVisible] = React.useState(0)
+
+    const viewRequest = (i:number) =>{
+        console.log("view Request ===========>", i)
+    }
 
     return(
         <>
@@ -135,6 +142,23 @@ export default (props:any) => {
                         </div>
                         <div className="primary-btn sm:w-[15%] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Copy</div>
                         <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Reset</div>
+                    </div>
+                </div>
+
+                <div className={`${state === 3 ?'':'hidden'}`}>
+                    <div className="sm:flex sm:justify-start sm:gap-[3rem] sm:py-[3rem]">
+                        <Request text = "Requests Available" num={98} color = "#449D5D" />
+                        <Request text = "Requests used" num = {2} color = "#FDA235" />
+                    </div>
+                    <p className="sm:text-[3rem] sm:font-semibold">Request history</p>
+                    <div className="sm:mt-[3rem]">
+                        <div className="sm:flex sm:justify-start sm:px-[4rem] sm:py-[2rem] bg-[#F4F4F4]">
+                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">ID</span>
+                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">Created</span>
+                        </div>
+                        <Cell ID={111111} Created="Nov 12, 2024" view={viewRequest}/>
+                        <Cell ID={222222} Created="Nov 12, 2024" view={viewRequest} />
+                        <Cell ID={333333} Created="Nov 12, 2024" view={viewRequest} />
                     </div>
                 </div>
             </div>
