@@ -10,6 +10,8 @@ import axios from "axios"
 import { useRouter } from 'next/navigation'
 import erralert from "../../../public/warning-2.svg"
 import { setCookie, getCookie, deleteCookie } from "cookies-next"
+import { useAuth } from "@/app/components/context/authContext"
+import { getProfile, login } from "@/app/backendApis"
 
 const roboto = Roboto({
     weight: '400',
@@ -21,35 +23,24 @@ export default (props : any) =>{
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
     const [err, setErr] = React.useState(0)
-
+    const {user, setUser} = useAuth();
     
     const router = useRouter()
     
-
-    
-    function submitBtn() {
-        axios.post('https://backend-pgnweb265a-uc.a.run.app/login', {
-            email,
-            password
-        }, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+    async function submitBtn() {
+        const res = await login(email, password);
+        if (res != null) {
+            Object.keys(res).map(val=>{
+                setCookie(val, res[val]);
+            })
+            const res1 = await getProfile(res["access_token"]);
+            if (res != null) {
+                setUser(res);
             }
+            router.back();
+        } else {
+            setErr(1)
         }
-        )
-        .then((response) => {
-          console.log('response===>', JSON.stringify(response.data));
-        const res = response.data;
-        Object.keys(res).map(val=>{
-            setCookie(val, res[val]);
-        })
-          router.back();
-
-        })
-        .catch((error) => {
-          console.log(error);
-          setErr(1)
-        });
     }
 
     return(

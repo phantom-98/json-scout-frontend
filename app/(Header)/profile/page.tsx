@@ -1,5 +1,5 @@
 'use client'
-import React from "react"
+import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import profile from "../../../public/profile1.svg"
 import profile1 from "../../../public/profile2.svg"
@@ -19,10 +19,17 @@ import eye1 from "../../../public/visible.svg"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { Console } from "console"
+import { useAuth } from "@/app/components/context/authContext"
 
 
 
 export default (props:any) => {
+    const {user, setUser} = useAuth();
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
 
     const [state, setState] = React.useState(1)
     const [visible, setVisible] = React.useState(0)
@@ -30,6 +37,14 @@ export default (props:any) => {
     const viewRequest = (i:number) =>{
         console.log("view Request ===========>", i)
     }
+    
+    useEffect(() => {
+        if (user) {
+            setFirstName(user['first_name']);
+            setLastName(user['last_name']);
+            setEmail(user['email']);
+        }
+    }, [user])
 
     return(
         <>
@@ -81,14 +96,14 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">First name</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input type="text" placeholder="John" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none"></input>
+                                <input onChange={e => setFirstName(e.target.value)} type="text" placeholder="John" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={firstName}></input>
                             </div>
                         </div>
                         <div className="sm:w-[46%]">
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Last name</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input type="text" placeholder="Doe" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none"></input>
+                                <input onChange={e => setLastName(e.target.value)} type="text" placeholder="Doe" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={lastName}></input>
                             </div>
                         </div>
                     </div>
@@ -102,7 +117,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Email</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={sms} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none"></input>
+                                <input onChange={e => setEmail(e.target.value)} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={email}></input>
                             </div>
                         </div>
                         <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div>
@@ -117,7 +132,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Current password</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input type="password" placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none"></input>
+                                <input onChange={e => setPassword(e.target.value)} type="password" placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={password}></input>
                                 <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
                             </div>
                         </div>
@@ -125,7 +140,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">New password</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input type="password" placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none"></input>
+                                <input type="password" placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={confirmPassword}></input>
                                 <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
                             </div>
                         </div>
@@ -138,7 +153,7 @@ export default (props:any) => {
                     <div className="flex justify-between items-center">
                         <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
                             <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
-                            <input type="password" placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none"></input>
+                            <input type={visible === 1? "":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={user['api_key']}></input>
                         </div>
                         <div className="primary-btn sm:w-[15%] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Copy</div>
                         <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Reset</div>
