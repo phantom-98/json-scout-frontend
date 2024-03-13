@@ -23,7 +23,7 @@ import plus from "../../../public/Group 1000001523.svg"
 import { Step } from "../../components/Step/page";
 import { Card, CardCan, CardMembership } from "../../components/Card/page";
 import minus from "../../../public/minus.svg"
-import React from "react";
+import React, { useEffect } from "react";
 import { Question } from "../../components/question/page";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -161,6 +161,9 @@ const codeRight:string[] = [
 export const Home = (props : any) => {
 
     const [num, setNum] = React.useState(0) 
+    useEffect(()=>{
+        console.log('localStorate====>', localStorage.getItem('access_token'))
+    },[])
 
     return (
         <>
