@@ -7,12 +7,11 @@ import logoimg from "../../../public/JSON-LOGO 1.svg"
 import frame from "../../../public/Frame.svg"
 import React, { useEffect } from "react";
 import { useAuth } from "../context/authContext";
-import { getCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
 import { getProfile } from "@/app/backendApis";
 import avatar from "../../../public/Profile-Button.svg"
 import setting2 from "../../../public/setting-2.svg"
 import logout from "../../../public/logout.svg"
-import { STATIC_STATUS_PAGE_GET_INITIAL_PROPS_ERROR } from "next/dist/lib/constants";
 
 
 const Header = (props:any) => {
@@ -28,6 +27,21 @@ const Header = (props:any) => {
         0
     );
 
+    //Delete all cookies
+    function deleteAllCookies() {
+        var cookies = document.cookie.split(";");
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+            var eqPos = cookie.indexOf("=");
+            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+            document.cookie = name + '=;' +
+                'expires=Thu, 01-Jan-1970 00:00:01 GMT;' +
+                'path=' + '/;' +
+                'domain=' + window.location.host + ';' +
+                'secure=;';
+        }
+    }
+
     const [popup, setPop] = React.useState(false)
 
     const setSelection = (no:number) => {
@@ -40,16 +54,21 @@ const Header = (props:any) => {
     }
 
     const out = () => {
-
+        setUser({})
+        deleteAllCookies()
     }
 
     const fetchProfile = async () => {
         const token = getCookie("access_token");
         if (token != undefined) {
             const res = await getProfile(token);
-            if (res) {
+            if (res["email"] != null) {
                 setUser(res);
+            } else {
+                setUser({})
+                router.push("/login")
             }
+            
         }
     }
 

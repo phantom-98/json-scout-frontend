@@ -1,11 +1,40 @@
 'use client'
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 type ReturnType = {
     [key: string]: any;
 } | null;
 
-export const login = async (email:string, password:string): Promise<ReturnType> => {
+export const register = async (first_name:string, last_name:string, email:string, password:string ) : Promise<string> => {
+    try {
+        const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/register', {
+            first_name,
+            last_name,
+            email,
+            password
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return "Success";
+    }  catch (e) {
+        if (axios.isAxiosError(e)) {
+            return e.response?.data.message;
+        } else {
+            return "Unknow error";
+        }
+    }
+}
+
+export const login = async (email:string, password:string): Promise<any> => {
+
+    interface ErrorResponse {
+        data?: any;
+        status?: number;
+        // ... add other relevant properties
+    }
+
     try{
         const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/login', {
             email,
@@ -15,29 +44,47 @@ export const login = async (email:string, password:string): Promise<ReturnType> 
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         });
-        if (res.status != 200){
-            throw new Error("Network response is not ok");
-        }
         return res.data;
-    } catch (error) {
-        console.log(error);
-        return null;
+    } catch (e: unknown) { // Marking e as unknown is considered best practice
+        // Narrow down the type of e and make sure we can access .data
+        if (e instanceof Error && 'response' in e) {
+            const error = e as Error & { response?: ErrorResponse };
+            if (error.response) {
+                return error.response.data;
+            }
+        }
+        
+        // Handle the non-AxiosError case or return a default value
+        return { message: 'An unexpected error occurred.' };
     };
 }
 
-export const getProfile = async (token: string): Promise<ReturnType> => {
+export const getProfile = async (token: string): Promise<any> => {
+
+    interface ErrorResponse {
+        data?: any;
+        status?: number;
+        // ... add other relevant properties
+    }
+
     try{
         const res = await axios.get(`https://backend-pgnweb265a-uc.a.run.app/profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
         });
-        if (res.status != 200){
-            throw new Error("Network response is not ok");
-        }
+       
         return res.data;
-    } catch (error) {
-        console.log(error);
-        return null;
+    } catch (e: unknown) { // Marking e as unknown is considered best practice
+        // Narrow down the type of e and make sure we can access .data
+        if (e instanceof Error && 'response' in e) {
+            const error = e as Error & { response?: ErrorResponse };
+            if (error.response) {
+                return error.response.data;
+            }
+        }
+        
+        // Handle the non-AxiosError case or return a default value
+        return { message: 'An unexpected error occurred.' };
     };
 }
