@@ -1,9 +1,9 @@
 import Image from "next/image"
-import React from "react"
+import React, { SetStateAction, Dispatch } from 'react';
 
 
 
-export const Question = (props:{img1:any, img2:any, question:string, answer:string, n:number, change:void}) => {
+export const Question = (props:{img1:any, img2:any, question:string, answer:string, n:number, change:Dispatch<SetStateAction<number>>}) => {
 
     const [state, setState] = React.useState(0)
 
