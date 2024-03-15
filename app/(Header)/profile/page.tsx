@@ -75,7 +75,7 @@ export default (props:any) => {
                     <span className="sm:text-[2rem] sm:text-[#828A91]">{state === 1?'Profile':state === 2?'API Key':state === 3?'Requests':'My Plan'}</span>
                 </div>
                 <div className={`sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:justify-start sm:gap-[4rem] sm:py-[4rem] ${state === 1?'':'hidden'}`}>
-                    <div className="sm:flex sm:justify-between sm:items-center sm:mb-[4rem]">
+                    {/* <div className="sm:flex sm:justify-between sm:items-center sm:mb-[4rem]">
                         <div className="sm:flex sm:justify-start sm:items-center sm:gap-[3rem]">
                             <div className="sm:h-[11rem] sm:w-[11rem] sm:rounded-full sm:overflow-hidden"><Image src={profileimg} alt="" className="sm:w-full sm:h-full"></Image></div>
                             <div>
@@ -90,7 +90,7 @@ export default (props:any) => {
                                 <p className="sm:text-[2rem] sm:text-[#828A91]">Delete</p>
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="sm:flex sm:justify-between">
                         <div className="sm:w-[46%]">
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">First name</p>
@@ -120,7 +120,7 @@ export default (props:any) => {
                                 <input onChange={e => setEmail(e.target.value)} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={email}></input>
                             </div>
                         </div>
-                        <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div>
+                        {/* <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div> */}
                     </div>
                 </div>
 

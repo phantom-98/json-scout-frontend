@@ -6,17 +6,24 @@ type Auth = {
         [key: string]: any;
     };
     setUser(user: object): void;
+    loged:boolean;
+    setLoged:void
 }
+
+
 
 const AuthContext = createContext<Auth>( {
     user: {},
-    setUser: () => {}
+    setUser: () => {},
+    loged:,
+    setLoged: () => {}
 } );
 
 export const AuthProvider = (props:{children:any}) => {
     const [user, setUser] = useState({});
+    const [loged, setLoged] = useState(false);
     return (
-        <AuthContext.Provider value={{user, setUser}} >
+        <AuthContext.Provider value={{user, setUser}, {loged, setLoged}} >
             {props.children}
         </AuthContext.Provider>
     );
