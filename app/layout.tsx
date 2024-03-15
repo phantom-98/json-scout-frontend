@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className={`flex flex-col ${inter.className}`}>
+        <div className={`flex flex-col ${inter.className} `}>
           <AuthProvider>
             {children}
           </AuthProvider>

@@ -25,6 +25,7 @@ import { Card, CardCan, CardMembership } from "../../components/Card/page";
 import minus from "../../../public/minus.svg"
 import React, { useEffect } from "react";
 import { Question } from "../../components/question/page";
+import { ClassNames } from "@emotion/react";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -161,10 +162,12 @@ const codeRight:string[] = [
 export const Home = (props : any) => {
 
     const [num, setNum] = React.useState(0) 
+
+    const [order, setOrder] = React.useState(0)
     
 
     return (
-        <>
+        <div>
             <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
                 <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Free Trial No Credit Card Required!</span>
             </div>
@@ -235,7 +238,7 @@ export const Home = (props : any) => {
                 </div>
             </div>
 
-            <div className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
+            <div id="how" className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>How It Works</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
@@ -305,7 +308,7 @@ export const Home = (props : any) => {
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
                 
-                <div className="sm:my-[13rem] sm:w-full w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
+                <div id="pricing" className="sm:my-[13rem] sm:w-full w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
                     <CardMembership title="FREE TRIAL" price="0" description="Get started for 100 requests" allowed={[
@@ -351,17 +354,17 @@ export const Home = (props : any) => {
 
             <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
                 <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {1} change={setOrder}/>
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {2} />
                     
                 </div>
                 <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {3} />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {4} />
+                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {5} />
                 </div>
             </div>
-        </>
+        </div>
         
     )
 }

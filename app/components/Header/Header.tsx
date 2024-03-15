@@ -19,13 +19,7 @@ const Header = (props:any) => {
     const router = useRouter();
 
     const [show, setShow] = React.useState(false);
-    const [selected, setSelected] = React.useState(
-        usePathname() == "/" ? 1:
-        usePathname() == "/how"? 2:
-        usePathname() == "/price"? 3:
-        usePathname() == "/docs"? 4:
-        0
-    );
+    const [selected, setSelected] = React.useState(1);
 
     function deleteAllCookies() {
         // Example implementation, adjust as needed
@@ -82,10 +76,10 @@ const Header = (props:any) => {
             <div className="sm:w-[12%] w-[44%] z-40 cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
             <div className={`flex justify-between sm:flex-row flex-col sm:gap-[24rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                 <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
-                    <Link onClick={()=>setSelection(1)} className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={`${selected == 1?'selected':''}`}>Home</span></Link>
-                    <Link onClick={()=>setSelection(2)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/how"><span className={`${selected == 2?'selected':''}`}>How it works</span></Link>
-                    <Link onClick={()=>setSelection(3)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/price"><span className={`${selected == 3?'selected':''}`}>Pricing</span></Link>
-                    <Link onClick={()=>setSelection(4)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={`${selected == 4?'selected':''}`}>API docs</span></Link>
+                    <Link onClick={()=>setSelection(1)} className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={` ${selected == 1?'selected':''}`}>Home</span></Link>
+                    <Link onClick={()=>setSelection(2)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="#how"><span className={`${selected == 2?'selected':''}`}>How it works</span></Link>
+                    <Link onClick={()=>setSelection(3)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="#pricing"><span className={`${selected == 3?'selected':''}`}>Pricing</span></Link>
+                    <Link onClick={()=>setSelection(4)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href=""><span className={`${selected == 4?'selected':''}`}>API docs</span></Link>
                 </div>
                 {!user['email'] && (
                     <div className="justify-between flex items-center sm:flex-row flex-col sm:gap-16 gap-[16rem] w-full px-[10rem] pb-[36rem] sm:p-0">
