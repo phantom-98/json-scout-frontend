@@ -5,6 +5,7 @@ import Link from "next/link"
 import sms from "../../../public/sms-notification.svg"
 import secure from "../../../public/shield-security.svg"
 import eye from "../../../public/eye-slash.svg"
+import eye1 from "../../../public/visible.svg"
 import { Roboto } from "next/font/google"
 import axios from "axios"
 import { useRouter } from 'next/navigation'
@@ -25,6 +26,7 @@ export default (props : any) =>{
     const [err, setErr] = React.useState(0)
     const [errmessage, setErrmessage] = React.useState("")
     const {user, setUser} = useAuth();
+    const [visible, setVisible] = React.useState(false)
     
     const router = useRouter()
     
@@ -34,15 +36,15 @@ export default (props : any) =>{
             Object.keys(res).map(val=>{
                 setCookie(val, res[val]);
             })
-            console.log(res["access_token"])
+            
             const resprofile = await getProfile(res["access_token"]);
             if (resprofile["email"] != null) {
                 setUser(resprofile);
             } else{
-                
+
             }
             
-            router.back();
+            router.push("/");
         } else {
             setErrmessage(res["message"])
             setErr(1)
@@ -50,9 +52,16 @@ export default (props : any) =>{
         }
     }
 
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Enter') {
+          // Code to be executed when Enter key is pressed
+          submitBtn();
+        }
+      });
+
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>
-            <div className="sm:mx-[27rem] login px-[10rem] py-[10rem] rounded-[2rem]">
+            <div className="sm:mx-[27rem] login px-[10rem]  pt-[10rem] pb-[10rem] rounded-[2rem]">
                 <div className="sm:text-[3rem] sm:leading-[6rem] sm:mb-[3rem] text-[10rem] leading-[20rem] text-center mb-[10rem] font-semibold">Sign In</div>
                 <div className="sm:mb-[3rem] mb-[8rem]">
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Email</p>
@@ -65,8 +74,8 @@ export default (props : any) =>{
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Password</p>
                     <div className="sm:px-[2rem] sm:py-[1.5rem] sm:rounded-[1rem] sm:gap-[3rem] items-center flex px-[7rem] py-[4rem] gap-[7rem] border-[1px] border-[#F2F3F5] rounded-[4rem]">
                         <Image src={secure} alt="asecure"  className=" sm:h-[3.5rem] h-[11rem] w-auto"/>
-                        <input type="password" onChange={(e)=>{setErr(0);setPassword(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] w-[80%] text-[6.5rem] leading-[10rem] focus:outline-none " placeholder="Enter your password" />
-                        <Image src={eye} alt="aeye" className=" sm:h-[3.5rem] h-[11rem] w-auto " />
+                        <input type={visible == true?'':'password'} onChange={(e)=>{setErr(0);setPassword(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] w-[80%] text-[6.5rem] leading-[10rem] focus:outline-none " placeholder="Enter your password" />
+                        <Image src={visible == true?eye1:eye} alt="aeye" className=" sm:h-[3.5rem] h-[11rem] w-auto cursor-pointer " onClick={()=>{setVisible(!visible)}} />
                     </div>
                 </div>
                 

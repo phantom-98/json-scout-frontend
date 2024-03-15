@@ -161,9 +161,7 @@ const codeRight:string[] = [
 export const Home = (props : any) => {
 
     const [num, setNum] = React.useState(0) 
-    useEffect(()=>{
-        console.log('localStorate====>', localStorage.getItem('access_token'))
-    },[])
+    
 
     return (
         <>

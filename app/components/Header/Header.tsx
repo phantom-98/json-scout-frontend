@@ -7,7 +7,7 @@ import logoimg from "../../../public/JSON-LOGO 1.svg"
 import frame from "../../../public/Frame.svg"
 import React, { useEffect } from "react";
 import { useAuth } from "../context/authContext";
-import { deleteCookie, getCookie } from "cookies-next";
+import { getCookie, } from "cookies-next";
 import { getProfile } from "@/app/backendApis";
 import avatar from "../../../public/Profile-Button.svg"
 import setting2 from "../../../public/setting-2.svg"
@@ -27,20 +27,17 @@ const Header = (props:any) => {
         0
     );
 
-    //Delete all cookies
     function deleteAllCookies() {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i];
-            var eqPos = cookie.indexOf("=");
-            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = name + '=;' +
-                'expires=Thu, 01-Jan-1970 00:00:01 GMT;' +
-                'path=' + '/;' +
-                'domain=' + window.location.host + ';' +
-                'secure=;';
+        // Example implementation, adjust as needed
+        const cookies = document.cookie.split(";");
+      
+        for (let cookie of cookies) {
+          const eqPos = cookie.indexOf("=");
+          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
         }
-    }
+      }
+    
 
     const [popup, setPop] = React.useState(false)
 
@@ -56,29 +53,33 @@ const Header = (props:any) => {
     const out = () => {
         setUser({})
         deleteAllCookies()
+        router.push("/")
+        
     }
 
     const fetchProfile = async () => {
         const token = getCookie("access_token");
-        if (token != undefined) {
+        if (token != null) {
             const res = await getProfile(token);
             if (res["email"] != null) {
                 setUser(res);
             } else {
                 setUser({})
-                router.push("/login")
             }
             
         }
+        else {
+        }
     }
 
+    
     useEffect(() => {
         fetchProfile();
     }, []);
 
     return(
-        <div className=" sm:relative w-full flex justify-between items-center p-[8rem] sm:px-[14%] sm:py-12  whitespace-nowrap">
-            <div className="sm:w-[12%] w-[44%] z-40"><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
+        <div className="w-full flex justify-between items-center p-[8rem] sm:px-[14%] sm:py-12  whitespace-nowrap">
+            <div className="sm:w-[12%] w-[44%] z-40 cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
             <div className={`flex justify-between sm:flex-row flex-col sm:gap-[24rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                 <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
                     <Link onClick={()=>setSelection(1)} className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={`${selected == 1?'selected':''}`}>Home</span></Link>
@@ -93,11 +94,11 @@ const Header = (props:any) => {
                     </div>
                 )}
             </div>
-            {user['email'] && (<>
-                <div className="sm:h-[6rem] sm:w-[6rem] sm:rounded-full sm:cursor-pointer" onClick={()=>{popup == false?setPop(true):setPop(false)}}>
+            {user['email'] && (<div className="relative group">
+                <div className="sm:h-[6rem] sm:w-[6rem] sm:rounded-full sm:cursor-pointer hover:">
                     <Image src={avatar} alt="" className="sm:w-full sm:h-full"></Image>
                 </div>
-                <div className={`sm:p-[1.5rem] sm:absolute sm:right-[14%] sm:top-[10rem] sm:shadow-md sm:rounded-[1rem] ${popup == false?'hidden':''}`}>
+                <div className={`sm:p-[1.5rem] sm:absolute sm:right-0 sm:shadow-md sm:rounded-[1rem] hidden group-hover:block`}>
                     <div className="sm:flex sm:gap-[1rem] sm:py-[1rem] sm:pr-[2rem] sm:pl-[1rem] sm:cursor-pointer sm:rounded-[0.5rem] text-[#828A91] hover:text-black stroke-[#828A91] hover:stroke-black hover:bg-[#F4F4F4]" onClick={()=>{linkpage()}}>
                         <svg width="3rem" height="3rem" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M7 8.75C7.9665 8.75 8.75 7.9665 8.75 7C8.75 6.0335 7.9665 5.25 7 5.25C6.0335 5.25 5.25 6.0335 5.25 7C5.25 7.9665 6.0335 8.75 7 8.75Z" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
@@ -114,12 +115,11 @@ const Header = (props:any) => {
                         <span className="sm:text-[2rem] sm:leading-[3rem]">Log Out</span>
                     </div>
                 </div>
-                </>
+                </div>
             )}
             
 
             <Image src={frame} alt="frame" className="w-auto h-full sm:hidden z-40" onClick={() => {
-                console.log(show, "show");
                 setShow(prev => !prev)
             }}></Image>
         </div>

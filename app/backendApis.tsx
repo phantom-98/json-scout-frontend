@@ -27,6 +27,15 @@ export const register = async (first_name:string, last_name:string, email:string
     }
 }
 
+export const verifyEmail = async (token: string) : Promise<boolean> => {
+    try {
+        const res = await axios.get(`https://backend-pgnweb265a-uc.a.run.app/verify?token=${token}`);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
 export const login = async (email:string, password:string): Promise<any> => {
 
     interface ErrorResponse {
@@ -57,6 +66,10 @@ export const login = async (email:string, password:string): Promise<any> => {
         // Handle the non-AxiosError case or return a default value
         return { message: 'An unexpected error occurred.' };
     };
+}
+
+export const logout = async ():Promise<void> => {
+
 }
 
 export const getProfile = async (token: string): Promise<any> => {

@@ -35,7 +35,7 @@ export default (props:any) => {
     const [visible, setVisible] = React.useState(0)
 
     const viewRequest = (i:number) =>{
-        console.log("view Request ===========>", i)
+        
     }
     
     useEffect(() => {
