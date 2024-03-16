@@ -12,14 +12,15 @@ import { useRouter } from 'next/navigation'
 import erralert from "../../../public/warning-2.svg"
 import { setCookie, getCookie, deleteCookie } from "cookies-next"
 import { useAuth } from "@/app/components/context/authContext"
-import { getProfile, login } from "@/app/backendApis"
+import { getProfile, signin } from "@/app/backendApis"
+import { Box, CircularProgress } from "@mui/material"
 
 const roboto = Roboto({
     weight: '400',
     subsets: ['latin'],
   })
 
-export default (props : any) =>{
+export default () => {
 
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
@@ -29,9 +30,12 @@ export default (props : any) =>{
     const [visible, setVisible] = React.useState(false)
     
     const router = useRouter()
+
+    const [loading, setLoading] = React.useState(false)
     
     async function submitBtn() {
-        const res = await login(email, password);
+        setLoading(true)
+        const res = await signin(email, password);
         if (res["access_token"] != null) {
             Object.keys(res).map(val=>{
                 setCookie(val, res[val]);
@@ -43,9 +47,11 @@ export default (props : any) =>{
             } else{
 
             }
+            setLoading(false)
+            setTimeout(()=>{router.push("/");}, 300)
             
-            router.push("/");
         } else {
+            setLoading(false)
             setErrmessage(res["message"])
             setErr(1)
 
@@ -89,7 +95,17 @@ export default (props : any) =>{
                         <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
                     </div>   
                 </div>                               
-                <button onClick={submitBtn} className="sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">Sign In</button>
+                <button onClick={submitBtn} className="relative sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">
+                <div className={`absolute sm:mt-[0.8rem] sm:ml-[5rem] ${loading == false?'hidden':''}`}>
+                    <Box display="flex" justifyContent="center" alignItems="center">
+                    <CircularProgress sx={{
+                        color: (theme) =>
+                            theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                        }}
+                        size={40}
+                        thickness={4} />
+                    </Box>
+                    </div>Sign In</button>
                 <div className=" sm:mt-[4rem] sm:gap-[2rem] flex justify-center items-center gap-[5rem] text-[6.5rem] mt-[8rem]">
                     <p className=" sm:text-[2.3rem] text-[#828A91]">Don’t have an account?</p>
                     <Link href="/register" className="sm:text-[2.3rem] font-semibold">Sign up</Link>

@@ -164,6 +164,8 @@ export const Home = (props : any) => {
     const [num, setNum] = React.useState(0) 
 
     const [order, setOrder] = React.useState(1)
+
+    const [pricing, setPricing] = React.useState("monthly")
     
 
     return (
@@ -245,13 +247,13 @@ export const Home = (props : any) => {
                 </div>
                 <div className="w-full text-[7rem] leading-[7rem] font-semibold flex flex-col justify-center gap-[7rem] sm:flex-row sm:justify-center sm:gap-[4rem] sm:text-[13px] sm:leading-[13px] ">
                     <div className="w-full sm:w-auto flex justify-between sm:justify-center sm:gap-[4rem]">
-                        <button onClick={()=>{setNum(0)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 0?'lorem-button':'unlorem-button'}`}>Lorem</button>
-                        <button onClick={()=>{setNum(1)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 1?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(0)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[47%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 0?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(1)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[47%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 1?'lorem-button':'unlorem-button'}`}>Lorem</button>
                     </div>
                     <div className="w-full sm:w-auto flex justify-between sm:justify-center sm:gap-[4rem]">
-                        <button onClick={()=>{setNum(2)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 2?'lorem-button':'unlorem-button'}`}>Lorem</button>
-                        <button onClick={()=>{setNum(3)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 3?'lorem-button':'unlorem-button'}`}>Lorem</button>
-                        <button onClick={()=>{setNum(4)}} className={`sm:text-[3rem] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 4?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(2)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[30%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 2?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(3)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[30%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 3?'lorem-button':'unlorem-button'}`}>Lorem</button>
+                        <button onClick={()=>{setNum(4)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[30%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 4?'lorem-button':'unlorem-button'}`}>Lorem</button>
                     </div>
                 </div>
                     
@@ -307,38 +309,42 @@ export const Home = (props : any) => {
                     <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:w-[44%] sm:leading-[8rem] ${space_grotesk.className}`}>Start today with our premium plan you choose</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
-                
-                <div id="pricing" className="sm:my-[13rem] sm:w-full w-[90%] mt-[27rem] mb-[20rem] overflow-auto sm:py-4rem px-0 py-[10rem] scroll-smooth">
+
+                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[13rem] mt-[20rem] bg-orange-300 border-[1px] border-gray-200 rounded-full">
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly"?'bg-white':''}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly"?'bg-white':''}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
+                </div>                
+                <div id="pricing" className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
-                    <CardMembership title="FREE TRIAL" price="0" description="Get started for 100 requests" allowed={[
+                    <CardMembership title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
                         "100 Requests"
                     ]} unallowed={[
                         "Basic Data Extraction",
                         "Character Limit",
                         "GPT - 4"
-                    ]} button="Choose Free Trial" id="trial"/>
-                    <CardMembership title="STARTER" price="9" description="Great for getting started!" allowed={[
+                    ]} button="Choose Free Trial" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
                         "1000 Requests",
                         "250 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4"
-                    ]} unallowed={[]} button="Choose Starter" id="starter"/>
-                    <CardMembership title="STANDARD" price="24" description="Our most popular plan!" allowed={[
+                    ]} unallowed={[]} button="Choose Starter" id="starter" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership title="STANDARD"  price={pricing == "monthly"?'24':'240'} description="Our most popular plan!" allowed={[
                         "2500 Requests",
                         "500 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4",
                         "Array Content Input"
-                    ]} unallowed={[]} button="Choose Standard" standard id="standard"/>
-                    <CardMembership title="PREMIUM" price="49" description="For the power user!" allowed={[
+                    ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership title="PREMIUM" price={pricing == "monthly"?'50':'500'} description="For the power user!" allowed={[
                         "5000 Requests",
                         "1000 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4",
                         "Array Content Input",
                         "Suggested For Long Form Content"
-                    ]} unallowed={[]} button="Choose Premium" id="premium"/>
+                    ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'Per month':'Per year'}/>
 
                     </div>
                 </div>

@@ -36,7 +36,8 @@ export const verifyEmail = async (token: string) : Promise<boolean> => {
     }
 }
 
-export const login = async (email:string, password:string): Promise<any> => {
+
+export const signin = async (email:string, password:string): Promise<any> => {
 
     interface ErrorResponse {
         data?: any;
@@ -68,8 +69,26 @@ export const login = async (email:string, password:string): Promise<any> => {
     };
 }
 
-export const logout = async ():Promise<void> => {
+export const logout = async (token: string):Promise<void> => {
+    try {
+        const res = await axios.post(`https://backend-pgnweb265a-uc.a.run.app/logout`, {
+            header: {
+                'Authorization':`Bearer ${token}`
+            }
+        });
 
+        console.log(res.data)
+    } catch (e: unknown) { // Marking e as unknown is considered best practice
+        // Narrow down the type of e and make sure we can access .data
+        if (e instanceof Error && 'response' in e) {
+            const error = e as Error & { response?: ErrorResponse };
+            if (error.response) {
+                return error.response.data;
+            }
+        }
+        
+       
+    }; 
 }
 
 export const getProfile = async (token: string): Promise<any> => {
