@@ -11,7 +11,8 @@ import { getCookie, } from "cookies-next";
 import { getProfile } from "@/app/backendApis";
 import avatar from "../../../public/Profile-Button.svg"
 import setting2 from "../../../public/setting-2.svg"
-import logout from "../../../public/logout.svg"
+import logoutimg from "../../../public/logout.svg"
+import { logout } from "@/app/backendApis";
 
 
 const Header = (props:any) => {
@@ -45,6 +46,8 @@ const Header = (props:any) => {
     }
 
     const out = () => {
+        const token = getCookie("access_token")
+        logout(token)
         setUser({})
         deleteAllCookies()
         router.push("/")

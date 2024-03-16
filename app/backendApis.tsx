@@ -70,6 +70,14 @@ export const signin = async (email:string, password:string): Promise<any> => {
 }
 
 export const logout = async (token: string):Promise<void> => {
+
+    interface ErrorResponse {
+        data: void | PromiseLike<void>;
+        code: number;
+        message: string;
+        // Add any additional properties that your error responses have
+      }
+
     try {
         const res = await axios.post(`https://backend-pgnweb265a-uc.a.run.app/logout`, {
             header: {
@@ -77,13 +85,13 @@ export const logout = async (token: string):Promise<void> => {
             }
         });
 
-        console.log(res.data)
+        console.log("success logout===========>",res.data)
     } catch (e: unknown) { // Marking e as unknown is considered best practice
         // Narrow down the type of e and make sure we can access .data
         if (e instanceof Error && 'response' in e) {
             const error = e as Error & { response?: ErrorResponse };
             if (error.response) {
-                return error.response.data;
+                console.log( "failed logout==========>",error.response.data)
             }
         }
         
