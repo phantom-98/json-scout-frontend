@@ -24,9 +24,7 @@ export default () => {
 
     const [email, setEmail] = React.useState("")
     const [password, setPassword] = React.useState("")
-    const [err, setErr] = React.useState(0)
-    const [errmessage, setErrmessage] = React.useState("")
-    const {user, setUser} = useAuth();
+    const [errorMessage, setErrorMessage] = React.useState("")
     const [visible, setVisible] = React.useState(false)
     
     const router = useRouter()
@@ -34,6 +32,19 @@ export default () => {
     const [loading, setLoading] = React.useState(false)
     
     async function submitBtn() {
+        if (loading) return;
+        if (!email) {
+            setErrorMessage("Please input email!");
+            return;
+        }
+        if (!/^[\w-+\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+            setErrorMessage("Please input correct email!");
+            return;
+        }
+        if (!password) {
+            setErrorMessage("Please input password!");
+            return;
+        }
         setLoading(true)
         const res = await signin(email, password);
         if (res["access_token"] != null) {
@@ -41,29 +52,13 @@ export default () => {
                 setCookie(val, res[val]);
             })
             
-            const resprofile = await getProfile(res["access_token"]);
-            if (resprofile["email"] != null) {
-                setUser(resprofile);
-            } else{
-
-            }
-            setLoading(false)
-            setTimeout(()=>{router.push("/");}, 300)
-            
+            router.push("/");
         } else {
-            setLoading(false)
-            setErrmessage(res["message"])
-            setErr(1)
+            setErrorMessage(res["message"])
 
         }
+        setLoading(false)
     }
-
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Enter') {
-          // Code to be executed when Enter key is pressed
-          submitBtn();
-        }
-      });
 
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>
@@ -73,14 +68,14 @@ export default () => {
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Email</p>
                     <div className="sm:px-[2rem] sm:py-[1.5rem] sm:rounded-[1rem] sm:gap-[3rem] items-center flex px-[7rem] py-[4rem] gap-[7rem] border-[1px] border-[#F2F3F5] rounded-[4rem]">
                         <Image src={sms} alt="asvg" className=" sm:h-[3.5rem] h-[11rem] w-auto" />
-                        <input type="email" onChange={(e)=>{setErr(0);setEmail(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none w-[80%]" placeholder="Enter your email" />
+                        <input type="email" onKeyDown={e => {if (e.key === "Enter") submitBtn()}}  onChange={(e)=>{setErrorMessage("");setEmail(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none w-[80%]" placeholder="Enter your email" />
                     </div>
                 </div>
                 <div className="sm:mb-[4rem] mb-[10rem]">
                     <p className="sm:text-[2rem] sm:mb-[2rem] font-semibold text-[6rem] mb-[4rem]">Password</p>
                     <div className="sm:px-[2rem] sm:py-[1.5rem] sm:rounded-[1rem] sm:gap-[3rem] items-center flex px-[7rem] py-[4rem] gap-[7rem] border-[1px] border-[#F2F3F5] rounded-[4rem]">
                         <Image src={secure} alt="asecure"  className=" sm:h-[3.5rem] h-[11rem] w-auto"/>
-                        <input type={visible == true?'':'password'} onChange={(e)=>{setErr(0);setPassword(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] w-[80%] text-[6.5rem] leading-[10rem] focus:outline-none " placeholder="Enter your password" />
+                        <input type={visible == true?'':'password'}  onKeyDown={e => {if (e.key === "Enter") submitBtn()}} onChange={(e)=>{setErrorMessage("");setPassword(e.target.value)}} className=" sm:text-[2.3rem] sm:leading-[4rem] w-[80%] text-[6.5rem] leading-[10rem] focus:outline-none " placeholder="Enter your password" />
                         <Image src={visible == true?eye1:eye} alt="aeye" className=" sm:h-[3.5rem] h-[11rem] w-auto cursor-pointer " onClick={()=>{setVisible(!visible)}} />
                     </div>
                 </div>
@@ -89,26 +84,27 @@ export default () => {
                     <p className="sm:text-[2.1rem] sm:mr-[1.5rem] text-[6.5rem] text-[#828A91] mr-[3rem]">Forgot your password?</p>
                     <Link href="/forgotpassword" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Recover Password</Link>
                 </div>
-                <div className={`flex justify-center items-center ${err == 1?'':'hidden'}`}>
-                    <div className={`sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
-                        <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errmessage}</span>
-                        <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
-                    </div>   
-                </div>                               
-                <button onClick={submitBtn} className="relative sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn ">
-                <div className={`absolute sm:mt-[0.8rem] sm:ml-[5rem] ${loading == false?'hidden':''}`}>
-                    <Box display="flex" justifyContent="center" alignItems="center">
-                    <CircularProgress sx={{
-                        color: (theme) =>
-                            theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-                        }}
-                        size={40}
-                        thickness={4} />
-                    </Box>
-                    </div>Sign In</button>
+                {errorMessage && (
+                    <div className={`flex justify-center items-center`}>
+                        <div className={`sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
+                            <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errorMessage}</span>
+                            <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
+                        </div>   
+                    </div>
+                )}                             
+                <button onClick={submitBtn} className={`flex justify-center sm:gap-[4rem] gap-[8rem] items-center sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn`}
+                >
+                    {loading && (
+                        <CircularProgress sx={{
+                            color: (theme) =>
+                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                            }}
+                            size={24}
+                            thickness={4} />
+                    )}Sign In</button>
                 <div className=" sm:mt-[4rem] sm:gap-[2rem] flex justify-center items-center gap-[5rem] text-[6.5rem] mt-[8rem]">
                     <p className=" sm:text-[2.3rem] text-[#828A91]">Don’t have an account?</p>
-                    <Link href="/register" className="sm:text-[2.3rem] font-semibold">Sign up</Link>
+                    <Link href="/register" className="sm:text-[2.3rem] font-semibold underline">Sign up</Link>
                 </div>
             </div>
         </div>

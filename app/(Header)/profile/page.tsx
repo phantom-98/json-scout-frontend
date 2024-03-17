@@ -18,13 +18,14 @@ import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
-import { Console } from "console"
 import { useAuth } from "@/app/components/context/authContext"
+import { useRouter } from "next/navigation"
 
 
 
 export default (props:any) => {
     const {user, setUser} = useAuth();
+    const router = useRouter();
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -40,30 +41,32 @@ export default (props:any) => {
     }
     
     useEffect(() => {
-        if (user) {
+        if (user['email']) {
             setFirstName(user['first_name']);
             setLastName(user['last_name']);
             setEmail(user['email']);
+        } else {
+            router.push("/login")
         }
     }, [user])
 
     const saveChange = () => {
         if(firstName!=null && lastName != null && email != null && password !== null  ){
             if(password == confirmPassword) {
-                setUser(
-                    {
-                        "id":user["id"],
-                        "first_name":firstName,
-                        "last_name":lastName,
-                        "email":email,
-                        "api_key":user["api_key"],
-                        "token_limit":user["token_limit"],
-                        "token_used":user["token_used"],
-                        "charactor_limit":user["charactor_limit"],
-                        "batch_limit":user["batch_limit"],
-                        "current_plan":user["current_plan"]
-                    }
-                )
+                // setUser(
+                //     {
+                //         "id":user["id"],
+                //         "first_name":firstName,
+                //         "last_name":lastName,
+                //         "email":email,
+                //         "api_key":user["api_key"],
+                //         "token_limit":user["token_limit"],
+                //         "token_used":user["token_used"],
+                //         "charactor_limit":user["charactor_limit"],
+                //         "batch_limit":user["batch_limit"],
+                //         "current_plan":user["current_plan"]
+                //     }
+                // )
             }
 
         }

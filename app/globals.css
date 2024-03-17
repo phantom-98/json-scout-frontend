@@ -121,9 +121,7 @@ html {
   box-shadow: 0px 15px 55px 0px #0000001A;
 }
 .secondary-btn:hover {
-  background: linear-gradient(314.63deg, #FF8132 0%, #FDA235 116.75%);
-  color: white;
-  box-shadow: 0px 12px 25px -10px #FE83323D;
+  box-shadow: 0px 15px 55px 0px #00000042;
 }
 .primary-btn {
   background: linear-gradient(314.63deg, #FF8132 0%, #FDA235 116.75%);
@@ -131,9 +129,7 @@ html {
   box-shadow: 0px 12px 25px -10px #FE83323D;
 }
 .primary-btn:hover {
-  background-color: white;
-  color: black;
-  box-shadow: 0px 15px 55px 0px #0000001A;
+  box-shadow: 0px 15px 55px 0px #00000060;
 }
 .letter2 {
   letter-spacing: 0.02em;

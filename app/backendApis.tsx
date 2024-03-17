@@ -1,5 +1,6 @@
 'use client'
 import axios, { AxiosResponse } from "axios";
+import FormData from 'form-data';
 
 type ReturnType = {
     [key: string]: any;
@@ -71,33 +72,21 @@ export const signin = async (email:string, password:string): Promise<any> => {
 
 export const logout = async (token: string):Promise<void> => {
 
-    interface ErrorResponse {
-        data: void | PromiseLike<void>;
-        code: number;
-        message: string;
-        // Add any additional properties that your error responses have
-      }
-
-    try {
-        const res = await axios.post(`https://backend-pgnweb265a-uc.a.run.app/logout`, {
-            header: {
-                'Authorization':`Bearer ${token}`
-            }
-        });
-
-        console.log("success logout===========>",res.data)
-    } catch (e: unknown) { // Marking e as unknown is considered best practice
-        // Narrow down the type of e and make sure we can access .data
-        if (e instanceof Error && 'response' in e) {
-            const error = e as Error & { response?: ErrorResponse };
-            if (error.response) {
-                console.log( "failed logout==========>",error.response.data)
-            }
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://backend-pgnweb265a-uc.a.run.app/logout',
+        headers: { 
+          'Authorization': `Bearer ${token}`
         }
-        
-       
-    }; 
-}
+      };
+      
+      axios.request(config)
+      .then((response) => {
+      })
+      .catch((error) => {
+      });
+    }
 
 export const getProfile = async (token: string): Promise<any> => {
 
@@ -127,4 +116,44 @@ export const getProfile = async (token: string): Promise<any> => {
         // Handle the non-AxiosError case or return a default value
         return { message: 'An unexpected error occurred.' };
     };
+}
+
+export const sendemail = async (email:string): Promise<string> => {
+
+    try {
+        const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/forgot', {
+            email,
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return "Success";
+    }  catch (e) {
+        if (axios.isAxiosError(e)) {
+            return e.response?.data.message;
+        } else {
+            return "Unknow error";
+        }
+    }
+}
+
+export const resetpassword = async (token:string, password:string): Promise<string> => {
+
+    try {
+        const res = await axios.post(`https://backend-pgnweb265a-uc.a.run.app/reset?token=${token}`, {
+            password,
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return "Success";
+    }  catch (e) {
+        if (axios.isAxiosError(e)) {
+            return e.response?.data.message;
+        } else {
+            return "Unknow error";
+        }
+    }
 }

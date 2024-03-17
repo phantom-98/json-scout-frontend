@@ -169,7 +169,7 @@ export const Home = (props : any) => {
     
 
     return (
-        <div>
+        <>
             <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
                 <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Free Trial No Credit Card Required!</span>
             </div>
@@ -370,7 +370,7 @@ export const Home = (props : any) => {
                     <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {5} selected = {order} change={setOrder} />
                 </div>
             </div>
-        </div>
+        </>
         
     )
 }

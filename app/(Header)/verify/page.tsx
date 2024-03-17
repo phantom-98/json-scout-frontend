@@ -5,24 +5,29 @@ import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect } from "react";
 import Stack from '@mui/material/Stack';
 import LinearProgress from '@mui/material/LinearProgress';
+import Image from "next/image"
+import sms from "../../../public/sms.svg"
 
 
 export default () => {
     const param = useSearchParams();
     const router = useRouter();
     const [verified, setVerified] = React.useState("")
+    const [title, setTitle] = React.useState("")
 
     const verify = async () => {
         const token = param.get('token');
         if (!token) return;
         const res = await verifyEmail(token);
         if (res) {
-            setVerified("Your email is successfully verified. Now redirecting sign in page...");
+            setTitle("Email Verified!")
+            setVerified("You have verified your email. Taking you to the profile page...")
             setTimeout(() => {
                 router.push("/login");
             }, 2000);
           
         } else {
+            setTitle("Email not Verified!")
             setVerified("Your email verification is failed.")
         }
     }
@@ -30,17 +35,14 @@ export default () => {
         verify();
     }, []);
     return(
-        <div className="h-[90rem] pt-[30rem]">
-            <div className={verified?'':'hidden'}>
-                <p className="text-center text-[#ff8132] font-bold text-[5rem] leading-[7rem] sm:px-[20%]">{verified}</p>
-            </div>
-            <div className={verified?'hidden':''}>
-                <Stack sx={{ width: '100%', color: 'grey.500' }} spacing={2}>
-                    
-                    <LinearProgress color="success" />
-                    
-                </Stack>
+    <div className="sm:h-[50rem] w-[100%]">
+        <div className="sm:py-[3rem] sm:px-[5rem] sm:mt-[25rem] sm:ml-[35%] w-[30%] shadow-lg flex flex-col items-center sm:rounded-[1rem]">
+            <div className="sm:p-[1.5rem] sm:rounded-[1rem] border-[1px] border-[#F2F3F5]"><Image src={sms} alt="" className="sm:w-[3.5rem] h-auto"></Image></div>
+            <div className="sm:mt-[3rem]">
+            <p className="text-center sm:text-[2.7rem] sm:font-semibold">{title}</p>
+            <p className="text-center sm:mt-[1rem] text-[#808080] sm:text-[1.8rem]">{verified}</p>
             </div>
         </div>
+    </div>
     )
 }
