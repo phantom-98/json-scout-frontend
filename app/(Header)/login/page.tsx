@@ -26,6 +26,7 @@ export default () => {
     const [password, setPassword] = React.useState("")
     const [errorMessage, setErrorMessage] = React.useState("")
     const [visible, setVisible] = React.useState(false)
+    const {user, setUser} = useAuth()
     
     const router = useRouter()
 
@@ -55,7 +56,6 @@ export default () => {
             router.push("/");
         } else {
             setErrorMessage(res["message"])
-
         }
         setLoading(false)
     }

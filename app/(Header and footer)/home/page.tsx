@@ -215,7 +215,12 @@ export const Home = (props : any) => {
                             </div>
                             <span className="text-[2rem]">Easy to use</span>
                         </div>
-                        <div className="text-[1.6rem] text-[#FF8132]">See More</div>
+                        <div className="flex flex-row justify-start items-center gap-8">
+                            <div className="w-[5rem] h-[5rem] rounded-full shadow-lg flex justify-center items-center">
+                               <Image src={check} alt=""/>
+                            </div>
+                            <span className="text-[2rem]">No more REGEX</span>
+                        </div>
                     </div>
                     <Image src={highlight} alt="" className="absolute left-[-45%] bottom-[-35%] w-[14%] h-auto"/>
                 </div>

@@ -20,6 +20,9 @@ import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { useAuth } from "@/app/components/context/authContext"
 import { useRouter } from "next/navigation"
+import { getCookie } from "cookies-next"
+import { getProfile } from "@/app/backendApis"
+import { CardMembership1 } from "@/app/components/Card/page"
 
 
 
@@ -36,15 +39,19 @@ export default (props:any) => {
     const [visible, setVisible] = React.useState(0)
     const [visible1, setVisible1] = React.useState(0)
 
+    
+    const [pricing, setPricing] = React.useState("monthly")
+
     const viewRequest = (i:number) =>{
         
     }
-    
+
     useEffect(() => {
-        if (user['email']) {
-            setFirstName(user['first_name']);
-            setLastName(user['last_name']);
-            setEmail(user['email']);
+        if(user["email"]) {
+            setFirstName(user["first_name"])
+            setLastName(user["last_name"])
+            setEmail(user["email"])
+            console.log(user["email"])
         } else {
             router.push("/login")
         }
@@ -176,7 +183,7 @@ export default (props:any) => {
                 <button className={` sm:text-[2.3rem] sm:px-[1.5rem] sm:py-[1rem] sm:rounded-[1rem] sm:mt-[3rem] primary-btn ${state === 1?'':'hidden'} `} onClick={saveChange}>Save Changes</button>
 
 
-                <div className={`mt-[6rem] ${state === 2?'':'hidden'}`}>
+                <div className={`mt-[6rem] ${state === 2?'':'hidden'} sm:h-[80rem]`}>
                     <div className="flex justify-between items-center">
                         <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
                             <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
@@ -201,7 +208,50 @@ export default (props:any) => {
                         <Cell ID={111111} Created="Nov 12, 2024" view={viewRequest}/>
                         <Cell ID={222222} Created="Nov 12, 2024" view={viewRequest} />
                         <Cell ID={333333} Created="Nov 12, 2024" view={viewRequest} />
+                        <Cell ID={444444} Created="Nov 12, 2024" view={viewRequest} />
+                        <Cell ID={555555} Created="Nov 12, 2024" view={viewRequest} />
                     </div>
+                </div>
+
+                <div className={`${state === 4 ?'':'hidden'} flex flex-col items-center`}>
+                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-orange-300 border-[1px] border-gray-200 rounded-full">
+                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly"?'bg-white':''}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
+                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly"?'bg-white':''}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
+                </div>                
+                <div id="pricing" className="sm:mt-[0rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                    <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                       
+                    <CardMembership1 title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
+                        "100 Requests"
+                    ]} unallowed={[
+                        "Basic Data Extraction",
+                        "Character Limit",
+                        "GPT - 4"
+                    ]} button="Choose Free Trial" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership1 title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
+                        "1000 Requests",
+                        "250 Character Limit",
+                        "Basic Data Extraction",
+                        "GPT - 4"
+                    ]} unallowed={[]} button="Choose Starter" id="starter" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership1 title="STANDARD"  price={pricing == "monthly"?'24':'240'} description="Our most popular plan!" allowed={[
+                        "2500 Requests",
+                        "500 Character Limit",
+                        "Basic Data Extraction",
+                        "GPT - 4",
+                        "Array Content Input"
+                    ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    <CardMembership1 title="PREMIUM" price={pricing == "monthly"?'50':'500'} description="For the power user!" allowed={[
+                        "5000 Requests",
+                        "1000 Character Limit",
+                        "Basic Data Extraction",
+                        "GPT - 4",
+                        "Array Content Input",
+                        "Suggested For Long Form Content"
+                    ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'Per month':'Per year'}/>
+
+                    </div>
+                </div>
                 </div>
             </div>
 
