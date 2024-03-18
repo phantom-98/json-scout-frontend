@@ -245,7 +245,7 @@ export const Home = (props : any) => {
                 </div>
             </div>
 
-            <div id="how" className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
+            <div id="how" className="items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:mt-[15rem] sm:pt-[15rem] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative">
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>How It Works</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
@@ -309,7 +309,7 @@ export const Home = (props : any) => {
                 </div>
             </div>
 
-            <div className="sm:mt-[12rem] mt-[36rem] flex flex-col items-center">
+            <div id="pricing" className="sm:pt-[22rem] sm:mt-0 mt-[36rem] flex flex-col items-center">
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:w-[44%] sm:leading-[8rem] ${space_grotesk.className}`}>Start today with our premium plan you choose</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
@@ -319,7 +319,7 @@ export const Home = (props : any) => {
                     <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly"?'bg-white':''}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
                     <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly"?'bg-white':''}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
                 </div>                
-                <div id="pricing" className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
                     <CardMembership title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
