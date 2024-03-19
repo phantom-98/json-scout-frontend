@@ -8,7 +8,7 @@ import frame319 from "../../../public/Frame 319.svg";
 import frame320 from "../../../public/Frame 320.svg";
 import frame321 from "../../../public/Frame 321.svg";
 import background from "../../../public/Background.svg";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/context";
 
 export const Footer = () => {
 

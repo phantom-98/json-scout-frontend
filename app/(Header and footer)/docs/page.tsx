@@ -10,8 +10,9 @@ import { Session2 } from "@/app/components/session2/page"
 import { Session3 } from "@/app/components/session3/page"
 import plus from "../../../public/Group 1000001523.svg"
 import minus from "../../../public/minus.svg"
-import React from "react"
+import React, { useContext } from "react"
 import { Space_Grotesk } from "next/font/google"
+import { Context } from "@/app/components/context/context"
 
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -27,7 +28,12 @@ export default (props:any)=> {
 
     const [order, setOrder] = React.useState(1)
 
+    const {activeHeader, setActiveHeader} = useContext(Context)
 
+
+    React.useEffect(()=>{
+        setActiveHeader("Docs")
+    },[])
 
     
 

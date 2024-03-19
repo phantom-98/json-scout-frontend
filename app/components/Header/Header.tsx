@@ -6,22 +6,24 @@ import Image from "next/image";
 import logoimg from "../../../public/JSON-LOGO 1.svg"
 import frame from "../../../public/Frame.svg"
 import React, { useEffect } from "react";
-import { useAuth } from "../context/authContext";
+import { useAuth } from "../context/context";
 import { getCookie, } from "cookies-next";
 import { getProfile } from "@/app/backendApis";
 import avatar from "../../../public/Profile-Button.svg"
 import setting2 from "../../../public/setting-2.svg"
 import logoutimg from "../../../public/logout.svg"
 import { logout } from "@/app/backendApis";
+import { useContext } from "react";
+import {Context} from '../../components/context/context'
 
 
 const Header = (props:any) => {
     const {user, setUser} = useAuth();
     const router = useRouter();
     const pathname = usePathname();  
-    
+    const [logged, setLogged] = React.useState(false);
     const [show, setShow] = React.useState(false);
-    const [selected, setSelected] = React.useState(1);
+    const {activeHeader, setActiveHeader} = useContext(Context);
 
     function deleteAllCookies() {
         // Example implementation, adjust as needed
@@ -37,13 +39,9 @@ const Header = (props:any) => {
 
     const [popup, setPop] = React.useState(false)
 
-    const setSelection = (no:number) => {
-        setSelected(no);
-        setShow(false);
-    }
+    
 
     const linkpage = () =>{
-        setSelected(0);
         router.push("/profile")
     }
 
@@ -58,6 +56,7 @@ const Header = (props:any) => {
             console.error('No access token found.');
           }
         deleteAllCookies()
+        setUser({})
         router.push("/")
     }
 
@@ -67,48 +66,58 @@ const Header = (props:any) => {
             const res = await getProfile(token);
             if (res["email"] != null) {
                 setUser(res);
-                console.log(res)
+                setLogged(true)
+                localStorage.setItem("logState","true")
+
                 
             } else {
                 setUser({})
-            }    
+                deleteAllCookies()
+                localStorage.clear()
+                router.push("/login")
+
+            }  
         }
         else {
+            setUser({})
+            localStorage.clear()
             console.log("========Empty Cookie========")
+
         }
     }
 
     
     useEffect(() => { 
+
         fetchProfile();
     }, []);
 
     return(
         <div className="fixed bg-white z-50 w-full">
-            <div className={`w-full flex sm:flex-row justify-between ${user["email"]?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
+            <div className={`w-full flex sm:flex-row justify-between ${logged?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
                 <Image src={frame} alt="frame" className="w-auto h-full sm:hidden z-40" onClick={() => {
                     setShow(prev => !prev)
                 }}></Image>
                     <div className="sm:w-[12%] w-[44%] z-40 cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
                     <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                         <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
-                            <Link onClick={()=>setSelection(1)} className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={` ${selected == 1?'selected':''}`}>Home</span></Link>
-                            <Link onClick={()=>setSelection(2)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span className={`${selected == 2?'selected':''}`}>How it works</span></Link>
-                            <Link onClick={()=>setSelection(3)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span className={`${selected == 3?'selected':''}`}>Pricing</span></Link>
-                            <Link onClick={()=>setSelection(4)} className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={`${selected == 4?'selected':''}`}>API docs</span></Link>
+                            <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''} onClick={()=>setActiveHeader('Home')}>Home</span></Link>
+                            {!logged && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span className={activeHeader == "How"?'selected':''} onClick={()=>setActiveHeader('How')}>How it works</span></Link>)}
+                            {!logged && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span className={activeHeader == "Price"?'selected':''} onClick={()=>setActiveHeader('Price')}>Pricing</span></Link>)}
+                            <Link className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={activeHeader == "Docs"?'selected':''} onClick={()=>setActiveHeader('Docs')}>API docs</span></Link>
                         </div>
-                        {!user['email'] && (
+                        {!logged && (
                             <div className="justify-between flex items-center sm:flex-row flex-col sm:gap-16 gap-[10rem] w-full px-[10rem] pb-[36rem] sm:p-0">
-                                <Link onClick={()=>setSelection(0)} className="w-full sm:w-[fit-content]" href={"/login"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] secondary-btn ">LOG IN</button></Link>
-                                <Link onClick={()=>setSelection(0)} className="w-full sm:w-[fit-content]" href={"/register"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] primary-btn">SIGN UP</button></Link>
+                                <Link className="w-full sm:w-[fit-content]" href={"/login"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] secondary-btn ">LOG IN</button></Link>
+                                <Link className="w-full sm:w-[fit-content]" href={"/register"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] primary-btn">SIGN UP</button></Link>
                             </div>
                         )}
                     </div>
-                    {user['email'] && (<div className="relative group">
+                    {logged && (<div className="relative group">
                         <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full border-[2px] border-green-700 items-center flex justify-center cursor-pointer">
                             <p className="font-medium text-[6rem] sm:text-[3rem] text-green-800">{user['first_name'][0]}{user['last_name'][0]}</p>
                         </div>
-                        <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] hidden group-hover:block`}>
+                        <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] bg-white hidden group-hover:block`}>
                             <div className="flex items-center sm:gap-[1rem] gap-[3rem] sm:py-[1rem] py-[3rem] sm:pr-[2rem] pr-[5rem] sm:pl-[1rem] pl-[3rem] cursor-pointer sm:rounded-[0.5rem] rounded-[2rem] text-[#828A91] hover:text-black stroke-[#828A91] hover:stroke-black hover:bg-[#F4F4F4]" onClick={()=>{linkpage()}}>
                                 <svg width="3rem" height="3rem" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7 8.75C7.9665 8.75 8.75 7.9665 8.75 7C8.75 6.0335 7.9665 5.25 7 5.25C6.0335 5.25 5.25 6.0335 5.25 7C5.25 7.9665 6.0335 8.75 7 8.75Z" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>

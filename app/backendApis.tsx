@@ -8,7 +8,7 @@ type ReturnType = {
 
 export const register = async (first_name:string, last_name:string, email:string, password:string ) : Promise<string> => {
     try {
-        const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/register', {
+        const res = await axios.post('https://api.jsonscout.com/register', {
             first_name,
             last_name,
             email,
@@ -30,7 +30,7 @@ export const register = async (first_name:string, last_name:string, email:string
 
 export const verifyEmail = async (token: string) : Promise<boolean> => {
     try {
-        const res = await axios.get(`https://backend-pgnweb265a-uc.a.run.app/verify?token=${token}`);
+        const res = await axios.get(`https://api.jsonscout.com/verify?token=${token}`);
         return true;
     } catch (e) {
         return false;
@@ -47,7 +47,7 @@ export const signin = async (email:string, password:string): Promise<any> => {
     }
 
     try{
-        const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/login', {
+        const res = await axios.post('https://api.jsonscout.com/login', {
             email,
             password
         }, {
@@ -75,7 +75,7 @@ export const logout = async (token: string):Promise<void> => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
-        url: 'https://backend-pgnweb265a-uc.a.run.app/logout',
+        url: 'https://api.jsonscout.com/logout',
         headers: { 
           'Authorization': `Bearer ${token}`
         }
@@ -97,7 +97,7 @@ export const getProfile = async (token: string): Promise<any> => {
     }
 
     try{
-        const res = await axios.get(`https://backend-pgnweb265a-uc.a.run.app/profile`, {
+        const res = await axios.get(`https://api.jsonscout.com/profile`, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
@@ -121,7 +121,7 @@ export const getProfile = async (token: string): Promise<any> => {
 export const sendemail = async (email:string): Promise<string> => {
 
     try {
-        const res = await axios.post('https://backend-pgnweb265a-uc.a.run.app/forgot', {
+        const res = await axios.post('https://api.jsonscout.com/forgot', {
             email,
         }, {
             headers: {
@@ -141,7 +141,7 @@ export const sendemail = async (email:string): Promise<string> => {
 export const resetpassword = async (token:string, password:string): Promise<string> => {
 
     try {
-        const res = await axios.post(`https://backend-pgnweb265a-uc.a.run.app/reset?token=${token}`, {
+        const res = await axios.post(`https://api.jsonscout.com/reset?token=${token}`, {
             password,
         }, {
             headers: {
@@ -150,6 +150,35 @@ export const resetpassword = async (token:string, password:string): Promise<stri
         });
         return "Success";
     }  catch (e) {
+        if (axios.isAxiosError(e)) {
+            return e.response?.data.message;
+        } else {
+            return "Unknow error";
+        }
+    }
+}
+
+
+export const updateProfile = async (token:string, first_name:string, last_name:string, email:string, current_password:string, new_password:string): Promise<string> => {
+
+    try{
+        const res = await axios.post(`https://api.jsonscout.com/profile`,{
+            first_name,
+            last_name,
+            email,
+            current_password,
+            new_password
+        },
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        }
+        )
+        
+        return("Success")
+
+    } catch (e) {
         if (axios.isAxiosError(e)) {
             return e.response?.data.message;
         } else {

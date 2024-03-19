@@ -11,7 +11,7 @@ import axios from "axios"
 import { useRouter } from 'next/navigation'
 import erralert from "../../../public/warning-2.svg"
 import { setCookie, getCookie, deleteCookie } from "cookies-next"
-import { useAuth } from "@/app/components/context/authContext"
+import { useAuth } from "@/app/components/context/context"
 import { getProfile, signin } from "@/app/backendApis"
 import { Box, CircularProgress } from "@mui/material"
 
@@ -53,7 +53,7 @@ export default () => {
                 setCookie(val, res[val]);
             })
             
-            router.push("/");
+            router.back()
         } else {
             setErrorMessage(res["message"])
         }

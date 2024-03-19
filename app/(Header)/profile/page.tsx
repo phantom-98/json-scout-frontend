@@ -18,26 +18,30 @@ import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
-import { useAuth } from "@/app/components/context/authContext"
+import { useAuth } from "@/app/components/context/context"
 import { useRouter } from "next/navigation"
 import { getCookie } from "cookies-next"
 import { getProfile } from "@/app/backendApis"
 import { CardMembership1 } from "@/app/components/Card/page"
+import erralert from "../../../public/warning-2.svg"
+import { CircularProgress } from "@mui/material"
+import { updateProfile } from "@/app/backendApis"
 
 
 
 export default (props:any) => {
     const {user, setUser} = useAuth();
     const router = useRouter();
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const [current_password, setCurrentPassword] = useState("");
+    const [new_password, setNewPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-
+    const [errorMessage, setErrorMessage] = useState("")
     const [state, setState] = React.useState(1)
     const [visible, setVisible] = React.useState(0)
     const [visible1, setVisible1] = React.useState(0)
+    const [loading, setLoading] = React.useState(false)
 
     
     const [pricing, setPricing] = React.useState("monthly")
@@ -47,37 +51,54 @@ export default (props:any) => {
     }
 
     useEffect(() => {
-        if(user["email"]) {
-            setFirstName(user["first_name"])
-            setLastName(user["last_name"])
-            setEmail(user["email"])
-            console.log(user["email"])
+        profile()
+    }, [])
+
+    const saveChange = async () => {
+        
+        if(loading) return
+
+        if(!firstName) {setErrorMessage("Input first name");return}
+        if(!lastName) {setErrorMessage("Input last name");return}
+        if(!email) {setErrorMessage("Input email");return}
+        if(!/^[\w-+\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {setErrorMessage("Input correct email");return}
+        if(!current_password) {setErrorMessage("Input current password"); return}
+        if(new_password.length < 8) {setErrorMessage("Password must be at least 8 characters"); return}
+
+        
+        setLoading(true)
+
+        const token = getCookie("access_token");
+        if(token != null) {
+
+            const res = await updateProfile(token, firstName, lastName, email, current_password, new_password)
+
+            if(res == "Success") {
+
+            } else {
+                setErrorMessage(res)
+            }
+
+            setLoading(false)
+        }
+
+    }
+
+    const profile = async () => {
+        const token = getCookie("access_token");
+        if(token != null) {
+            const res = await getProfile(token)
+            if(res["email"]){
+                setFirstName(res["first_name"])
+                setLastName(res["last_name"])
+                setEmail(res["email"])
+            } else {
+                router.push("/login")
+            }
         } else {
             router.push("/login")
         }
-    }, [user])
 
-    const saveChange = () => {
-        if(firstName!=null && lastName != null && email != null && password !== null  ){
-            if(password == confirmPassword) {
-                // setUser(
-                //     {
-                //         "id":user["id"],
-                //         "first_name":firstName,
-                //         "last_name":lastName,
-                //         "email":email,
-                //         "api_key":user["api_key"],
-                //         "token_limit":user["token_limit"],
-                //         "token_used":user["token_used"],
-                //         "charactor_limit":user["charactor_limit"],
-                //         "batch_limit":user["batch_limit"],
-                //         "current_plan":user["current_plan"]
-                //     }
-                // )
-            }
-
-        }
-        
     }
 
     return(
@@ -102,7 +123,7 @@ export default (props:any) => {
                     <span  className="sm:text-[2.1rem]">My Plan</span>
                 </div>
             </div>
-            <div className="sm:w-[77%] sm:pb-[5rem]">
+            <div className="sm:w-[77%] sm:pb-[10rem]">
                 <div className="sm:pb-[3rem] sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:flex sm:items-center sm:gap-[1.5rem]">
                     <span className="sm:text-[3rem] sm:font-semibold">Settings</span>
                     <Image src={arrowright} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
@@ -130,14 +151,14 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">First name</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onChange={e => setFirstName(e.target.value)} type="text" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={firstName}></input>
+                                <input onChange={e =>{setErrorMessage(""); setFirstName(e.target.value)} } type="text" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={firstName}></input>
                             </div>
                         </div>
                         <div className="sm:w-[46%]">
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Last name</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onChange={e => setLastName(e.target.value)} type="text" placeholder="Doe" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={lastName}></input>
+                                <input onChange={e => {setErrorMessage(""); setLastName(e.target.value)}} type="text" placeholder="Doe" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={lastName}></input>
                             </div>
                         </div>
                     </div>
@@ -151,7 +172,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Email</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={sms} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onChange={e => setEmail(e.target.value)} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={email}></input>
+                                <input onChange={e => {setErrorMessage("");setEmail(e.target.value)}} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={email}></input>
                             </div>
                         </div>
                         {/* <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div> */}
@@ -166,7 +187,7 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Current password</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onChange={e => setPassword(e.target.value)} type={visible === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={password}></input>
+                                <input onChange={e => {setErrorMessage(""); setCurrentPassword(e.target.value)}} type={visible === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={current_password}></input>
                                 <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
                             </div>
                         </div>
@@ -174,13 +195,28 @@ export default (props:any) => {
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">New password</p>
                             <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
                                 <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onChange={e => setConfirmPassword(e.target.value)} type={visible1 === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={confirmPassword}></input>
+                                <input onChange={e => {setErrorMessage(""); setNewPassword(e.target.value)}} type={visible1 === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={new_password}></input>
                                 <Image src={visible1 === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible1 === 0?setVisible1(1):setVisible1(0)}}></Image>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button className={` sm:text-[2.3rem] sm:px-[1.5rem] sm:py-[1rem] sm:rounded-[1rem] sm:mt-[3rem] primary-btn ${state === 1?'':'hidden'} `} onClick={saveChange}>Save Changes</button>
+                
+                <div className={`${!errorMessage?'hidden':''} sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start items-center sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
+                    <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errorMessage}</span>
+                    <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
+                </div>   
+                
+                <button className={`flex justify-center sm:gap-[1rem] items-center sm:text-[2.5rem] sm:px-[2.5rem] sm:py-[1.3rem] sm:rounded-[1rem] sm:mt-[3rem] primary-btn ${state === 1?'':'hidden'} `} onClick={saveChange}>
+                    
+                {loading && (
+                        <CircularProgress sx={{
+                            color: (theme) =>
+                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                            }}
+                            size={21}
+                            thickness={4} />
+                    )}Save Changes</button>
 
 
                 <div className={`mt-[6rem] ${state === 2?'':'hidden'} sm:h-[80rem]`}>

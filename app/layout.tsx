@@ -4,7 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header/Header";
 import { Footer } from "./components/Footer/page";
-import { AuthProvider } from "./components/context/authContext";
+import { ContextProvider } from "./components/context/context";
 
 const inter = Inter({ subsets: ["latin"] });
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -23,9 +23,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className={`flex flex-col ${inter.className} `}>
-          <AuthProvider>
+          <ContextProvider>
             {children}
-          </AuthProvider>
+          </ContextProvider>
         </div>
         </body>
     </html>
