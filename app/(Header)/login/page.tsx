@@ -61,7 +61,6 @@ export default () => {
     }
 
     React.useEffect(()=>{
-        setActiveHeader("")
     }, [])
 
     return(

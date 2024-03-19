@@ -15,6 +15,7 @@ import logoutimg from "../../../public/logout.svg"
 import { logout } from "@/app/backendApis";
 import { useContext } from "react";
 import {Context} from '../../components/context/context'
+import path from "path";
 
 
 const Header = (props:any) => {
@@ -23,6 +24,7 @@ const Header = (props:any) => {
     const pathname = usePathname();  
     const [show, setShow] = React.useState(false);
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context);
+    
 
     function deleteAllCookies() {
         // Example implementation, adjust as needed
@@ -54,6 +56,8 @@ const Header = (props:any) => {
             // for instance, by logging out without a token or by showing an error message.
             console.error('No access token found.');
           }
+        
+        setLogState(false)
         deleteAllCookies()
         setUser({})
         router.push("/")
@@ -80,9 +84,36 @@ const Header = (props:any) => {
             setUser({})
             setLogState(false)
             console.log("========Empty Cookie========")
-
         }
+        
+        // console.log(pathname)
+        // console.log(window.location.hash)
+         settingSelected()
     }
+
+    const settingSelected = () => {
+        
+        const pathname = window.location.pathname;
+        var hash = document.URL.substr(document.URL.indexOf('#')+1) 
+
+        console.log(pathname, hash)
+        
+        if (pathname === "/" && hash === "") {
+            setActiveHeader("Home");
+        } else if (hash === "#how") {
+            setActiveHeader("How");
+        } else if (hash === "#pricing") {
+            setActiveHeader("Price");
+        } else if (pathname === "/docs") {
+            setActiveHeader("Docs");
+        } else {
+            setActiveHeader("");
+        }
+        
+    }
+
+    
+    
 
     
     useEffect(() => { 
@@ -99,10 +130,10 @@ const Header = (props:any) => {
                     <div className="sm:w-[12%] w-[44%] z-40 cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
                     <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                         <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
-                            <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''} onClick={()=>setActiveHeader('Home')}>Home</span></Link>
-                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span className={activeHeader == "How"?'selected':''} onClick={()=>setActiveHeader('How')}>How it works</span></Link>)}
-                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span className={activeHeader == "Price"?'selected':''} onClick={()=>setActiveHeader('Price')}>Pricing</span></Link>)}
-                            <Link className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={activeHeader == "Docs"?'selected':''} onClick={()=>setActiveHeader('Docs')}>API docs</span></Link>
+                            <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''}>Home</span></Link>
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span onClick={()=>{settingSelected()}} className={activeHeader == "How"?'selected':''} >How it works</span></Link>)}
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span onClick={()=>{settingSelected()}} className={activeHeader == "Price"?'selected':''}>Pricing</span></Link>)}
+                            <Link className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={activeHeader == "Docs"?'selected':''} >API docs</span></Link>
                         </div>
                         {!logState && (
                             <div className="justify-between flex items-center sm:flex-row flex-col sm:gap-16 gap-[10rem] w-full px-[10rem] pb-[36rem] sm:p-0">
