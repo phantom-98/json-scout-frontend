@@ -16,6 +16,7 @@
     "cookies-next": "^4.1.1",
     "form-data": "^4.0.0",
     "geist": "^1.2.2",
+    "jwt-decode": "^4.0.0",
     "next": "14.1.0",
     "prism-react-renderer": "^2.3.1",
     "prismjs": "^1.29.0",

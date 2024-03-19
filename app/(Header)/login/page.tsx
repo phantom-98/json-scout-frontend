@@ -53,7 +53,14 @@ export default () => {
                 setCookie(val, res[val]);
             })
             
-            router.back()
+            const profile = await getProfile(res["access_token"]);
+            if (profile["email"] != null) {
+                Object.keys(profile).forEach((key)=>{
+                    localStorage.setItem(key, profile[key])
+                })
+            }
+
+            router.push("/")
         } else {
             setErrorMessage(res["message"])
         }

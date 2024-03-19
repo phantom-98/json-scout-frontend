@@ -187,3 +187,23 @@ export const updateProfile = async (token:string, first_name:string, last_name:s
     console.log(error);
     });
 }
+
+export const refresh = async (token:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api.jsonscout.com/refresh',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      
+      return axios.request(config)
+      .then((response) => {
+        // return response.data
+        return response.data["access_token"];
+      })
+      .catch((error) => {
+        return "error"
+      });
+}

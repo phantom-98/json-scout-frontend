@@ -43,6 +43,7 @@ export default (props:any) => {
     const [visible1, setVisible1] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
     const {activeHeader, setActiveHeader} = useContext(Context)
+    const [logged, setLogged] = React.useState(true)
 
     
     const [pricing, setPricing] = React.useState("monthly")
@@ -73,6 +74,9 @@ export default (props:any) => {
         if(token != null) {
 
             await updateProfile(token, firstName, lastName, email, current_password, new_password)
+            localStorage.setItem("first_name", firstName)
+            localStorage.setItem("last_name", lastName)
+            localStorage.setItem("email", email)
 
             setLoading(false)
         }
@@ -80,16 +84,16 @@ export default (props:any) => {
     }
 
     const profile = async () => {
-        const token = getCookie("access_token");
-        if(token != null) {
-            const res = await getProfile(token)
-            if(res["email"]){
-                setFirstName(res["first_name"])
-                setLastName(res["last_name"])
-                setEmail(res["email"])
-            } else {
-                router.push("/login")
-            }
+        if(localStorage.getItem("email")) {
+            
+            const first = localStorage.getItem("first_name");
+            const last = localStorage.getItem("last_name")
+            const ema = localStorage.getItem("email")
+            if(first != null && last != null && ema != null) {
+                setFirstName(first);
+                setLastName(last);
+                setEmail(ema)
+            } 
         } else {
             router.push("/login")
         }

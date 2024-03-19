@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo1 from "../../../public/JSON-LOGO 1 (1).svg";
@@ -8,19 +8,24 @@ import frame319 from "../../../public/Frame 319.svg";
 import frame320 from "../../../public/Frame 320.svg";
 import frame321 from "../../../public/Frame 321.svg";
 import background from "../../../public/Background.svg";
-import { useAuth } from "../context/context";
+import { Context, useAuth } from "../context/context";
 
 export const Footer = () => {
 
-    const { user } = useAuth();
-    const [isLoggedIn, setLoggedIn] = useState(false);
-    useEffect(() => {
-        setLoggedIn(user['email']);
-    }, [user]);
+    const [isloggedin, setIsLoggedIn] = React.useState(false)
+
+    React.useEffect(()=>{
+        if(localStorage.getItem("email")) {
+            setIsLoggedIn(true)
+        } else {
+            setIsLoggedIn(false)
+        }
+    }, [])
+    
     
     return (
-        <div className={`${isLoggedIn?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
-            {!isLoggedIn && <div className="flex flex-col items-center">
+        <div className={`${isloggedin?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
+            {!isloggedin && <div className="flex flex-col items-center">
                 <p className=" sm:text-[8rem] sm:mb-[12rem] sm:leading-[10rem] text-[15rem] items-center leading-[23rem] mb-[19rem] font-semibold">Ready to Get Started</p>
                 <Link href="/register"><button className=" sm:text-[2.5rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[5rem] sm:rounded-[1rem] text-[8rem] rounded-[5rem] leading-[10rem] px-[12rem] py-[7rem] primary-btn">Sign Up Now</button></Link>
             </div>}

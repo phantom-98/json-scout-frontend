@@ -1,14 +1,14 @@
 'use client'
 import Link from "next/link";
-import { usePathname, useRouter } from 'next/navigation'
+import { useParams, usePathname, useRouter } from 'next/navigation'
 
 import Image from "next/image";
 import logoimg from "../../../public/JSON-LOGO 1.svg"
 import frame from "../../../public/Frame.svg"
 import React, { useEffect } from "react";
 import { useAuth } from "../context/context";
-import { getCookie, } from "cookies-next";
-import { getProfile } from "@/app/backendApis";
+import { getCookie, deleteCookie, getCookies, setCookie } from "cookies-next";
+import { getProfile, refresh } from "@/app/backendApis";
 import avatar from "../../../public/Profile-Button.svg"
 import setting2 from "../../../public/setting-2.svg"
 import logoutimg from "../../../public/logout.svg"
@@ -16,31 +16,28 @@ import { logout } from "@/app/backendApis";
 import { useContext } from "react";
 import {Context} from '../../components/context/context'
 import path from "path";
+import { jwtDecode } from "jwt-decode";
 
 
 const Header = (props:any) => {
     const {user, setUser} = useAuth();
     const router = useRouter();
-    const pathname = usePathname();  
+    const params = useParams();
     const [show, setShow] = React.useState(false);
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context);
+    const [firstname, setFirstName] = React.useState("")
+    const [lastname, setLastName] = React.useState("")
     
 
     function deleteAllCookies() {
         // Example implementation, adjust as needed
-        const cookies = document.cookie.split(";");
-      
-        for (let cookie of cookies) {
-          const eqPos = cookie.indexOf("=");
-          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-          document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-        }
+        Object.keys(getCookies()).forEach((key) => {
+            deleteCookie(key);
+        })
       }
     
 
     const [popup, setPop] = React.useState(false)
-
-    
 
     const linkpage = () =>{
         router.push("/profile")
@@ -57,46 +54,49 @@ const Header = (props:any) => {
             console.error('No access token found.');
           }
         
-        setLogState(false)
         deleteAllCookies()
-        setUser({})
+        setLogState(false)
         router.push("/")
     }
 
-    const fetchProfile = async () => {
+    const loadProfile = async () => {
         const token = getCookie("access_token");
-        if (token != null) {
-            const res = await getProfile(token);
-            if (res["email"] != null) {
-                setUser(res);
+        const refresh_token = getCookie("refresh_token")
+        if (token && refresh_token) {
+            const expireTime = jwtDecode(token)["exp"]
+            const refresh_token_expireTime = jwtDecode(refresh_token)["exp"]
+            const currentTime = Math.floor(Date.now() / 1000); // Convert from milliseconds to seconds.
+            if (expireTime !== undefined && expireTime > currentTime) {
                 setLogState(true)
-
+                const first = localStorage.getItem("first_name");
+                const last = localStorage.getItem("last_name")
+                if(first != null && last != null) {
+                setFirstName(first);
+                setLastName(last);
+                }
                 
+                // Token has not expired, and you can proceed.
+            } else if (refresh_token_expireTime !== undefined && refresh_token_expireTime > currentTime) {
+                const new_token = await refresh(refresh_token)
+                setCookie("access_token", new_token)
+                setLogState(true)
+                const first = localStorage.getItem("first_name");
+                const last = localStorage.getItem("last_name")
+                if(first != null && last != null) {
+                setFirstName(first);
+                setLastName(last);
+                }
             } else {
-                setUser({})
-                deleteAllCookies()
+                localStorage.clear()
                 setLogState(false)
-                router.push("/login")
-
-            }  
-        }
-        else {
-            setUser({})
-            setLogState(false)
-            console.log("========Empty Cookie========")
-        }
-        
-        // console.log(pathname)
-        // console.log(window.location.hash)
-         settingSelected()
+            }
+        }  
     }
 
     const settingSelected = () => {
-        
         const pathname = window.location.pathname;
-        var hash = document.URL.substr(document.URL.indexOf('#')+1) 
+        const hash = window.location.hash;
 
-        console.log(pathname, hash)
         
         if (pathname === "/" && hash === "") {
             setActiveHeader("Home");
@@ -109,16 +109,12 @@ const Header = (props:any) => {
         } else {
             setActiveHeader("");
         }
-        
     }
-
-    
-    
-
-    
+    useEffect(() => {
+        settingSelected();
+    }, [params])
     useEffect(() => { 
-
-        fetchProfile();
+        loadProfile();
     }, []);
 
     return(
@@ -131,8 +127,8 @@ const Header = (props:any) => {
                     <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                         <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
                             <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''}>Home</span></Link>
-                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span onClick={()=>{settingSelected()}} className={activeHeader == "How"?'selected':''} >How it works</span></Link>)}
-                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span onClick={()=>{settingSelected()}} className={activeHeader == "Price"?'selected':''}>Pricing</span></Link>)}
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span  className={activeHeader == "How"?'selected':''} >How it works</span></Link>)}
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span  className={activeHeader == "Price"?'selected':''}>Pricing</span></Link>)}
                             <Link className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={activeHeader == "Docs"?'selected':''} >API docs</span></Link>
                         </div>
                         {!logState && (
@@ -144,7 +140,7 @@ const Header = (props:any) => {
                     </div>
                     {logState && (<div className="relative group">
                         <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full border-[2px] border-green-700 items-center flex justify-center cursor-pointer">
-                            <p className="font-medium text-[6rem] sm:text-[3rem] text-green-800">{user['first_name'][0]}{user['last_name'][0]}</p>
+                            <p className="font-medium text-[6rem] sm:text-[3rem] text-green-800">{firstname[0]}{lastname[0]}</p>
                         </div>
                         <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] bg-white hidden group-hover:block`}>
                             <div className="flex items-center sm:gap-[1rem] gap-[3rem] sm:py-[1rem] py-[3rem] sm:pr-[2rem] pr-[5rem] sm:pl-[1rem] pl-[3rem] cursor-pointer sm:rounded-[0.5rem] rounded-[2rem] text-[#828A91] hover:text-black stroke-[#828A91] hover:stroke-black hover:bg-[#F4F4F4]" onClick={()=>{linkpage()}}>
