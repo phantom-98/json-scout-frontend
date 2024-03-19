@@ -16,7 +16,7 @@ export const Context = createContext<Context>( {
     user: {},
     setUser: () => {},
     activeHeader: '',
-    setActiveHeader: () => {}
+    setActiveHeader: () => {},
     logState: false,
     setLogState: ()=>{}
 } );
@@ -24,8 +24,9 @@ export const Context = createContext<Context>( {
 export const ContextProvider = (props:{children:any}) => {
     const [user, setUser] = useState({});
     const [activeHeader, setActiveHeader] = useState("Home");
+    const [logState, setLogState] = useState(false)
     return (
-        <Context.Provider value={{user, setUser, activeHeader, setActiveHeader}} >
+        <Context.Provider value={{user, setUser, activeHeader, setActiveHeader, logState, setLogState}} >
             {props.children}
         </Context.Provider>
     );
