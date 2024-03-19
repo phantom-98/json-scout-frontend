@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import Image from "next/image"
 import profile from "../../../public/profile1.svg"
 import profile1 from "../../../public/profile2.svg"
@@ -18,7 +18,7 @@ import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
-import { useAuth } from "@/app/components/context/context"
+import { Context, useAuth } from "@/app/components/context/context"
 import { useRouter } from "next/navigation"
 import { getCookie } from "cookies-next"
 import { getProfile } from "@/app/backendApis"
@@ -42,6 +42,7 @@ export default (props:any) => {
     const [visible, setVisible] = React.useState(0)
     const [visible1, setVisible1] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
+    const {activeHeader, setActiveHeader} = useContext(Context)
 
     
     const [pricing, setPricing] = React.useState("monthly")
@@ -71,13 +72,7 @@ export default (props:any) => {
         const token = getCookie("access_token");
         if(token != null) {
 
-            const res = await updateProfile(token, firstName, lastName, email, current_password, new_password)
-
-            if(res == "Success") {
-
-            } else {
-                setErrorMessage(res)
-            }
+            await updateProfile(token, firstName, lastName, email, current_password, new_password)
 
             setLoading(false)
         }
@@ -85,6 +80,7 @@ export default (props:any) => {
     }
 
     const profile = async () => {
+        setActiveHeader("")
         const token = getCookie("access_token");
         if(token != null) {
             const res = await getProfile(token)
@@ -98,7 +94,6 @@ export default (props:any) => {
         } else {
             router.push("/login")
         }
-
     }
 
     return(

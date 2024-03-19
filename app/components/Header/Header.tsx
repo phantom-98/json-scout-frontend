@@ -21,9 +21,8 @@ const Header = (props:any) => {
     const {user, setUser} = useAuth();
     const router = useRouter();
     const pathname = usePathname();  
-    const [logged, setLogged] = React.useState(false);
     const [show, setShow] = React.useState(false);
-    const {activeHeader, setActiveHeader} = useContext(Context);
+    const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context);
 
     function deleteAllCookies() {
         // Example implementation, adjust as needed
@@ -66,21 +65,20 @@ const Header = (props:any) => {
             const res = await getProfile(token);
             if (res["email"] != null) {
                 setUser(res);
-                setLogged(true)
-                localStorage.setItem("logState","true")
+                setLogState(true)
 
                 
             } else {
                 setUser({})
                 deleteAllCookies()
-                localStorage.clear()
+                setLogState(false)
                 router.push("/login")
 
             }  
         }
         else {
             setUser({})
-            localStorage.clear()
+            setLogState(false)
             console.log("========Empty Cookie========")
 
         }
@@ -94,7 +92,7 @@ const Header = (props:any) => {
 
     return(
         <div className="fixed bg-white z-50 w-full">
-            <div className={`w-full flex sm:flex-row justify-between ${logged?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
+            <div className={`w-full flex sm:flex-row justify-between ${logState?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
                 <Image src={frame} alt="frame" className="w-auto h-full sm:hidden z-40" onClick={() => {
                     setShow(prev => !prev)
                 }}></Image>
@@ -102,18 +100,18 @@ const Header = (props:any) => {
                     <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                         <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
                             <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''} onClick={()=>setActiveHeader('Home')}>Home</span></Link>
-                            {!logged && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span className={activeHeader == "How"?'selected':''} onClick={()=>setActiveHeader('How')}>How it works</span></Link>)}
-                            {!logged && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span className={activeHeader == "Price"?'selected':''} onClick={()=>setActiveHeader('Price')}>Pricing</span></Link>)}
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span className={activeHeader == "How"?'selected':''} onClick={()=>setActiveHeader('How')}>How it works</span></Link>)}
+                            {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#pricing"><span className={activeHeader == "Price"?'selected':''} onClick={()=>setActiveHeader('Price')}>Pricing</span></Link>)}
                             <Link className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/docs"><span className={activeHeader == "Docs"?'selected':''} onClick={()=>setActiveHeader('Docs')}>API docs</span></Link>
                         </div>
-                        {!logged && (
+                        {!logState && (
                             <div className="justify-between flex items-center sm:flex-row flex-col sm:gap-16 gap-[10rem] w-full px-[10rem] pb-[36rem] sm:p-0">
                                 <Link className="w-full sm:w-[fit-content]" href={"/login"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] secondary-btn ">LOG IN</button></Link>
                                 <Link className="w-full sm:w-[fit-content]" href={"/register"}><button className="sm:px-[4rem] sm:py-[2rem] w-full sm:w-[fit-content] py-[8rem] rounded-[8px] primary-btn">SIGN UP</button></Link>
                             </div>
                         )}
                     </div>
-                    {logged && (<div className="relative group">
+                    {logState && (<div className="relative group">
                         <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full border-[2px] border-green-700 items-center flex justify-center cursor-pointer">
                             <p className="font-medium text-[6rem] sm:text-[3rem] text-green-800">{user['first_name'][0]}{user['last_name'][0]}</p>
                         </div>

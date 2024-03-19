@@ -1,5 +1,5 @@
 'use client'
-import React from "react"
+import React, { useContext } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import sms from "../../../public/sms-notification.svg"
@@ -11,7 +11,7 @@ import axios from "axios"
 import { useRouter } from 'next/navigation'
 import erralert from "../../../public/warning-2.svg"
 import { setCookie, getCookie, deleteCookie } from "cookies-next"
-import { useAuth } from "@/app/components/context/context"
+import { Context, useAuth } from "@/app/components/context/context"
 import { getProfile, signin } from "@/app/backendApis"
 import { Box, CircularProgress } from "@mui/material"
 
@@ -26,7 +26,7 @@ export default () => {
     const [password, setPassword] = React.useState("")
     const [errorMessage, setErrorMessage] = React.useState("")
     const [visible, setVisible] = React.useState(false)
-    const {user, setUser} = useAuth()
+    const {user, setUser, activeHeader, setActiveHeader} = useContext(Context)
     
     const router = useRouter()
 
@@ -59,6 +59,10 @@ export default () => {
         }
         setLoading(false)
     }
+
+    React.useEffect(()=>{
+        setActiveHeader("")
+    }, [])
 
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>

@@ -169,18 +169,15 @@ export const Home = (props : any) => {
 
     const {user, setUser} = useAuth()
 
-    const [logged, setLogged] = React.useState(false)
 
     const [order, setOrder] = React.useState(1)
 
     const [pricing, setPricing] = React.useState("monthly")
 
-    const {activeHeader, setActiveHeader} = useContext(Context)
+    const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context)
 
     React.useEffect(()=>{
         
-        home()
-        console.log("home========>",logged)
 
     },[])
 
@@ -193,7 +190,7 @@ export const Home = (props : any) => {
 
     return (
         <>
-            {!logged && (
+            {!logState && (
                 <>
                     <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
                 <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Free Trial No Credit Card Required!</span>
@@ -272,12 +269,12 @@ export const Home = (props : any) => {
                 </>
             )}
 
-            <div id="how" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] ${logged?'sm:mt-0 sm:pt-[9rem]':' sm:pt-[15rem] sm:mt-[15rem]'} mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
+            <div id="how" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] ${logState?'sm:mt-0 sm:pt-[9rem]':' sm:pt-[15rem] sm:mt-[15rem]'} mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
                 <div className="flex flex-col items-center text-center">
-                    <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>{logged?'Fetch Insights':'How It Works'}</p>
-                    <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">{logged?'You can test how json scout works by inserting an input and you will receive an input with the result.':'You can test how json scout works by inserting an input and you will receive an input with the result.'}</p>
+                    <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>{logState?'Fetch Insights':'How It Works'}</p>
+                    <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">{logState?'You can test how json scout works by inserting an input and you will receive an input with the result.':'You can test how json scout works by inserting an input and you will receive an input with the result.'}</p>
                 </div>
-                {!logged && (<div className="w-full text-[7rem] leading-[7rem] font-semibold flex flex-col justify-center gap-[7rem] sm:flex-row sm:justify-center sm:gap-[4rem] sm:text-[13px] sm:leading-[13px] ">
+                {!logState && (<div className="w-full text-[7rem] leading-[7rem] font-semibold flex flex-col justify-center gap-[7rem] sm:flex-row sm:justify-center sm:gap-[4rem] sm:text-[13px] sm:leading-[13px] ">
                     <div className="w-full sm:w-auto flex justify-between sm:justify-center sm:gap-[4rem]">
                         <button onClick={()=>{setNum(0)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[47%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 0?'lorem-button':'unlorem-button'}`}>Lorem</button>
                         <button onClick={()=>{setNum(1)}} className={`sm:text-[3rem] sm:w-[fit-content] w-[47%] sm:leading-[5rem] sm:px-[8rem] sm:py-[1.2rem] py-[13px] rounded-[8px] ${num === 1?'lorem-button':'unlorem-button'}`}>Lorem</button>
@@ -294,12 +291,12 @@ export const Home = (props : any) => {
                     <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
                     <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle="JSON" code={codeRight[num]}/>
                 </div>
-                <button className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn ${logged?'sm:block':'sm:hidden'}`}>Process</button>
-                <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] ${logged?'sm:top-[35rem]':'sm:top-[30rem]'}  w-[4%] h-auto`}></Image>
-                <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] ${logged?'sm:top-[100rem]':'sm:top-[122rem]'}  w-[4%] h-auto`}></Image>
+                <button className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn ${logState?'sm:block':'sm:hidden'}`}>Process</button>
+                <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] ${logState?'sm:top-[35rem]':'sm:top-[30rem]'}  w-[4%] h-auto`}></Image>
+                <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] ${logState?'sm:top-[100rem]':'sm:top-[122rem]'}  w-[4%] h-auto`}></Image>
             </div>
 
-            {!logged && (
+            {!logState && (
                 <>
                     <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
                 <Card title="Old way of doing it." font={`${space_grotesk.className}`} body={[
@@ -392,7 +389,7 @@ export const Home = (props : any) => {
                 </>
             )}
 
-            <p className={`${logged?'sm:pt-[15rem]':''} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
+            <p className={`${logState?'sm:pt-[15rem]':''} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
 
             <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
                 <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">

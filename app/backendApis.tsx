@@ -159,30 +159,31 @@ export const resetpassword = async (token:string, password:string): Promise<stri
 }
 
 
-export const updateProfile = async (token:string, first_name:string, last_name:string, email:string, current_password:string, new_password:string): Promise<string> => {
+export const updateProfile = async (token:string, first_name:string, last_name:string, email:string, current_password:string, new_password:string): Promise<void> => {
 
-    try{
-        const res = await axios.post(`https://api.jsonscout.com/profile`,{
-            first_name,
-            last_name,
-            email,
-            current_password,
-            new_password
-        },
-        {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        }
-        )
-        
-        return("Success")
+    const FormData = require('form-data');
+    let data = new FormData();
+    data.append('first_name', first_name);
+    data.append('last_name', last_name);
+    data.append('email', email);
+    data.append('current_password', current_password);
+    data.append('new_password', new_password);
 
-    } catch (e) {
-        if (axios.isAxiosError(e)) {
-            return e.response?.data.message;
-        } else {
-            return "Unknow error";
-        }
-    }
+    let config = {
+    method: 'post',
+    maxBodyLength: Infinity,
+    url: 'https://api.jsonscout.com/profile',
+    headers: { 
+        'Authorization': `Bearer ${token}`
+    },
+    data : data
+    };
+
+    axios.request(config)
+    .then((response) => {
+    console.log(JSON.stringify(response.data));
+    })
+    .catch((error) => {
+    console.log(error);
+    });
 }
