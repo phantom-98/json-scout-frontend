@@ -85,9 +85,9 @@ export default (props:any) => {
             localStorage.setItem("email", email)
 
             if(response == "success") {
-                toast.success("profile updated successfully.",{
+                toast.success("Profile updated successfully.",{
                     position: "bottom-right",
-                    autoClose: 3000,
+                    autoClose: 2000,
                     hideProgressBar: false,
                     closeOnClick: true,
                     pauseOnHover: true,

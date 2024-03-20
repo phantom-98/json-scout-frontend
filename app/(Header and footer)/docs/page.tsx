@@ -13,6 +13,7 @@ import minus from "../../../public/minus.svg"
 import React, { useContext } from "react"
 import { Space_Grotesk } from "next/font/google"
 import { Context } from "@/app/components/context/context"
+import { Header4 } from "@/app/components/Header4/page"
 
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -52,12 +53,12 @@ export default (props:any)=> {
                 <div className="w-[76%] flex justify-between">
                 <div className="sm:w-[75%]">
                     <Header1 text = "Introduction" />
-                    <p className="sm:text-[3rem] sm:font-medium sm:mb-[6.5rem]">Welcome to JSONScout Documentation!</p>
+                    <Header4 text = "Welcome to JSONScout Documentation!" />
                     <Header2 text = "What is JSONScout?" />
                     <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
                     <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
                     <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <div className="sm:mt-[10rem] sm:mb-[8rem]"><CustomCodeBlock code = {code1} centerTitle="New Method" leftTitle="EXAMPLE" rightTitle="JSON"/></div>
+                    <div className="sm:mt-[10rem] sm:mb-[8rem]"><CustomCodeBlock code = {code1} centerTitle="New Method" leftTitle="EXAMPLE" rightTitle={["CURL", "node.js", "python"]}/></div>
                     <Header2 text = "What is JSONScout?" />
                     <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
                     <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
