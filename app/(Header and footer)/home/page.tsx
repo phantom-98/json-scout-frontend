@@ -215,7 +215,7 @@ export const Home = (props : any) => {
                 </div>
                 <div className="hidden sm:block sm:relative sm:font-normal relative">
                     
-                    <CustomCodeBlock  code={`/* it can handle user typing errors very well. */` + jsonSnippet} leftTitle="" rightTitle="JSON" centerTitle="Example"/>
+                    <CustomCodeBlock  code={`/* it can handle user typing errors very well. */` + jsonSnippet} leftTitle="" rightTitle={["Curl","node.js","python"]} centerTitle="Example"/>
                     
                     <div className="p-[4rem] bg-white shadow-lg font-semibold absolute left-[-35%] bottom-[-25%] rounded-[2rem] flex flex-col justify-between gap-10">
                         <h1 className="text-[2.8rem] text-center">Our Advantages</h1>
@@ -287,9 +287,9 @@ export const Home = (props : any) => {
                 </div>)}
                     
                 <div className="flex flex-col items-center justify-between gap-[12rem] sm:flex-row sm:gap-[16px] sm:h-[56rem]">
-                    <CustomCodeBlock leftTitle="INPUT" centerTitle="Example 1" rightTitle="JSON" code={codeLeft[num]}/>
+                    <CustomCodeBlock leftTitle="INPUT" centerTitle="Example 1" rightTitle={["Curl","node.js","python"]} code={codeLeft[num]}/>
                     <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
-                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle="JSON" code={codeRight[num]}/>
+                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="Example Result" rightTitle={["python"]} code={codeRight[num]}/>
                 </div>
                 <button className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn ${logState?'sm:block':'sm:hidden'}`}>Process</button>
                 <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] ${logState?'sm:top-[35rem]':'sm:top-[30rem]'}  w-[4%] h-auto`}></Image>
@@ -304,7 +304,7 @@ export const Home = (props : any) => {
                     "JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it",
                     "Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage."
                 ]}/>
-                <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" rightTitle="JSON" code={pySnippet}/>
+                <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" rightTitle={["Curl","node.js","python"]} code={pySnippet}/>
             </div>
 
             <div className="sm:flex-row-reverse sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
@@ -313,7 +313,7 @@ export const Home = (props : any) => {
                     "JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it",
                     "Unleash the power of LLMs with JSON Scout and transform your data extraction into a competitive advantage."
                 ]} button/>
-                <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" rightTitle="JSON" code={pySnippet}/>
+                <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" rightTitle={["Curl","node.js","python"]} code={pySnippet}/>
             </div>
 
             <div className="sm:mt-[12rem] mt-[36rem]">
