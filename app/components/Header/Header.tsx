@@ -110,12 +110,11 @@ const Header = (props:any) => {
             setActiveHeader("");
         }
     }
-    useEffect(() => {
-        settingSelected();
-    }, [params])
+    
     useEffect(() => { 
+        settingSelected();
         loadProfile();
-    }, []);
+    }, [params]);
 
     return(
         <div className="fixed bg-white z-50 w-full">

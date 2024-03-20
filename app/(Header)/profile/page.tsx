@@ -26,6 +26,9 @@ import { CardMembership1 } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
 import { updateProfile } from "@/app/backendApis"
+import { Slide, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
+import { css } from "glamor";
 
 
 
@@ -44,46 +47,63 @@ export default (props:any) => {
     const [loading, setLoading] = React.useState(false)
     const {activeHeader, setActiveHeader} = useContext(Context)
     const [logged, setLogged] = React.useState(true)
-
+    
     
     const [pricing, setPricing] = React.useState("monthly")
+
+    
 
     const viewRequest = (i:number) =>{
         
     }
 
     useEffect(() => {
-        profile()
+        settingProfile()
+        
     }, [])
 
     const saveChange = async () => {
         
+        
         if(loading) return
 
         if(!firstName) {setErrorMessage("Input first name");return}
-        if(!lastName) {setErrorMessage("Input last name");return}
         if(!email) {setErrorMessage("Input email");return}
         if(!/^[\w-+\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {setErrorMessage("Input correct email");return}
-        if(!current_password) {setErrorMessage("Input current password"); return}
-        if(new_password.length < 8) {setErrorMessage("Password must be at least 8 characters"); return}
+        if(current_password){
+            if(new_password.length < 8) {setErrorMessage("Password must be at least 8 characters"); return}
+        }   
 
         
         setLoading(true)
 
         const token = getCookie("access_token");
         if(token != null) {
-
-            await updateProfile(token, firstName, lastName, email, current_password, new_password)
+            const response = await updateProfile(token, firstName, lastName, email, current_password, new_password)
             localStorage.setItem("first_name", firstName)
             localStorage.setItem("last_name", lastName)
             localStorage.setItem("email", email)
 
+            if(response == "success") {
+                toast.success("profile updated successfully.",{
+                    position: "bottom-right",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored",
+                    transition: Slide,
+                    })
+                router.push("/profile")
+            }
             setLoading(false)
         }
 
     }
 
-    const profile = async () => {
+    const settingProfile = async () => {
         if(localStorage.getItem("email")) {
             
             const first = localStorage.getItem("first_name");
@@ -200,7 +220,7 @@ export default (props:any) => {
                     </div>
                 </div>
                 
-                <div className={`${!errorMessage?'hidden':''} sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start items-center sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
+                <div className={`${!errorMessage?'hidden':''} ${state === 1?'':'hidden'} sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start items-center sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
                     <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errorMessage}</span>
                     <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
                 </div>   

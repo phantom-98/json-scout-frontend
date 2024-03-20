@@ -210,7 +210,7 @@ export const Home = (props : any) => {
                     </div>
                     <div className="gap-[10rem] mt-[19rem] sm:mt-[6rem] flex flex-col justify-center sm:flex-row sm:justify-start sm:gap-[4rem]">
                         <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] primary-btn  font-semibold ">Get Started</button>
-                        <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button>
+                        {/* <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button> */}
                     </div>
                 </div>
                 <div className="hidden sm:block sm:relative sm:font-normal relative">

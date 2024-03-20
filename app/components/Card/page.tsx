@@ -65,7 +65,7 @@ export const CardMembership = (props:{title: string, price: string, description:
                     })}
                 </div>
             </div>
-            <button className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full ${props.standard?"text-black hover:text-[#FF8132] ":" hover:bg-[#FF8132] hover:text-white hover:border-white border-[#8593A3]"}`}>{props.button}</button>
+            <button className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100 ${props.standard?"text-black standard ":" nostandard border-[#8593A3]"}`}>{props.button}</button>
         </div>
     );
 }

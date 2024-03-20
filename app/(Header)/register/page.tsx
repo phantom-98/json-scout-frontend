@@ -122,8 +122,8 @@ export default (props : any) =>{
                     onClick={() => {
                         handleSubmit();
                     }}
-                    disabled = {checked==false}
-                    className={`flex justify-center sm:gap-[4rem] gap-[8rem] items-center sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] ${checked && 'primary-btn'} disabled:bg-[#828A91] disabled:text-white`}
+                    disabled = {checked==false || !first_name || !last_name || !password || !email }
+                    className={`flex justify-center sm:gap-[4rem] gap-[8rem] items-center sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] ${checked && first_name && last_name && password && email && 'primary-btn'} disabled:bg-[#828A91] disabled:text-white`}
                 >
                     {loading && (
                         <CircularProgress sx={{

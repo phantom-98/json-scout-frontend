@@ -5,6 +5,7 @@ import "./globals.css";
 import Header from "./components/Header/Header";
 import { Footer } from "./components/Footer/page";
 import { ContextProvider } from "./components/context/context";
+import { Slide, ToastContainer } from 'react-toastify';
 
 const inter = Inter({ subsets: ["latin"] });
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -23,9 +24,24 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className={`flex flex-col ${inter.className} `}>
+        <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Slide}
+        bodyClassName="toastBody"
+        />
           <ContextProvider>
             {children}
           </ContextProvider>
+          
         </div>
         </body>
     </html>
