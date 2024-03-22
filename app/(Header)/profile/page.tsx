@@ -51,7 +51,7 @@ export default (props:any) => {
     const [batch_limit, setBatch_Limit] = React.useState("")
     const [character_limit, setCharacter_Limit] = React.useState("")
     const [pricing, setPricing] = React.useState("monthly")
-    const [copyState, setCopyState] = React.useState("")
+    const [apiState, setApiState] = React.useState("")
 
 
 
@@ -105,9 +105,17 @@ export default (props:any) => {
 
     }
 
-    const settingProfile =  () => {
-        if(localStorage.getItem("email")) {
-            
+    const settingProfile = async () => {
+        if(getCookie("access_token")) {
+            const token = getCookie("access_token")
+            if(token != null) {
+                const profile = await getProfile(token)
+                if (profile["email"] != null) {
+                    Object.keys(profile).forEach((key)=>{
+                        localStorage.setItem(key, profile[key])
+                    })
+                }
+            }
             const first = localStorage.getItem("first_name");
             const last = localStorage.getItem("last_name")
             const ema = localStorage.getItem("email")
@@ -142,6 +150,8 @@ export default (props:any) => {
                 setApi_Key(key)
                 setCookie("api_key",key)
                 localStorage.setItem("api_key", key)
+                setApiState("Api_key has been reset successfully")
+                setTimeout(()=>{setApiState("")}, 3000)
             }}
     }
 
@@ -253,8 +263,11 @@ export default (props:any) => {
                         <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
                         <input type={visible === 1? "text":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
                     </div>
-                    <CopyToClipboard text={api_key} onCopy={(text, result) => {setCopyState("Copy to clipboard")}}><div className="primary-btn sm:w-[15%] sm:text-[2.5rem] cursor-pointer sm:text-center sm:leading-[7rem] sm:rounded-[1rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
+                    <CopyToClipboard text={api_key} onCopy={(text, result) => {setApiState("Copied to clipboard");setTimeout(()=>{setApiState("")}, 2000)}}><div className="primary-btn sm:w-[15%] sm:text-[2.5rem] cursor-pointer sm:text-center sm:leading-[7rem] sm:rounded-[1rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
                         <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] cursor-pointer sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem] reset-button" onClick={()=>{resetAPI()}}>Reset</div>
+                    </div>
+                    <div className="sm:mt-[5rem] flex justify-center">
+                        {apiState && (<span className="sm:text-[#449D5D] sm:text-[2.5rem] sm:font-medium text-center sm:py-[1rem] sm:px-[2rem] rounded-[1rem] shadow-effect">{apiState}</span>)}
                     </div>
                 </div>
 
