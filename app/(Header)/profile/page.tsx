@@ -18,8 +18,8 @@ import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { Context, useAuth } from "@/app/components/context/context"
 import { useRouter } from "next/navigation"
-import { getCookie } from "cookies-next"
-import { getProfile } from "@/app/backendApis"
+import { getCookie, setCookie } from "cookies-next"
+import { getProfile, refresh, reset } from "@/app/backendApis"
 import { CardMembership1 } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
@@ -27,7 +27,8 @@ import { updateProfile } from "@/app/backendApis"
 import { Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { css } from "glamor";
-
+import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { text } from "stream/consumers"
 
 
 export default (props:any) => {
@@ -37,7 +38,6 @@ export default (props:any) => {
     const [new_password, setNewPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [api_key] = useState("")
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
     const [state, setState] = React.useState(1)
@@ -46,8 +46,14 @@ export default (props:any) => {
     const [loading, setLoading] = React.useState(false)
     const {activeHeader, setActiveHeader} = useContext(Context)
     const [logged, setLogged] = React.useState(true)
-    
+    const [api_key, setApi_Key] = React.useState("")
+    const [token_limit, setToken_Limit] = React.useState("")
+    const [batch_limit, setBatch_Limit] = React.useState("")
+    const [character_limit, setCharacter_Limit] = React.useState("")
     const [pricing, setPricing] = React.useState("monthly")
+    const [copyState, setCopyState] = React.useState("")
+
+
 
     const viewRequest = (i:number) =>{
         
@@ -99,20 +105,44 @@ export default (props:any) => {
 
     }
 
-    const settingProfile = async () => {
+    const settingProfile =  () => {
         if(localStorage.getItem("email")) {
             
             const first = localStorage.getItem("first_name");
             const last = localStorage.getItem("last_name")
             const ema = localStorage.getItem("email")
-            if(first != null && last != null && ema != null) {
+            const apikey = localStorage.getItem("api_key")
+            const characterlimit = localStorage.getItem("character_limit")
+            const batchlimit = localStorage.getItem("batch_limit")
+            const tokenlimit = localStorage.getItem("token_limit")
+            
+            if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null) {
                 setFirstName(first);
                 setLastName(last);
-                setEmail(ema)
+                setEmail(ema);
+                setApi_Key(apikey);
+                setCharacter_Limit(characterlimit);
+                setBatch_Limit(batchlimit);
+                setToken_Limit(tokenlimit);
             } 
+            console.log(api_key)
         } else {
             router.push("/login")
         }
+    }
+
+    const resetAPI = async () => {
+        const token = getCookie("access_token")
+        if(token != null) {
+            const res = await reset(token)
+            console.log(res)
+            if(res == "Success") {
+                const profile = await getProfile(token)
+                const key = profile["api_key"]
+                setApi_Key(key)
+                setCookie("api_key",key)
+                localStorage.setItem("api_key", key)
+            }}
     }
 
     return(
@@ -221,17 +251,18 @@ export default (props:any) => {
                     <div className="flex justify-between items-center">
                     <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
                         <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
-                        <input type={visible === 1? "text":"api_key"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
+                        <input type={visible === 1? "text":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
                     </div>
-                        <div className="primary-btn sm:w-[15%] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Copy</div>
-                        <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Reset</div>
+                    <CopyToClipboard text={api_key} onCopy={(text, result) => {setCopyState("Copy to clipboard")}}><div className="primary-btn sm:w-[15%] sm:text-[2.5rem] cursor-pointer sm:text-center sm:leading-[7rem] sm:rounded-[1rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
+                        <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] cursor-pointer sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem] reset-button" onClick={()=>{resetAPI()}}>Reset</div>
                     </div>
                 </div>
 
                 <div className={`${state === 3 ?'':'hidden'}`}>
                     <div className="sm:flex sm:justify-start sm:gap-[3rem] sm:py-[3rem]">
-                        <Request text = "Requests Available" num={98} color = "#449D5D" />
-                        <Request text = "Requests used" num = {2} color = "#FDA235" />
+                        <Request text = "Tokens Available" num={98} color = "#449D5D" />
+                        <Request text = "Batch Limit" num = {2} color = "#FDA235" />
+                        <Request text = "Character Limit" num = {2} color = "#FDA235" />
                     </div>
                     <p className="sm:text-[3rem] sm:font-semibold">Request history</p>
                     <div className="sm:mt-[3rem]">
@@ -248,9 +279,9 @@ export default (props:any) => {
                 </div>
 
                 <div className={`${state === 4 ?'':'hidden'} flex flex-col items-center`}>
-                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-orange-300 border-[1px] border-gray-200 rounded-full">
-                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly"?'bg-white':''}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
-                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly"?'bg-white':''}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
+                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
+                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
+                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
                 </div>                
                 <div id="pricing" className="sm:mt-[0rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">

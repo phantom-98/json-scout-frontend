@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import uncheck from "../../../public/check-circle (2).svg";
 import check from "../../../public/check-circle (1).svg";
 import checkLight from "../../../public/check-circle.svg";
@@ -15,7 +16,7 @@ export const Card = (props:{title: string, body: string[], font: string , button
                 );
             })}
             {props.button && (
-                <button className="w-full mt-[32px] sm:w-[fit-content] sm:px-[5rem] sm:py-[1.2rem] py-[5rem] primary-btn rounded-[8px] text-[8rem] font-medium sm:text-[2rem]">Get Started</button>
+                <Link href="/register"><button className="w-full mt-[32px] sm:w-[fit-content] sm:px-[5rem] sm:py-[1.2rem] py-[5rem] primary-btn rounded-[8px] text-[8rem] font-medium sm:text-[2rem]">Get Started</button></Link>
             )}
         </div>
     );
@@ -102,7 +103,7 @@ export const CardMembership1 = (props:{title: string, price: string, description
                     })}
                 </div>
             </div>
-            <button className={`sm:text-[1.9rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full ${props.standard?"text-black hover:text-[#FF8132] ":" hover:bg-[#FF8132] hover:text-white hover:border-white border-[#8593A3]"}`}>{props.button}</button>
+            <button className={`sm:text-[1.9rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full ${props.standard?"text-black standard ":" nostandard border-[#8593A3]"}`}>{props.button}</button>
         </div>
     );
 }

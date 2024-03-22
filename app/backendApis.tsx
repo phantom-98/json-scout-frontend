@@ -209,3 +209,22 @@ export const refresh = async (token:string): Promise<string> => {
         return "error"
       });
 }
+
+export const reset = async (token:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://api.jsonscout.com/api_key/reset',
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      
+      return axios.request(config)
+      .then((response) => {
+        return "Success"
+      })
+      .catch((error) => {
+        return error
+      });
+}

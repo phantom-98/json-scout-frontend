@@ -138,8 +138,8 @@ const Header = (props:any) => {
                         )}
                     </div>
                     {logState && (<div className="relative group">
-                        <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full border-[2px] border-green-700 items-center flex justify-center cursor-pointer">
-                            <p className="font-medium text-[6rem] sm:text-[3rem] text-green-800">{firstname[0]?.toUpperCase()}{lastname[0]?.toUpperCase()}</p>
+                        <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full bg-[#FDC9A8] items-center flex justify-center cursor-pointer">
+                            <p className="font-medium text-[6rem] sm:text-[3rem] text-[#B25C26] ">{firstname[0]?.toUpperCase()}{lastname[0]?.toUpperCase()}</p>
                         </div>
                         <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] bg-white hidden group-hover:block`}>
                             <div className="flex items-center sm:gap-[1rem] gap-[3rem] sm:py-[1rem] py-[3rem] sm:pr-[2rem] pr-[5rem] sm:pl-[1rem] pl-[3rem] cursor-pointer sm:rounded-[0.5rem] rounded-[2rem] text-[#828A91] hover:text-black stroke-[#828A91] hover:stroke-black hover:bg-[#F4F4F4]" onClick={()=>{linkpage()}}>

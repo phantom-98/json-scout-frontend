@@ -344,9 +344,9 @@ export const Home = (props : any) => {
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
 
-                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[13rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 rounded-full">
-                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-gray-800'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
-                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-gray-800'}`} onClick={()=>{setPricing("yearly")}}>Yearly Plan</div>
+                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[13rem] mt-[20rem] bg-gray-200 border-[1px] shadow-effect border-gray-200 rounded-[1rem]">
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly Plan</div>
                 </div>           
                 <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">

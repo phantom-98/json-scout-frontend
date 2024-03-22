@@ -12,19 +12,12 @@ import { Context, useAuth } from "../context/context";
 
 export const Footer = () => {
 
-    const [isloggedin, setIsLoggedIn] = React.useState(false)
-
-    React.useEffect(()=>{
-        if(localStorage.getItem("email")) {
-            setIsLoggedIn(true)
-        } else {
-            setIsLoggedIn(false)
-        }
-    }, [])
+    const {logState} = React.useContext(Context)
+   
     
     return (
-        <div className={`${isloggedin?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
-            {!isloggedin && <div className="flex flex-col items-center">
+        <div className={`${logState?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
+            {!logState && <div className="flex flex-col items-center">
                 <p className=" sm:text-[8rem] sm:mb-[12rem] sm:leading-[10rem] text-[15rem] items-center leading-[23rem] mb-[19rem] font-semibold">Ready to Get Started</p>
                 <Link href="/register"><button className=" sm:text-[2.5rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[5rem] sm:rounded-[1rem] text-[8rem] rounded-[5rem] leading-[10rem] px-[12rem] py-[7rem] primary-btn">Sign Up Now</button></Link>
             </div>}

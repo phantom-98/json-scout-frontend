@@ -6,7 +6,7 @@ export default (props: any) => {
   return (
     <>
     <Header/>
-      <div className="sm:mt-[12rem] mt-[36rem] sm:px-[14%] sm:w-full px-[12rem] overflow-hidden">
+      <div className="sm:mt-0 mt-[36rem] sm:px-[14%] sm:w-full px-[12rem] overflow-hidden">
         <Home />
       </div>
     <Footer/>

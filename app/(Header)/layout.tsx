@@ -16,7 +16,7 @@ export default function RootLayout({
     return (
         <>
             <Header />
-            <div className="sm:mt-[12rem] mt-[32rem] sm:px-[14%] sm:w-full px-[12rem] overflow-hidden">
+            <div className="sm:mt-0 mt-[32rem] sm:px-[14%] sm:w-full px-[12rem] overflow-hidden">
             {children}
             </div>
         </>
