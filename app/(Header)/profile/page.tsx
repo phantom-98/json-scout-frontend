@@ -273,9 +273,9 @@ export default (props:any) => {
 
                 <div className={`${state === 3 ?'':'hidden'}`}>
                     <div className="sm:flex sm:justify-start sm:gap-[3rem] sm:py-[3rem]">
-                        <Request text = "Tokens Available" num={98} color = "#449D5D" />
-                        <Request text = "Batch Limit" num = {2} color = "#FDA235" />
-                        <Request text = "Character Limit" num = {2} color = "#FDA235" />
+                        <Request text = "Tokens Available" num={Number(token_limit) } color = "#449D5D" />
+                        <Request text = "Batch Limit" num = {Number(batch_limit)} color = "#FDA235" />
+                        <Request text = "Character Limit" num = {Number(character_limit)} color = "#FDA235" />
                     </div>
                     <p className="sm:text-[3rem] sm:font-semibold">Request history</p>
                     <div className="sm:mt-[3rem]">

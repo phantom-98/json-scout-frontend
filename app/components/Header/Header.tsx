@@ -117,13 +117,13 @@ const Header = (props:any) => {
     }, [params]);
 
     return(
-        <div className="bg-white z-50 w-full">
+        <div className="bg-white w-full">
             <div className={`w-full flex sm:flex-row justify-between ${logState?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
-                <Image src={frame} alt="frame" className="w-auto h-full sm:hidden z-40" onClick={() => {
+                <Image src={frame} alt="frame" className="w-auto h-full sm:hidden" onClick={() => {
                     setShow(prev => !prev)
                 }}></Image>
-                    <div className="sm:w-[12%] w-[44%] z-40 cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
-                    <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] fixed w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white z-30 sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
+                    <div className="sm:w-[12%] w-[44%] cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
+                    <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                         <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
                             <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''}>Home</span></Link>
                             {!logState && (<Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-b-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/#how"><span  className={activeHeader == "How"?'selected':''} >How it works</span></Link>)}
