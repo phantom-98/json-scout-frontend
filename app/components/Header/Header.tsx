@@ -9,9 +9,6 @@ import React, { useEffect } from "react";
 import { useAuth } from "../context/context";
 import { getCookie, deleteCookie, getCookies, setCookie } from "cookies-next";
 import { getProfile, refresh } from "@/app/backendApis";
-import avatar from "../../../public/Profile-Button.svg"
-import setting2 from "../../../public/setting-2.svg"
-import logoutimg from "../../../public/logout.svg"
 import { logout } from "@/app/backendApis";
 import { useContext } from "react";
 import {Context} from '../../components/context/context'
@@ -34,6 +31,9 @@ const Header = (props:any) => {
         Object.keys(getCookies()).forEach((key) => {
             deleteCookie(key);
         })
+
+        // Clear local storage on successful logout
+        localStorage.clear();
       }
     
 
@@ -117,7 +117,7 @@ const Header = (props:any) => {
     }, [params]);
 
     return(
-        <div className="fixed bg-white z-50 w-full">
+        <div className="bg-white z-50 w-full">
             <div className={`w-full flex sm:flex-row justify-between ${logState?'flex-row':'flex-row-reverse'} items-center p-[8rem] sm:px-[14%] sm:w-[full] sm:py-12  whitespace-nowrap`}>
                 <Image src={frame} alt="frame" className="w-auto h-full sm:hidden z-40" onClick={() => {
                     setShow(prev => !prev)

@@ -10,8 +10,6 @@ import arrow from "../../../public/arrow-swap-horizontal1.svg"
 import personal1 from "../../../public/personalcard.svg"
 import personal from "../../../public/personalcard1.svg"
 import arrowright from "../../../public/arrow-right.svg"
-import profileimg from "../../../public/Profile-Button.svg"
-import trash from "../../../public/trash.svg"
 import sms from "../../../public/sms.svg"
 import unlock from "../../../public/unlock.svg"
 import eye from "../../../public/eye-slash.svg"
@@ -39,6 +37,7 @@ export default (props:any) => {
     const [new_password, setNewPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [api_key] = useState("")
     const [email, setEmail] = useState("");
     const [errorMessage, setErrorMessage] = useState("")
     const [state, setState] = React.useState(1)
@@ -48,10 +47,7 @@ export default (props:any) => {
     const {activeHeader, setActiveHeader} = useContext(Context)
     const [logged, setLogged] = React.useState(true)
     
-    
     const [pricing, setPricing] = React.useState("monthly")
-
-    
 
     const viewRequest = (i:number) =>{
         
@@ -148,22 +144,6 @@ export default (props:any) => {
                     <span className="sm:text-[2rem] sm:text-[#828A91]">{state === 1?'Profile':state === 2?'API Key':state === 3?'Requests':'My Plan'}</span>
                 </div>
                 <div className={`sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:justify-start sm:gap-[4rem] sm:py-[4rem] ${state === 1?'':'hidden'}`}>
-                    {/* <div className="sm:flex sm:justify-between sm:items-center sm:mb-[4rem]">
-                        <div className="sm:flex sm:justify-start sm:items-center sm:gap-[3rem]">
-                            <div className="sm:h-[11rem] sm:w-[11rem] sm:rounded-full sm:overflow-hidden"><Image src={profileimg} alt="" className="sm:w-full sm:h-full"></Image></div>
-                            <div>
-                                <p className="sm:text-[2.5rem] sm:font-medium">Profile picture</p>
-                                <p className="sm:text-[#828A91] sm:text-[1.8rem]">PNG, JPEG under 15MB</p>
-                            </div>
-                        </div>
-                        <div className="sm:flex sm:justify-center sm:gap-[2rem]">
-                            <div className="sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Upload new picture</div>
-                            <div className="sm:flex sm:items-center sm:gap-[1rem] sm:px-[1.5rem] sm:py-[1rem] sm:bg-[#F4F4F4]">
-                                <Image src={trash} alt="" className="sm:h-[2rem] sm:w-auto"></Image>
-                                <p className="sm:text-[2rem] sm:text-[#828A91]">Delete</p>
-                            </div>
-                        </div>
-                    </div> */}
                     <div className="sm:flex sm:justify-between">
                         <div className="sm:w-[46%]">
                             <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">First name</p>
@@ -239,10 +219,10 @@ export default (props:any) => {
 
                 <div className={`mt-[6rem] ${state === 2?'':'hidden'} sm:h-[80rem]`}>
                     <div className="flex justify-between items-center">
-                        <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
-                            <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
-                            <input type={visible === 1? "":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={user['api_key']}></input>
-                        </div>
+                    <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
+                        <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
+                        <input type={visible === 1? "text":"api_key"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
+                    </div>
                         <div className="primary-btn sm:w-[15%] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Copy</div>
                         <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem]">Reset</div>
                     </div>

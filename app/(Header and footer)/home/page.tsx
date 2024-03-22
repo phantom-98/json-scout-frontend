@@ -30,12 +30,14 @@ import { Context, useAuth } from "@/app/components/context/context";
 import { getCookie } from "cookies-next";
 import { getProfile } from "@/app/backendApis";
 
+import Link from "next/link";
+
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
 
 const jsonSnippet: string =`
 payload = {
-    "api_key": "SOME_API_KEY",
+    "api_key": "secret_key",
     "desired_output": "date_purchased (mm-dd-yyyy)"
     "content": [
         "My purchase was made back in january 12, 2012. i am not sure if i am eligible for a refund, but i would like to know.",
@@ -209,13 +211,14 @@ export const Home = (props : any) => {
                         <div className="mt-[6rem] text-[8rem] leading-[18rem] font-normal sm:mt-[2rem] sm:text-[1.8rem] sm:leading-[5rem] text-[#828A91] sm:w-[80%] sm:text-wrap">In the digital age, data is your most valuable asset, but extracting this gold from the mine of unstructured text can be as complex as it is crucial.</div>
                     </div>
                     <div className="gap-[10rem] mt-[19rem] sm:mt-[6rem] flex flex-col justify-center sm:flex-row sm:justify-start sm:gap-[4rem]">
-                        <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] primary-btn  font-semibold ">Get Started</button>
-                        {/* <button className=" text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] secondary-btn font-semibold ">Create a Fee Account</button> */}
+                        <Link href={"/register"}>
+                            <button className="text-[10rem] leading-[14rem] w-full sm:w-auto rounded-[8px] py-[8rem] sm:text-[2rem] sm:leading-[4rem] sm:px-[5rem] sm:py-[2rem] primary-btn  font-semibold ">Get Started</button>
+                        </Link>
                     </div>
                 </div>
                 <div className="hidden sm:block sm:relative sm:font-normal relative">
                     
-                    <CustomCodeBlock  code={`/* it can handle user typing errors very well. */` + jsonSnippet} leftTitle="" rightTitle={["Curl","node.js","python"]} centerTitle="Example"/>
+                    <CustomCodeBlock  code={`/* Clean and extract your desired fields */` + jsonSnippet} leftTitle="" rightTitle={["Curl","node.js","python"]} centerTitle="Example"/>
                     
                     <div className="p-[4rem] bg-white shadow-lg font-semibold absolute left-[-35%] bottom-[-25%] rounded-[2rem] flex flex-col justify-between gap-10">
                         <h1 className="text-[2.8rem] text-center">Our Advantages</h1>
@@ -341,20 +344,20 @@ export const Home = (props : any) => {
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[56%] sm:leading-[6rem] text-[#828A91] text-wrap">With lots of unique and useful features, you can easily manage your wallet easily without any problem.</p>
                 </div>
 
-                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[13rem] mt-[20rem] bg-orange-300 border-[1px] border-gray-200 rounded-full">
-                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly"?'bg-white':''}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
-                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly"?'bg-white':''}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
-                </div>                
+                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[13rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 rounded-full">
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-gray-800'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
+                    <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[2rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-full font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-gray-800'}`} onClick={()=>{setPricing("yearly")}}>Yearly Plan</div>
+                </div>           
                 <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
-                    <CardMembership title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
+                    <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
                         "100 Requests"
                     ]} unallowed={[
                         "Basic Data Extraction",
                         "Character Limit",
                         "GPT - 4"
-                    ]} button="Choose Free Trial" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
+                    ]} button="Get Started" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
                     <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
                         "1000 Requests",
                         "250 Character Limit",

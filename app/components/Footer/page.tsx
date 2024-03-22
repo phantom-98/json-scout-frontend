@@ -22,7 +22,6 @@ export const Footer = () => {
         }
     }, [])
     
-    
     return (
         <div className={`${isloggedin?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
             {!isloggedin && <div className="flex flex-col items-center">
@@ -42,9 +41,9 @@ export const Footer = () => {
                 <div className=" sm:w-[50%] flex flex-col items-center gap-[2rem] ">
                     <p className="sm:text-[4rem] sm:leading-[8rem] text-[12rem] leading-[24rem]">About</p>
                     <div className=" sm:flex-row sm:justify-center sm:gap-[4rem] flex flex-col justify-start gap-[3rem] items-center">
-                    <Link href="/terms-of-service" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Terms of service</Link>
-                    <Link href="/privacy-policy" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Privacy police</Link>
-                    <Link href="#" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Contact</Link>
+                    <Link href="/terms-of-service" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Terms of Service</Link>
+                    <Link href="/privacy-policy" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Privacy Policy</Link>
+                    <Link href="/contact" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">Contact</Link>
                     </div>
                 </div>
                 <div className="sm:w-[50%] flex flex-col items-center gap-[2rem]">
@@ -56,7 +55,7 @@ export const Footer = () => {
                 </div>
                 
             </div>
-            <div className=" sm:text-[2rem] sm:leading-[4rem] text-[7rem] text-center">© 2024 Json Scout. All rights reserved</div>
+            <div className=" sm:text-[2rem] sm:leading-[4rem] text-[7rem] text-center">© 2024 JSON Scout. All rights reserved</div>
             <Image src={background} alt="" className="absolute right-0 top-0 sm:w-[20%] w-[70rem] h-auto"></Image>
         </div>
     );
