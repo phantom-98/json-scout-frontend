@@ -141,7 +141,7 @@ const Header = (props:any) => {
                         <div className="sm:h-[7rem] sm:w-[7rem] h-[16rem] w-[16rem] rounded-full bg-[#FDC9A8] items-center flex justify-center cursor-pointer">
                             <p className="font-medium text-[6rem] sm:text-[3rem] text-[#B25C26] ">{firstname[0]?.toUpperCase()}{lastname[0]?.toUpperCase()}</p>
                         </div>
-                        <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] bg-white hidden group-hover:block`}>
+                        <div className={`sm:p-[1.5rem] p-[5rem] absolute sm:right-0 right-0 shadow-md rounded-[8px] bg-white hidden group-hover:block z-50`}>
                             <div className="flex items-center sm:gap-[1rem] gap-[3rem] sm:py-[1rem] py-[3rem] sm:pr-[2rem] pr-[5rem] sm:pl-[1rem] pl-[3rem] cursor-pointer sm:rounded-[0.5rem] rounded-[2rem] text-[#828A91] hover:text-black stroke-[#828A91] hover:stroke-black hover:bg-[#F4F4F4]" onClick={()=>{linkpage()}}>
                                 <svg width="3rem" height="3rem" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M7 8.75C7.9665 8.75 8.75 7.9665 8.75 7C8.75 6.0335 7.9665 5.25 7 5.25C6.0335 5.25 5.25 6.0335 5.25 7C5.25 7.9665 6.0335 8.75 7 8.75Z" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>

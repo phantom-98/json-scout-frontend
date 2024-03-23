@@ -259,15 +259,15 @@ export default (props:any) => {
 
                 <div className={`mt-[6rem] ${state === 2?'':'hidden'} sm:h-[80rem]`}>
                     <div className="flex justify-between items-center">
-                    <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem]">
+                    <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem] relative">
                         <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
                         <input type={visible === 1? "text":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
+                        <div className="sm:mt-[5rem] flex justify-center absolute left-[36%] bottom-[-120%]">
+                            {apiState && (<span className="sm:text-[#449D5D] sm:text-[2.5rem] sm:font-medium text-center sm:py-[1rem] sm:px-[2rem] rounded-[1rem] shadow-effect ">{apiState}</span>)}
+                        </div>
                     </div>
                     <CopyToClipboard text={api_key} onCopy={(text, result) => {setApiState("Copied to clipboard");setTimeout(()=>{setApiState("")}, 2000)}}><div className="primary-btn sm:w-[15%] sm:text-[2.5rem] cursor-pointer sm:text-center sm:leading-[7rem] sm:rounded-[1rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
                         <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] cursor-pointer sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem] reset-button" onClick={()=>{resetAPI()}}>Reset</div>
-                    </div>
-                    <div className="sm:mt-[5rem] flex justify-center">
-                        {apiState && (<span className="sm:text-[#449D5D] sm:text-[2.5rem] sm:font-medium text-center sm:py-[1rem] sm:px-[2rem] rounded-[1rem] shadow-effect">{apiState}</span>)}
                     </div>
                 </div>
 

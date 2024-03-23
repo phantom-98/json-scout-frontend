@@ -101,6 +101,10 @@ html {
       transform: rotate(45deg);
     }
 
+    .toastBody {
+      font-size: 5rem;
+      padding: 3rem;
+    }
 }
 
 
@@ -271,7 +275,7 @@ html {
 
 .toastBody {
   color: white; 
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
   padding:1rem
 }
