@@ -4,9 +4,9 @@ import { themes } from 'prism-react-renderer';
 import arrow from "../../../public/Arrow 1.svg"
 import Image from 'next/image';
 
-export const CustomCodeBlock = (props:{ code: string, centerTitle: string, leftTitle: string, rightTitle: string[], className?: string}) => {
+export const CustomCodeBlock = (props:{ code: string, centerTitle: string, leftTitle: string, rightTitle?: string[], className?: string}) => {
     
-    const [right, setRight] = React.useState(props.rightTitle[0])
+    const [right, setRight] = React.useState(props.rightTitle ? props.rightTitle[0] : '')
     const [isPopup, setIsPopup] = React.useState(false)
 
     return (
@@ -22,8 +22,8 @@ export const CustomCodeBlock = (props:{ code: string, centerTitle: string, leftT
                 <span className='text-black font-bold sm:text-[1.8rem] text-[7.2rem]'>{props.centerTitle}</span>
                 <div className='sm:pl-8 pl-[10rem] cursor-default relative border-l-[1px] border-l-gray-400 w-[10rem] flex justify-center items-center'>
                     <span onClick={()=>{setIsPopup(!isPopup)}} className=' text-gray-500 sm:pr-[1rem]'>{right}</span>
-                    {props.rightTitle.length > 1 && (<Image onClick={()=>{setIsPopup(!isPopup)}} src={arrow} alt='' className='sm:h-[1rem] h-[6.4rem] w-auto'></Image>)}
-                    {props.rightTitle.length > 1 && (
+                    {props.rightTitle && props.rightTitle.length > 1 && (<Image onClick={()=>{setIsPopup(!isPopup)}} src={arrow} alt='' className='sm:h-[1rem] h-[6.4rem] w-auto'></Image>)}
+                    {props.rightTitle && props.rightTitle.length > 1 && (
                     <div className={`absolute bg-gray-100 top-[4rem] sm:px-[1rem] -right-[1rem] rounded-[1px] sm:text-[1.6rem] text-[6.4rem] w-full ${isPopup?'':'hidden'}`}>
                         {props.rightTitle.map((key, item)=>(
                         <div className={`sm:p-[1rem] text-center text-gray-400 ${item == 0?'':'sm:border-t-[1px]'} sm:border-t-gray-200`} onClick={()=>{setRight(key);setIsPopup(false)}}>{key}</div>

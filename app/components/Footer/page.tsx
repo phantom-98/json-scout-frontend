@@ -3,8 +3,6 @@ import React, { useContext, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo1 from "../../../public/JSON-LOGO 1 (1).svg";
-import frame318 from "../../../public/Frame 318.svg";
-import frame319 from "../../../public/Frame 319.svg";
 import frame320 from "../../../public/Frame 320.svg";
 import frame321 from "../../../public/Frame 321.svg";
 import background from "../../../public/Background.svg";
@@ -44,8 +42,6 @@ export const Footer = () => {
             <div className=" sm:mt-[8rem] sm:flex-row sm:justify-between flex flex-col mt-[26rem] items-center gap-[8rem]">
                 <Image src={logo1} alt="" className="sm:h-[6rem] h-[29rem] w-auto"></Image>
                 <div className=" sm:gap-[2rem] flex justify-center gap-[11rem] ">
-                    <Link href="#" className="cursor-pointer"><Image src={frame318} alt=""></Image></Link>
-                    <Link href="#" className="cursor-pointer"><Image src={frame319} alt=""></Image></Link>
                     <Link href="#" className="cursor-pointer"><Image src={frame320} alt=""></Image></Link>
                     <Link href="#" className="cursor-pointer"><Image src={frame321} alt=""></Image></Link>
                 </div>

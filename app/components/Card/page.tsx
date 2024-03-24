@@ -37,12 +37,12 @@ export const CardCan = (props:{title: string, description: string, font: string 
 export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string}) => {
 
     return (
-        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[16px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
+        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
             <div className="flex flex-col gap-[2rem]">
-                <div className={`border-b-[1px] pb-[8rem] sm:pb-[3rem] ${props.standard?"":"border-b-[#8593A3]"}`}>
+                <div className={`border-b-[1px] pb-[8rem] sm:pb-[3rem] ${props.standard?"":""}`}>
                     <p className={`sm:text-[2rem] text-[7rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
                     <div className="sm:text-[2rem] text-[8rem]">
-                        <span className={`sm:text-[6.2rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
+                        <span className={`sm:text-[5.2rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
                         {props.type}
                     </div>
                     <div className="sm:text-[2rem] text-[8rem]">{props.description}</div>
@@ -66,7 +66,7 @@ export const CardMembership = (props:{title: string, price: string, description:
                     })}
                 </div>
             </div>
-            <button className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100 ${props.standard?"text-black standard ":" nostandard border-[#8593A3]"}`}>{props.button}</button>
+            <button className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100 ${props.standard?"text-black standard border-[#FFFFFF]":" nostandard border-[#8593A3]"}`}>{props.button}</button>
         </div>
     );
 }
