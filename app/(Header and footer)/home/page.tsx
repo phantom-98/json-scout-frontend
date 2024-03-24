@@ -278,11 +278,15 @@ export const Home = (props : any) => {
                 <div className="sm:flex sm:justify-between">
                     <Step font={space_grotesk.className} no="1" img={frame17} title="Define Your Output" description="Tell JSON Scout what information you are looking to extract"/>
                     
-                    <div className="my-[11em] sm:my-[0] relative h-[23rem] sm:w-[5%] sm:h-auto"><Image src={vector3} alt="vector3" className="sm:w-[75%] sm:h-[75%] sm:left-[12.5%] sm:top-[12.5%]  absolute h-[46rem] w-auto right-[5rem] -top-[11.5rem] sm:right-[5px] sm:rotate-90 "></Image></div>
-                  
+                    <div className="my-[11em] sm:my-[0] relative h-[23rem] sm:w-[5%] sm:h-auto">
+                        <Image src={vector3} alt="vector3" className="sm:w-[75%] sm:h-[75%] sm:left-[12.5%] sm:top-[-7%]  absolute h-[46rem] w-auto right-[5rem] -top-[11.5rem] sm:right-[5px] sm:rotate-90 "></Image>
+                    </div>
+                
                     <Step font={space_grotesk.className} no="2" img={frame18} title="Input Your Content" description="Provide your content"/>
                     
-                    <div className="my-[11em] sm:my-[0]  relative h-[23rem] sm:w-[5%] sm:h-auto"><Image src={vector4} alt="vector3" className=" sm:w-[75%] sm:h-[60%] sm:left-[12.5%] sm:top-[0px] absolute h-[46rem] -top-[11.5rem] w-auto left-[5rem] sm:rotate-90 "></Image></div>
+                    <div className="my-[11em] sm:my-[0]  relative h-[23rem] sm:w-[5%] sm:h-auto">
+                        <Image src={vector4} alt="vector3" className=" sm:w-[75%] sm:h-[60%] sm:left-[12.5%] sm:top-[-7%] absolute h-[46rem] -top-[11.5rem] w-auto left-[5rem] sm:rotate-90 "></Image>
+                    </div>
                     
                     <Step font={space_grotesk.className} no="3" img={frame19} title="Fetch Insights" description="JSON Scout processes your input and returns the structured data you need"/>
                     

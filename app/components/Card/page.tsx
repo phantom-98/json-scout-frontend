@@ -71,7 +71,7 @@ export const CardMembership = (props:{title: string, price: string, description:
     );
 }
 
-export const CardMembership1 = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string}) => {
+export const ProfileCardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string}) => {
 
     return (
         <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[16px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>

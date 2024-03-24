@@ -20,7 +20,7 @@ import { Context, useAuth } from "@/app/components/context/context"
 import { useRouter } from "next/navigation"
 import { getCookie, setCookie } from "cookies-next"
 import { getProfile, refresh, reset } from "@/app/backendApis"
-import { CardMembership1 } from "@/app/components/Card/page"
+import { ProfileCardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
 import { updateProfile } from "@/app/backendApis"
@@ -299,27 +299,27 @@ export default (props:any) => {
                 <div id="pricing" className="sm:mt-[0rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
-                    <CardMembership1 title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
+                    <ProfileCardMembership title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
                         "100 Requests"
                     ]} unallowed={[
                         "Basic Data Extraction",
                         "Character Limit",
                         "GPT - 4"
                     ]} button="Choose Free Trial" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <CardMembership1 title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
+                    <ProfileCardMembership title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
                         "1000 Requests",
                         "250 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4"
                     ]} unallowed={[]} button="Choose Starter" id="starter" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <CardMembership1 title="STANDARD"  price={pricing == "monthly"?'24':'240'} description="Our most popular plan!" allowed={[
+                    <ProfileCardMembership title="STANDARD"  price={pricing == "monthly"?'24':'240'} description="Our most popular plan!" allowed={[
                         "2500 Requests",
                         "500 Character Limit",
                         "Basic Data Extraction",
                         "GPT - 4",
                         "Array Content Input"
                     ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <CardMembership1 title="PREMIUM" price={pricing == "monthly"?'50':'500'} description="For the power user!" allowed={[
+                    <ProfileCardMembership title="PREMIUM" price={pricing == "monthly"?'50':'500'} description="For the power user!" allowed={[
                         "5000 Requests",
                         "1000 Character Limit",
                         "Basic Data Extraction",
