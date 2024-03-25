@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import logo1 from "../../../public/JSON-LOGO 1 (1).svg";
@@ -7,10 +7,10 @@ import frame320 from "../../../public/Frame 320.svg";
 import frame321 from "../../../public/Frame 321.svg";
 import background from "../../../public/Background.svg";
 import { Context, useAuth } from "../context/context";
-import { Roboto } from "next/font/google";
 
 export const Footer = () => {
 
+    const currentYear = new Date().getFullYear();
     const {logState} = React.useContext(Context)
     
     return (
@@ -43,7 +43,7 @@ export const Footer = () => {
                 </div>
                 
             </div>
-            <div className="sm:text-[2rem] sm:leading-[4rem] text-[7rem] text-center">© 2024 JSON Scout. All rights reserved</div>
+            <div className="sm:text-[2rem] sm:leading-[4rem] text-[7rem] text-center">© {currentYear} JSON Scout. All rights reserved</div>
             <Image src={background} alt="" className="absolute right-0 top-0 sm:w-[20%] w-[70rem] h-auto"></Image>
         </div>
     );

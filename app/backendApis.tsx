@@ -230,7 +230,7 @@ export const reset = async (token:string): Promise<string> => {
 }
 
 // Create a new API endpoint to submit a contact form
-export const submitContactForm = async (email: string, contactType: string, message: string, recaptcha: string): Promise<ReturnType> => {
+export const submitContactForm = async (email: string, contactType: string, message: string, recaptcha: string, accessToken: string): Promise<ReturnType> => {
     try {
         const res = await axios.post('https://api.jsonscout.com/contact', {
             email,
@@ -239,7 +239,8 @@ export const submitContactForm = async (email: string, contactType: string, mess
             recaptcha
         }, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': `Bearer ${accessToken}`
             }
         });
         return res.data;
