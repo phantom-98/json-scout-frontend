@@ -22,7 +22,7 @@ const ContactForm = () => {
   const siteKey = "6Lev8MUoAAAAAKp3bYSwQo3lTykrWGHEzGAP1qqd"
   
   
-  const process = async (props:{token:string}) => {
+  const process = async (props: { token: string }) => {
     setLoading(true);
 
     let accessToken;
@@ -63,7 +63,7 @@ const ContactForm = () => {
         grecaptcha.execute(siteKey, {action: 'submit'}).then(function (token) {
             // Add your logic to submit to your backend server here.
             
-            process(token)
+            process({ token: token });
         });
     });
 
