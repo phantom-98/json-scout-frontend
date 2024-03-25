@@ -29,6 +29,7 @@ export default () => {
 
     const [loading, setLoading] = React.useState(false)
     
+    
     async function submitBtn() {
         if (loading) return;
         if (!email) {
