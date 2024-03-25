@@ -3,8 +3,6 @@
 import { verifyEmail } from "@/app/backendApis";
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect } from "react";
-import Stack from '@mui/material/Stack';
-import LinearProgress from '@mui/material/LinearProgress';
 import Image from "next/image"
 import sms from "../../../public/sms.svg"
 

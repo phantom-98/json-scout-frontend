@@ -228,3 +228,22 @@ export const reset = async (token:string): Promise<string> => {
         return error
       });
 }
+
+// Create a new API endpoint to submit a contact form
+export const submitContactForm = async (email: string, contactType: string, message: string, recaptcha: string): Promise<ReturnType> => {
+    try {
+        const res = await axios.post('https://api.jsonscout.com/contact', {
+            email,
+            contactType,
+            message,
+            recaptcha
+        }, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        });
+        return res.data;
+    } catch (e) {
+        return null;
+    }
+}

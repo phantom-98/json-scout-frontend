@@ -25,11 +25,7 @@ import { Card, CardCan, CardMembership } from "../../components/Card/page";
 import minus from "../../../public/minus.svg"
 import React, { useContext, useEffect } from "react";
 import { Question } from "../../components/question/page";
-import { ClassNames } from "@emotion/react";
 import { Context, useAuth } from "@/app/components/context/context";
-import { getCookie } from "cookies-next";
-import { getProfile } from "@/app/backendApis";
-
 import Link from "next/link";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -44,7 +40,7 @@ payload = {
     ]
     "output": "json": {
         "classification": "Purchase Inquiry",
-        "data_purchased": "01-12-2012",
+        "date_purchased": "01-12-2012",
     }
 }
 `;
@@ -165,7 +161,8 @@ const codeRight:string[] = [
 "tokens_remaining": 999
     `,
     `
-"data": {
+"data": 
+    {
         "classification": "quality issue",
         "complaint": "they taste burnt",
         "expiration_date": "12-12-2024",

@@ -36,7 +36,7 @@ export default (props : any) =>{
         setLoading(true)
         const res = await sendemail(email)
         if(res == "Success") {
-            router.push("/checkemail")
+            router.push("/check-email")
         }
         else{
             setErrorMessage(res)
@@ -45,18 +45,14 @@ export default (props : any) =>{
     }
 
     return(
-        <div className={`${roboto.className} sm:mb-[10rem] sm:mt-[8rem] px-[14rem] mb-[30rem]`}>
-
-            
-
+        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[5%]`}>
             <div className="sm:mx-[32rem] sm:p-[5rem] login px-[10rem] py-[10rem] rounded-[2rem]">
-                
                 <div className="sm:mb-[2rem] flex flex-col items-center mb-[12rem]">
                     <div className="sm:w-[6rem] sm:h-[6rem] sm:rounded-[2rem] w-[17rem] h-[17rem] border-[1px] border-[#F2F3F5] rounded-[5rem] flex justify-center items-center">
                         <Image src={smss} alt="" className="w-[50%] h-auto"></Image>
                     </div>
                     <p className="sm:mb-0 sm:mt-[2rem] sm:text-[3rem] sm:leading-[6rem] text-[10rem] leading-[20rem] my-[3rem] font-semibold">Forgot Password?</p>
-                    <p className="sm:leading-[3rem] sm:text-[2.1rem] sm:mr-[1.5rem] text-[6.5rem] leading-[8rem] w-[85%] text-center text-[#808080]" >No worries we’ll send you reset instructions.</p>
+                    <p className="sm:leading-[3rem] sm:text-[2.1rem] sm:mr-[1.5rem] text-[6.5rem] leading-[8rem] w-[85%] text-center text-[#808080]" >No worries, we’ll send you reset instructions.</p>
                 </div>
                 
                 <div className="sm:mb-[3rem] mb-[11rem]">

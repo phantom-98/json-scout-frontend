@@ -7,13 +7,11 @@ import secure from "../../../public/shield-security.svg"
 import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
 import { Roboto } from "next/font/google"
-import axios from "axios"
 import { useRouter } from 'next/navigation'
 import erralert from "../../../public/warning-2.svg"
-import { setCookie, getCookie, deleteCookie } from "cookies-next"
-import { Context, useAuth } from "@/app/components/context/context"
+import { setCookie } from "cookies-next"
 import { getProfile, signin } from "@/app/backendApis"
-import { Box, CircularProgress } from "@mui/material"
+import { CircularProgress } from "@mui/material"
 
 const roboto = Roboto({
     weight: '400',
@@ -26,7 +24,6 @@ export default () => {
     const [password, setPassword] = React.useState("")
     const [errorMessage, setErrorMessage] = React.useState("")
     const [visible, setVisible] = React.useState(false)
-    const {user, setUser, activeHeader, setActiveHeader} = useContext(Context)
     
     const router = useRouter()
 
@@ -71,7 +68,7 @@ export default () => {
     }, [])
 
     return(
-        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>
+        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[5%]`}>
             <div className="sm:mx-[27rem] login px-[10rem]  pt-[10rem] pb-[10rem] rounded-[2rem]">
                 <div className="sm:text-[3rem] sm:leading-[6rem] sm:mb-[3rem] text-[10rem] leading-[20rem] text-center mb-[10rem] font-semibold">Sign In</div>
                 <div className="sm:mb-[3rem] mb-[8rem]">
@@ -92,7 +89,7 @@ export default () => {
                 
                 <div className="sm:mb-[2.5rem] flex items-center mb-[8rem]">
                     <p className="sm:text-[2.1rem] sm:mr-[1.5rem] text-[6.5rem] text-[#828A91] mr-[3rem]">Forgot your password?</p>
-                    <Link href="/forgotpassword" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Recover Password</Link>
+                    <Link href="/forgot-password" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Recover Password</Link>
                 </div>
                 {errorMessage && (
                     <div className={`flex justify-center items-center`}>

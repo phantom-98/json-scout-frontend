@@ -55,7 +55,7 @@ export default (props : any) =>{
     
 
     return(
-        <div className={`${roboto.className} sm:mb-[10rem] sm:mt-[8rem] px-[14rem] mb-[30rem]`}>
+        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[10%]`}>
             <div className="sm:mx-[32rem] sm:p-[5rem] login px-[10rem] py-[10rem] rounded-[2rem]">
                 <div className="sm:mb-[3rem] flex flex-col items-center mb-[12rem]">
                     

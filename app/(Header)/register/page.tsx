@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from "react"
 import Image from "next/image"
-import axios, { AxiosError } from 'axios'
 import Link from "next/link"
 import sms from "../../../public/sms-notification.svg"
 import secure from "../../../public/shield-security.svg"
@@ -10,11 +9,9 @@ import eye from "../../../public/eye-slash.svg"
 import { Roboto } from "next/font/google"
 import { register } from "@/app/backendApis"
 import { useRouter } from "next/navigation"
-import { setCookie } from "cookies-next"
 import erralert from "../../../public/warning-2.svg"
 import eye1 from "../../../public/visible.svg"
 import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
 
 
 const roboto = Roboto({
@@ -70,7 +67,7 @@ export default (props : any) =>{
     }
 
     return(
-        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem]`}>
+        <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[5%]`}>
             <div className="sm:mx-[27rem] login px-[10rem] pt-[5rem] pb-[7rem] rounded-[2rem]">
                 <div className="sm:text-[3rem] sm:leading-[6rem] sm:mb-[3rem] text-[10rem] leading-[20rem] text-center mb-[10rem] font-semibold">Sign Up</div>
                 <div className="sm:mb-[3rem] mb-[8rem]">
@@ -104,11 +101,12 @@ export default (props : any) =>{
                 </div>
                 <div className="sm:mb-[3rem] flex items-center mb-[6rem]">
                     <label className="sm:text-[2.1rem] sm:mr-[1.5rem] checkgroup text-[6.5rem] text-[#828A91] mr-[3rem]" 
-                    >You accept the terms and conditions?
+                    >By Signing Up, I agree to the{" "}
+                     <Link href="/terms" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">TOS</Link>
+                     {" "}and <Link href="/privacy" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">JSON Scout Privacy Policy.</Link>
                         <input type="checkbox" onClick={()=>setChecked(!checked)}/>
                         <span className="checkmark"></span>
                     </label>
-                    <Link href="#" className="sm:text-[2.1rem] text-[6.5rem] font-medium underline">Terms</Link>
                 </div>
                 {errorMessage && (
                     <div className={`flex justify-center items-center`}>
