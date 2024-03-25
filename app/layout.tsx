@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ContextProvider } from "./components/context/context";
 import { Slide, ToastContainer } from 'react-toastify';
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,9 +35,11 @@ export default function RootLayout({
         transition={Slide}
         bodyClassName="toastBody"
         />
+        <ReCaptchaProvider reCaptchaKey="[GTM-6Lev8MUoAAAAAKp3bYSwQo3lTykrWGHEzGAP1qqd]">
           <ContextProvider>
             {children}
           </ContextProvider>
+        </ReCaptchaProvider>
           
         </div>
         </body>

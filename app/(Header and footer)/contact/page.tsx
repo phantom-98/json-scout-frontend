@@ -5,8 +5,8 @@ import { Roboto } from "next/font/google"
 import { getCookie } from "cookies-next"
 import { CircularProgress } from "@mui/material"
 import { submitContactForm } from "@/app/backendApis"
-import ReCAPTCHA from "react-google-recaptcha";
 import { useRef } from 'react';
+import Script from 'next/script';
 
 const roboto = Roboto({
   weight: '400',
@@ -17,28 +17,12 @@ const ContactForm = () => {
   const [email, setEmail] = useState('');
   const [contactType, setContactType] = useState('');
   const [message, setMessage] = useState('');
-  const [recaptchaValue, setRecaptchaValue] = useState(false);
   const [loading, setLoading] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA>(null);
-  
-  const submitForm = () => {
-    if (recaptchaRef.current) {
-      recaptchaRef.current.execute();
-    } else {
-      // Handle the case where recaptchaRef.current is null
-      console.error('ReCAPTCHA ref is null');
-      // You may want to inform the user or perform some other action here.
-    }
-  }
 
-  const onReCAPTCHAChange = async (captchaCode: any) => {
-    // If the reCAPTCHA code is null or undefined indicating that
-    // the reCAPTCHA was expired then return early
-    if(!captchaCode) {
-      return;
-    }
-    // Else reCAPTCHA was executed successfully so proceed with the 
-    // alert
+  const siteKey = "6Lev8MUoAAAAAKp3bYSwQo3lTykrWGHEzGAP1qqd"
+  
+  
+  const process = async (props:{token:string}) => {
     setLoading(true);
 
     let accessToken;
@@ -49,12 +33,13 @@ const ContactForm = () => {
     else {
       accessToken = ""
     }
-        
+    
+    
     const data = await submitContactForm(
       email,
       contactType,
       message,
-      captchaCode,
+      props.token,
       accessToken ?? "" // Coalesce `undefined` to an empty string.
     );
     
@@ -67,47 +52,27 @@ const ContactForm = () => {
     }
     
     setLoading(false);
-    // Reset the reCAPTCHA so that it can be executed again if user 
-    // submits another email.
-    if (recaptchaRef.current) {
-      recaptchaRef.current.reset();
-    } else {
-      // Handle the case where recaptchaRef.current is null
-      console.error('ReCAPTCHA ref is null');
-      // You may want to inform the user or perform some other action here.
-    }
   }
+
   
   
-  // const submitForm = async () => {
-  //   setLoading(true);
+  
+  const submitForm = async () => {
 
-  //   let accessToken;
+      grecaptcha.ready(function () {
+        grecaptcha.execute(siteKey, {action: 'submit'}).then(function (token) {
+            // Add your logic to submit to your backend server here.
+            
+            process(token)
+        });
+    });
 
-  //   if(getCookie("access_token")) {
-  //     accessToken = getCookie("access_token")
-  //   }
-  //   else {
-  //     accessToken = ""
-  //   }
-    
-  //   const recaptchaToken = recaptchaValue;
-    
-  //   const data = await submitContactForm(email, contactType, message, recaptchaToken, accessToken);
-    
-  //   if (data) {
-  //     console.log(data);
-  //     // Handle successful submission
-  //   } else {
-  //     console.error('Form submission failed');
-  //     // Handle failed submission
-  //   }
-    
-  //   setLoading(false);
-  // };
 
-  return (
     
+  };
+
+  return (<>
+    <Script src={`https://www.google.com/recaptcha/api.js?render=6Lev8MUoAAAAAKp3bYSwQo3lTykrWGHEzGAP1qqd`}></Script>
     <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[5%]`}>
       <div className="sm:mx-[27rem] login px-[10rem]  pt-[10rem] pb-[10rem] rounded-[2rem]">
         <div className="sm:text-[3rem] sm:leading-[6rem] sm:mb-[3rem] text-[10rem] leading-[20rem] text-center mb-[10rem] font-semibold">Contact Us</div>
@@ -135,13 +100,6 @@ const ContactForm = () => {
           </div>
         </div>
 
-        <ReCAPTCHA
-          ref={recaptchaRef}
-          size="invisible"
-          sitekey={"6Lev8MUoAAAAAKp3bYSwQo3lTykrWGHEzGAP1qqd"}
-          onChange={onReCAPTCHAChange}
-        />
-          
         <button onClick={submitForm} className={`flex justify-center sm:gap-[4rem] gap-[8rem] items-center sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn`}>
           {loading && (
             <CircularProgress sx={{
@@ -153,6 +111,7 @@ const ContactForm = () => {
         )}Submit</button>
       </div>
     </div>
+    </>
   );
 };
 
