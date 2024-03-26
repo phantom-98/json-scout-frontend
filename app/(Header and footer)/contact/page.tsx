@@ -82,7 +82,11 @@ const ContactForm = () => {
             <textarea onChange={(e) => setMessage(e.target.value)} className="sm:text-[2.3rem] sm:leading-[4rem] text-[6.5rem] leading-[10rem] focus:outline-none w-[100%]" placeholder="Enter your message"></textarea>
           </div>
         </div>
-
+        {subState && (
+          <div className='flex justify-center'>
+          <span className='sm:text-[#449D5D] sm:text-[2.3rem] sm:py-[0.8rem] sm:px-[1.5rem] shadow-effect sm:mb-[3rem] rounded-[1rem]'>{subState}</span>
+          </div>
+        )}
         <button onClick={submitForm} className={`flex justify-center sm:gap-[4rem] gap-[8rem] items-center sm:text-[2.7rem] sm:px-[2rem] sm:py-[1rem] sm:leading-[6rem] sm:rounded-[1rem] text-[9rem] w-full leading-[11rem] py-[5rem] rounded-[3rem] primary-btn`}>
           {loading && (
             <CircularProgress sx={{
@@ -92,11 +96,7 @@ const ContactForm = () => {
             size={24}
             thickness={4} />
         )}Submit</button>
-        {subState && (
-          <div className='flex justify-center'>
-          <span className='sm:text-[#449D5D] sm:text-[2.3rem] sm:py-[0.8rem] sm:px-[1.5rem] shadow-effect sm:mt-[3rem] rounded-[1rem]'>{subState}</span>
-          </div>
-        )}
+        
       </div>
     </div>
     </>
