@@ -16,23 +16,17 @@ import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
-import { Context, useAuth } from "@/app/components/context/context"
 import { useRouter } from "next/navigation"
 import { getCookie, setCookie } from "cookies-next"
-import { getProfile, refresh, reset } from "@/app/backendApis"
-import { ProfileCardMembership } from "@/app/components/Card/page"
+import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership } from "@/app/backendApis"
+import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
-import { updateProfile } from "@/app/backendApis"
 import { Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
-import { css } from "glamor";
 import {CopyToClipboard} from 'react-copy-to-clipboard';
-import { text } from "stream/consumers"
-
 
 export default (props:any) => {
-    const {user, setUser} = useAuth();
     const router = useRouter();
     const [current_password, setCurrentPassword] = useState("");
     const [new_password, setNewPassword] = useState("");
@@ -44,16 +38,54 @@ export default (props:any) => {
     const [visible, setVisible] = React.useState(0)
     const [visible1, setVisible1] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
-    const {activeHeader, setActiveHeader} = useContext(Context)
     const [logged, setLogged] = React.useState(true)
     const [api_key, setApi_Key] = React.useState("")
     const [token_limit, setToken_Limit] = React.useState("")
+    const [tokens_used, setTokens_Used] = React.useState("")
     const [batch_limit, setBatch_Limit] = React.useState("")
     const [character_limit, setCharacter_Limit] = React.useState("")
     const [pricing, setPricing] = React.useState("monthly")
     const [apiState, setApiState] = React.useState("")
+    const [currentPlan, setCurrentPlan] = useState<string | null>(null);
 
+    function formatNumber(num: number) {
+        if (num >= 1000000) {
+          return (num / 1000000).toFixed(2) + 'M';
+        } else if (num >= 100000) {
+          return (num / 1000).toFixed(2) + 'K';
+        } else {
+          return num;
+        }
+    }
 
+    const reviewChangeMembership = async (event, price_id: string) => {
+
+        event.preventDefault();
+
+        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        if(token != null) {
+          const result = await reviewMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
+          if(result !== "Success") {
+            console.error('Failed to change membership:', result);
+          }
+        } else {
+          console.error('No access token found');
+        }
+    }
+
+    const confirmChangeMembership = async (event, price_id: string) => {
+        event.preventDefault();
+
+        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        if(token != null) {
+          const result = await changeMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
+          if(result !== "Success") {
+            console.error('Failed to change membership:', result);
+          }
+        } else {
+          console.error('No access token found');
+        }
+    };
 
     const viewRequest = (i:number) =>{
         
@@ -66,7 +98,6 @@ export default (props:any) => {
 
     const saveChange = async () => {
         
-        
         if(loading) return
 
         if(!firstName) {setErrorMessage("Input first name");return}
@@ -76,7 +107,6 @@ export default (props:any) => {
             if(new_password.length < 8) {setErrorMessage("Password must be at least 8 characters"); return}
         }   
 
-        
         setLoading(true)
 
         const token = getCookie("access_token");
@@ -102,8 +132,23 @@ export default (props:any) => {
             }
             setLoading(false)
         }
-
     }
+
+    const cancelPlan = async () => {
+        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        if(token != null) {
+          const result = await cancelMembership(token); // Replace with your actual function to cancel the membership
+          if(result !== "Success") {
+            console.error('Failed to cancel membership:', result);
+          } else {
+            // Handle successful cancellation
+            localStorage.removeItem('current_plan');
+            setCurrentPlan(null);
+          }
+        } else {
+          console.error('No access token found');
+        }
+      };      
 
     const settingProfile = async () => {
         if(getCookie("access_token")) {
@@ -123,8 +168,10 @@ export default (props:any) => {
             const characterlimit = localStorage.getItem("character_limit")
             const batchlimit = localStorage.getItem("batch_limit")
             const tokenlimit = localStorage.getItem("token_limit")
-            
-            if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null) {
+            const tokens_used = localStorage.getItem("tokens_used")
+            const current_plan = localStorage.getItem("current_plan")
+
+            if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null && tokens_used != null) {
                 setFirstName(first);
                 setLastName(last);
                 setEmail(ema);
@@ -132,7 +179,14 @@ export default (props:any) => {
                 setCharacter_Limit(characterlimit);
                 setBatch_Limit(batchlimit);
                 setToken_Limit(tokenlimit);
-            } 
+                setTokens_Used(tokens_used);
+                if(current_plan != null) {
+                    setCurrentPlan(current_plan);
+                } else {
+                    setCurrentPlan(null);
+                }
+            }
+
             console.log(api_key)
         } else {
             router.push("/login")
@@ -273,7 +327,7 @@ export default (props:any) => {
 
                 <div className={`${state === 3 ?'':'hidden'}`}>
                     <div className="sm:flex sm:justify-start sm:gap-[3rem] sm:py-[3rem]">
-                        <Request text = "Tokens Available" num={Number(token_limit) } color = "#449D5D" />
+                        <Request text = "Tokens Available" num = {formatNumber(Number(token_limit) - Number(tokens_used))} color = "#449D5D" />
                         <Request text = "Batch Limit" num = {Number(batch_limit)} color = "#FDA235" />
                         <Request text = "Character Limit" num = {Number(character_limit)} color = "#FDA235" />
                     </div>
@@ -290,43 +344,42 @@ export default (props:any) => {
                         <Cell ID={555555} Created="Nov 12, 2024" view={viewRequest} />
                     </div>
                 </div>
-
+                {currentPlan && (
+                    <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                        <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                        <a onClick={cancelPlan} className="sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100">Cancel Plan</a>
+                        </div>
+                    </div>
+                )}
                 <div className={`${state === 4 ?'':'hidden'} flex flex-col items-center`}>
                 <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
                     <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
                     <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
                 </div>                
-                <div id="pricing" className="sm:mt-[0rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
-                       
-                    <ProfileCardMembership title="FREE TRIAL" price={pricing == "monthly"?'0':'0'} description="Get started for 100 requests" allowed={[
-                        "100 Requests"
-                    ]} unallowed={[
-                        "Basic Data Extraction",
-                        "Character Limit",
-                        "GPT - 4"
-                    ]} button="Choose Free Trial" id="trial" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <ProfileCardMembership title="STARTER"  price={pricing == "monthly"?'9':'90'} description="Great for getting started!" allowed={[
-                        "1000 Requests",
-                        "250 Character Limit",
-                        "Basic Data Extraction",
-                        "GPT - 4"
-                    ]} unallowed={[]} button="Choose Starter" id="starter" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <ProfileCardMembership title="STANDARD"  price={pricing == "monthly"?'24':'240'} description="Our most popular plan!" allowed={[
-                        "2500 Requests",
-                        "500 Character Limit",
-                        "Basic Data Extraction",
-                        "GPT - 4",
-                        "Array Content Input"
-                    ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'Per month':'Per year'}/>
-                    <ProfileCardMembership title="PREMIUM" price={pricing == "monthly"?'50':'500'} description="For the power user!" allowed={[
-                        "5000 Requests",
-                        "1000 Character Limit",
-                        "Basic Data Extraction",
-                        "GPT - 4",
-                        "Array Content Input",
-                        "Suggested For Long Form Content"
-                    ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'Per month':'Per year'}/>
+                        <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/" allowed={[
+                            "100,000 Tokens",
+                            "Basic Data Extraction",
+                            "250 Character Limit",
+                        ]} unallowed={[
+                            "Batch Processing"
+                        ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
+                        <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
+                            "4M Tokens",
+                            "Basic Data Extraction",
+                            "500 Character Limit",
+                            "100 Batch Limit"
+                        ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
+                        <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
+                            "20M Tokens",
+                            "Basic Data Extraction",
+                            "1000 Character Limit",
+                            "500 Batch Limit",
+                        ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
+                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
 
                     </div>
                 </div>

@@ -36,8 +36,6 @@ export default (props:any)=> {
         setActiveHeader("Docs")
     },[])
 
-    
-
 
     return (
         <>
@@ -51,37 +49,28 @@ export default (props:any)=> {
                     <Session2 text = "Installation" />
                 </div>
                 <div className="w-[76%] flex justify-between">
-                <div className="sm:w-[75%]">
-                    <Header1 text = "Introduction" />
-                    <Header4 text = "Welcome to JSONScout Documentation!" />
-                    <Header2 text = "What is JSONScout?" />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <div className="sm:mt-[10rem] sm:mb-[8rem]"><CustomCodeBlock code = {code1} centerTitle="New Method" leftTitle="EXAMPLE" rightTitle={["CURL", "node.js", "python"]}/></div>
-                    <Header2 text = "What is JSONScout?" />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
-                    <Header3 text = "Easy steps" />
-                    <Content text = "JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it" />
+                    <div className="sm:w-[75%]">
+                        <Header1 text = "Introduction" />
+                        <Header4 text = "Welcome to JSONScout Documentation!" />
+                        <Header2 text = "What is JSONScout?" />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <div className="sm:mt-[10rem] sm:mb-[8rem]"><CustomCodeBlock code = {code1} centerTitle="New Method" leftTitle="EXAMPLE" rightTitle={["CURL", "node.js", "python"]}/></div>
+                        <Header2 text = "What is JSONScout?" />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <Content text = "It's time to step into a new era of data extraction with JSON Scout where the insights you seek are just a query away.Make the shift." />
+                        <Header3 text = "Easy steps" />
+                        <Content text = "JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it JSON Scout saves development time and maintenance by comparing the old way of doing things vs using it" />
+                        
+                        
                     
                     
-                
-                
-                
-                
-                
-                </div>
-                <div className="w-[fit-content]]">
-                    <Session1 text = "On this page" />
-                    <Session3 text = "Whats is JSONScout?" selected = {true} />
-                    <Session3 text = "Main Features" selected = {false} />
-                    <Session3 text = "How to Use These Docs" selected = {false} />
-                    <Session3 text = "Pre-Requisite Knowledge" selected = {false} />
-                    <Session3 text = "Accessibility" selected = {false} />
-                    <Session3 text = "Join our Community" selected = {false} />
-                </div>
+                    
+                    
+                    
+                    </div>
                 </div>
             </div>
             <p className={`sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>

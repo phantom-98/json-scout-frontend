@@ -34,7 +34,7 @@ export const CardCan = (props:{title: string, description: string, font: string 
     );
 }
 
-export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string}) => {
+export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string, link: string, onClick: () => void}) => {
 
     return (
         <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
@@ -66,7 +66,9 @@ export const CardMembership = (props:{title: string, price: string, description:
                     })}
                 </div>
             </div>
-            <button className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100 ${props.standard?"text-black standard border-[#FFFFFF]":" nostandard border-[#8593A3]"}`}>{props.button}</button>
+            <Link href={props.link}>
+                <button onClick={props.onClick} className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100 ${props.standard?"text-black standard border-[#FFFFFF]":" nostandard border-[#828A3}"}`}>{props.button}</button>
+            </Link>
         </div>
     );
 }

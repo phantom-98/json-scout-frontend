@@ -1,7 +1,6 @@
 'use client'
-import axios, { AxiosResponse } from "axios";
-import FormData from 'form-data';
-import { access } from "fs";
+import axios from "axios";
+import { useRouter } from 'next/router';
 
 type ReturnType = {
     [key: string]: any;
@@ -258,4 +257,74 @@ export const submitContactForm = async (email: string, contactType: string, mess
     return error
     });
 
+}
+
+// Create a new API endpoint to change the users membership
+export const changeMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/update_plan?price_id=${price_id}`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        },
+        data: {
+            membership: membership
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        // Redirect the user to the response link
+        useRouter().push(response.data.link);
+        return "Success"
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
+// Create a new API endpoint to review changes to the users membership
+export const reviewMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/upcoming_invoice?price_id=${price_id}`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        },
+        data: {
+            membership: membership
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        // Redirect the user to the response link
+        useRouter().push(response.data.link);
+        return "Success"
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
+// Create a new API endpoint to cancel the users membership
+export const cancelMembership = async (token:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/cancel`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        return "Success"
+    })
+    .catch((error) => {
+        return error
+    });
 }

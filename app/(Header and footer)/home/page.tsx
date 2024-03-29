@@ -371,27 +371,27 @@ export const Home = (props : any) => {
                 <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                     <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                        
-                    <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" allowed={[
+                    <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" link="/register" allowed={[
                         "2,000 Tokens",
                         "Basic Data Extraction",
                         "250 Character Limit"
                     ]} unallowed={[
                         "Batch Processing",
                     ]} button="Get Started" id="trial" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                    <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" allowed={[
+                    <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/register" allowed={[
                         "100,000 Tokens",
                         "Basic Data Extraction",
                         "250 Character Limit",
                     ]} unallowed={[
                         "Batch Processing"
                     ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                    <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" allowed={[
+                    <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/register" allowed={[
                         "4M Tokens",
                         "Basic Data Extraction",
                         "500 Character Limit",
                         "100 Batch Limit"
                     ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                    <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" allowed={[
+                    <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="/register" allowed={[
                         "20M Tokens",
                         "Basic Data Extraction",
                         "1000 Character Limit",
