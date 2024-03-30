@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useParams, usePathname, useRouter } from 'next/navigation'
 
 import Image from "next/image";
-import logoimg from "../../../public/JSON-LOGO 1.svg"
+import logo from "../../../public/logo_black.svg"
 import frame from "../../../public/Frame.svg"
 import React, { useEffect } from "react";
 import { useAuth } from "../context/context";
@@ -122,7 +122,7 @@ const Header = (props:any) => {
                 <Image src={frame} alt="frame" className="w-auto h-full sm:hidden" onClick={() => {
                     setShow(prev => !prev)
                 }}></Image>
-                    <div className="sm:w-[12%] w-[44%] cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logoimg} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
+                    <div className="sm:w-[12%] w-[44%] cursor-pointer" onClick={()=>{router.push("/")}}><Image src={logo} alt="logimage" className="sm:h-auto w-auto sm:w-full"></Image></div>
                     <div className={`flex sm:justify-between sm:flex-row flex-col sm:gap-[24rem] justify-start gap-[30rem] items-center sm:[position:inherit] w-[100vw] h-[100vh] top-0 bottom-0 left-0 right-0 bg-white sm:bottom-[inherit] sm:w-[fit-content] sm:h-[fit-content] font-medium sm:text-[2rem] text-[12rem] sm:leading-[3rem] leading-[16rem] sm:[display:inherit] ${show?"":"hidden"}`}>
                     <div className="flex sm:flex-row flex-col justify-between items-center sm:gap-[5rem] gap-[0px] w-full px-[10rem] pt-[38rem] sm:p-0">
                         <Link  className="w-full sm:w-[fit-content] border-y-gray-100 border-y-2 sm:border-y-0 py-[10rem] sm:py-4 flex justify-center" href="/"><span className={activeHeader == "Home"?'selected':''}>Home</span></Link>

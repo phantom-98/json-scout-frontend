@@ -18,7 +18,7 @@ import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { useRouter } from "next/navigation"
 import { getCookie, setCookie } from "cookies-next"
-import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership } from "@/app/backendApis"
+import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership, getRequests, createPortal } from "@/app/backendApis"
 import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
@@ -47,6 +47,9 @@ export default (props:any) => {
     const [pricing, setPricing] = React.useState("monthly")
     const [apiState, setApiState] = React.useState("")
     const [currentPlan, setCurrentPlan] = useState<string | null>(null);
+    const [is_plan_cancelled, setIsPlanCancelled] = useState(false);
+    const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
+    const [upcomingChargeAmount, setUpcomingChargeAmount] = useState<string | null>(null);
 
     function formatNumber(num: number) {
         if (num >= 1000000) {
@@ -55,6 +58,20 @@ export default (props:any) => {
           return (num / 1000).toFixed(2) + 'K';
         } else {
           return num;
+        }
+    }
+
+    const getUpcomingInvoice = async (event, price_id: string) => {
+        const token = getCookie("access_token");
+        if(token != null) {
+            const response = await reviewMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
+
+            // Using response data, set upcoming date and upcoming charge amount
+            setNextInvoiceDate(response.next_invoice_date);
+            setUpcomingChargeAmount(response.prorated_amount);
+
+        } else {
+            console.error('No access token found');
         }
     }
 
@@ -170,8 +187,9 @@ export default (props:any) => {
             const tokenlimit = localStorage.getItem("token_limit")
             const tokens_used = localStorage.getItem("tokens_used")
             const current_plan = localStorage.getItem("current_plan")
+            const is_plan_cancelled = localStorage.getItem('is_plan_cancelled') === 'true';
 
-            if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null && tokens_used != null) {
+            if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null && tokens_used != null && is_plan_cancelled != null) {
                 setFirstName(first);
                 setLastName(last);
                 setEmail(ema);
@@ -180,6 +198,7 @@ export default (props:any) => {
                 setBatch_Limit(batchlimit);
                 setToken_Limit(tokenlimit);
                 setTokens_Used(tokens_used);
+                setIsPlanCancelled(is_plan_cancelled);
                 if(current_plan != null) {
                     setCurrentPlan(current_plan);
                 } else {
@@ -344,13 +363,15 @@ export default (props:any) => {
                         <Cell ID={555555} Created="Nov 12, 2024" view={viewRequest} />
                     </div>
                 </div>
-                {currentPlan && (
+                
+                {!is_plan_cancelled && (
                     <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                         <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                         <a onClick={cancelPlan} className="sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100">Cancel Plan</a>
                         </div>
                     </div>
                 )}
+
                 <div className={`${state === 4 ?'':'hidden'} flex flex-col items-center`}>
                 <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
                     <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
@@ -364,30 +385,34 @@ export default (props:any) => {
                             "250 Character Limit",
                         ]} unallowed={[
                             "Batch Processing"
-                        ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
+                        ]} 
+                        isCurrentPlan={currentPlan === 'price_1OSAI4GiLNj7uqwLT22xq8Ay' || currentPlan === 'price_1OSAI4GiLNj7uqwLH8uZPlTt'}
+                        button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
                         <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
                             "4M Tokens",
                             "Basic Data Extraction",
                             "500 Character Limit",
                             "100 Batch Limit"
-                        ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
+                        ]} unallowed={[]} 
+                        isCurrentPlan={currentPlan === 'price_1Oja8kGiLNj7uqwLYaZTwdu0' || currentPlan === 'price_1Oja95GiLNj7uqwL3RkUYDt5'}
+                        button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
                         <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
                             "20M Tokens",
                             "Basic Data Extraction",
                             "1000 Character Limit",
                             "500 Batch Limit",
-                        ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
-                        onClick={(event) => handleButtonClick(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
+                        ]} unallowed={[]}
+                        isCurrentPlan={currentPlan === 'price_1OjaAMGiLNj7uqwL0N9JQYOm' || currentPlan === 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm'}
+                        button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
+                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
 
                     </div>
                 </div>
                 </div>
             </div>
-
         </div>
-
         </>
     )
 }

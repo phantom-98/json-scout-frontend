@@ -229,7 +229,6 @@ export const reset = async (token:string): Promise<string> => {
       });
 }
 
-// Create a new API endpoint to submit a contact form
 export const submitContactForm = async (email: string, contactType: string, message: string, recaptcha: string, accessToken: string): Promise<string> => {
         
     const FormData = require('form-data');
@@ -259,7 +258,6 @@ export const submitContactForm = async (email: string, contactType: string, mess
 
 }
 
-// Create a new API endpoint to change the users membership
 export const changeMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
     let config = {
         method: 'post',
@@ -284,7 +282,6 @@ export const changeMembership = async (token:string, membership:string, price_id
     });
 }
 
-// Create a new API endpoint to review changes to the users membership
 export const reviewMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
     let config = {
         method: 'post',
@@ -300,16 +297,13 @@ export const reviewMembership = async (token:string, membership:string, price_id
       
     return axios.request(config)
     .then((response) => {
-        // Redirect the user to the response link
-        useRouter().push(response.data.link);
-        return "Success"
+        return response.data
     })
     .catch((error) => {
         return error
     });
 }
 
-// Create a new API endpoint to cancel the users membership
 export const cancelMembership = async (token:string): Promise<string> => {
     let config = {
         method: 'post',
@@ -323,6 +317,44 @@ export const cancelMembership = async (token:string): Promise<string> => {
     return axios.request(config)
     .then((response) => {
         return "Success"
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
+export const getRequests = async (token:string): Promise<any> => {
+    let config = {
+        method: 'get',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/requests`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        return response.data
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
+export const createPortal = async (token:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/portal`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        return response.data
     })
     .catch((error) => {
         return error
