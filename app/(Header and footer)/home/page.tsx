@@ -23,10 +23,11 @@ import plus from "../../../public/Group 1000001523.svg"
 import { Step } from "../../components/Step/page";
 import { Card, CardCan, CardMembership } from "../../components/Card/page";
 import minus from "../../../public/minus.svg"
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Question } from "../../components/question/page";
 import { Context, useAuth } from "@/app/components/context/context";
 import Link from "next/link";
+import { fetchInsight } from "@/app/backendApis";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -183,9 +184,24 @@ export const Home = (props : any) => {
 
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context)
 
+    const [insightInput, setInsightInput] = useState(`{
+        "desired_output": "product, sentiment(good or bad or else)",
+        "content": "I've been using the Galaxy Explorer Smartwatch. The battery life is incredible, easily lasting three days on a single charge, even with heavy use. However, the touchscreen responsiveness leaves a lot to be desired."
+      }`);
+    const [insightOutput, setInsightOutput] = useState(codeRight[1]);
+
     React.useEffect(()=>{
         
     },[])
+
+    const fetch = async () => {
+        const api_key = localStorage.getItem("api_key");
+        const res = await fetchInsight(api_key ?? "", insightInput);
+        console.log(res)
+        if (res) {
+            setInsightOutput(JSON.stringify(res));
+        }
+    }
 
     return (
         <>
@@ -193,8 +209,8 @@ export const Home = (props : any) => {
             {!logState && (
                 <>
 
-            <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
-                <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Register for a free 2,000 tokens!</span>
+                <div className="my-[10rem] sm:mb-[2.8rem] sm:mt-[8rem]">
+                    <span className="text-[8rem] leading-[5rem] px-[8rem] py-[4rem] sm:px-[2.4rem] sm:py-[1.6rem] sm:text-[2rem] rounded-full font-semibold text-[#449D5D] shadow-lg">Register for a free 2,000 tokens!</span>
                 </div>
                 <div className="mt-[10rem] sm:mt-[2rem] sm:flex sm:justify-between">
                     
@@ -278,7 +294,7 @@ export const Home = (props : any) => {
                     </div>
                 </div>
 
-                <div id="how" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] sm:mt-[15rem]' mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
+                <div id="how" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] sm:mt-[15rem] mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
                     <div className="flex flex-col items-center text-center">
                         <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>How It Works</p>
                         <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">'Click through the different examples of data that JSON Scout is able to process</p>
@@ -300,110 +316,118 @@ export const Home = (props : any) => {
                         <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
                         <CustomCodeBlock leftTitle="OUTPUT" centerTitle=""code={codeRight[num]}/>
                     </div>
-                    <button className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn ${logState?'sm:block':'sm:hidden'}`}>Process</button>
-                    <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] ${logState?'sm:top-[35rem]':'sm:top-[30rem]'}  w-[4%] h-auto`}></Image>
-                    <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] ${logState?'sm:top-[100rem]':'sm:top-[122rem]'}  w-[4%] h-auto`}></Image>
+                    <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] sm:top-[30rem] w-[4%] h-auto`}></Image>
+                    <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[122rem] w-[4%] h-auto`}></Image>
                 </div>
 
-                    <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
-                        <Card title="Old way of doing it;" font={`${space_grotesk.className}`} body={[
-                            "The old way of extracting specific data requires you to create a REGEX pattern for a specific data format.",
-                            "This process is time-consuming and requires constant maintenance to keep up with changing data formats. Keep in mind, it won't consider typos.",
-                            "JSON Scout eliminates the need for REGEX patterns, saving you time and effort."
-                        ]}/>
-                        <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" code={oldMethodSnippet}/>
+                <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
+                    <Card title="Old way of doing it;" font={`${space_grotesk.className}`} body={[
+                        "The old way of extracting specific data requires you to create a REGEX pattern for a specific data format.",
+                        "This process is time-consuming and requires constant maintenance to keep up with changing data formats. Keep in mind, it won't consider typos.",
+                        "JSON Scout eliminates the need for REGEX patterns, saving you time and effort."
+                    ]}/>
+                    <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="Old Method" code={oldMethodSnippet}/>
+                </div>
+
+                <div className="sm:flex-row-reverse sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
+                    <Card title="New way using JSON Scout;" font={`${space_grotesk.className}`} body={[
+                        "With JSON Scout you can extract data without the need for REGEX patterns.",
+                        "Simply provide the desired output and JSON Scout will handle the rest.",
+                        "JSON Scout is more accurate and efficient than REGEX, saving you time and effort."
+                    ]} button/>
+                    <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="New Method" code={newMethodSnippet}/>
+                </div>
+
+                <div className="sm:mt-[12rem] mt-[36rem]">
+                    <div className="flex flex-col items-center text-center">
+                        <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>With JSON Scout You Can</p>
+                        <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[76%] sm:leading-[6rem] text-[#828A91] text-wrap">Stop the endless cycle of writing and rewriting complex regex. JSON Scout intuitively understands and locates the data you need with human-like precision.</p>
                     </div>
 
-                    <div className="sm:flex-row-reverse sm:justify-between sm:gap-0 flex flex-col justify-center gap-[50px] mt-[48px]">
-                        <Card title="New way using JSON Scout;" font={`${space_grotesk.className}`} body={[
-                            "With JSON Scout you can extract data without the need for REGEX patterns.",
-                            "Simply provide the desired output and JSON Scout will handle the rest.",
-                            "JSON Scout is more accurate and efficient than REGEX, saving you time and effort."
-                        ]} button/>
-                        <CustomCodeBlock leftTitle="EXAMPLE" centerTitle="New Method" code={newMethodSnippet}/>
-                    </div>
-
-                    <div className="sm:mt-[12rem] mt-[36rem]">
-                        <div className="flex flex-col items-center text-center">
-                            <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>With JSON Scout You Can</p>
-                            <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[76%] sm:leading-[6rem] text-[#828A91] text-wrap">Stop the endless cycle of writing and rewriting complex regex. JSON Scout intuitively understands and locates the data you need with human-like precision.</p>
+                    <div className="sm:mt-[70px] mt-[32rem] flex flex-col justify-center gap-[70px]">
+                        <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[70px]">
+                            <CardCan font={`${manrop.className}`} img={frame117} title="Expand beyond limits" description="Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns."/>
+                            <CardCan font={`${manrop.className}`} img={frame191} title="Boost Productivity" description="Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward."/>
+                            <CardCan font={`${manrop.className}`} img={frame1192} title="Future-Proof" description="As your data grows and changes, JSON Scout evolves with it, continuously learning from interactions to provide more accurate extractions."/>
                         </div>
-
-                        <div className="sm:mt-[70px] mt-[32rem] flex flex-col justify-center gap-[70px]">
-                            <div className="sm:flex-row sm:justify-between sm:gap-0 flex flex-col justify-center gap-[70px]">
-                                <CardCan font={`${manrop.className}`} img={frame117} title="Expand beyond limits" description="Regex has its limits. JSON Scout adapts to your evolving data needs, understanding context and semantics, not just patterns."/>
-                                <CardCan font={`${manrop.className}`} img={frame191} title="Boost Productivity" description="Redirect your valuable time and talent from the tedium of pattern matching to strategic initiatives that drive your business forward."/>
-                                <CardCan font={`${manrop.className}`} img={frame1192} title="Future-Proof" description="As your data grows and changes, JSON Scout evolves with it, continuously learning from interactions to provide more accurate extractions."/>
-                            </div>
-                            <div className="sm:flex-row sm:justify-center sm:gap-[5%] flex flex-col justify-center gap-[70px]">                        
-                                <CardCan font={`${manrop.className}`} img={frame1194} title="API Integration" description="Seamlessly integrate JSON Scout into your existing data pipeline, whether you're using Python, Node.js, or any other language."/>
-                                <CardCan font={`${manrop.className}`} img={frame1193} title="Batch Processing" description="Our API is built for scale, whether you're processing a few requests or hundreds. JSON Scout is designed to fit seamlessly into your existing data pipeline."/>
-                            </div>
+                        <div className="sm:flex-row sm:justify-center sm:gap-[5%] flex flex-col justify-center gap-[70px]">                        
+                            <CardCan font={`${manrop.className}`} img={frame1194} title="API Integration" description="Seamlessly integrate JSON Scout into your existing data pipeline, whether you're using Python, Node.js, or any other language."/>
+                            <CardCan font={`${manrop.className}`} img={frame1193} title="Batch Processing" description="Our API is built for scale, whether you're processing a few requests or hundreds. JSON Scout is designed to fit seamlessly into your existing data pipeline."/>
                         </div>
                     </div>
+                </div>
 
-                    <div id="pricing" className="sm:pt-[15rem] sm:mt-0 mt-[36rem] flex flex-col items-center">
-                        <div className="flex flex-col items-center text-center">
-                            <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>Simple Pricing For Everyone</p>
-                            <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:leading-[6rem] text-[#828A91] text-wrap">Choose a pricing plan that suites your needs.</p>
-                        </div>
+                <div id="pricing" className="sm:pt-[15rem] sm:mt-0 mt-[36rem] flex flex-col items-center">
+                    <div className="flex flex-col items-center text-center">
+                        <p className={`text-[14rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>Simple Pricing For Everyone</p>
+                        <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:leading-[6rem] text-[#828A91] text-wrap">Choose a pricing plan that suites your needs.</p>
+                    </div>
 
-                        <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[10rem] bg-gray-200 border-[1px] shadow-effect border-gray-200 rounded-[1rem]">
-                            <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
-                            <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Annual Plan</div>
-                        </div>           
-                        <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
-                            <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
-                            
-                            <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" link="/register" allowed={[
-                                "2,000 Tokens",
-                                "Basic Data Extraction",
-                                "250 Character Limit"
-                            ]} unallowed={[
-                                "Batch Processing",
-                            ]} button="Get Started" id="trial" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                            <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/register" allowed={[
-                                "100,000 Tokens",
-                                "Basic Data Extraction",
-                                "250 Character Limit",
-                            ]} unallowed={[
-                                "Batch Processing"
-                            ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                            <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/register" allowed={[
-                                "4M Tokens",
-                                "Basic Data Extraction",
-                                "500 Character Limit",
-                                "100 Batch Limit"
-                            ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                            <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="/register" allowed={[
-                                "20M Tokens",
-                                "Basic Data Extraction",
-                                "1000 Character Limit",
-                                "500 Batch Limit",
-                            ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year'}/>
+                    <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[10rem] bg-gray-200 border-[1px] shadow-effect border-gray-200 rounded-[1rem]">
+                        <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
+                        <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Annual Plan</div>
+                    </div>           
+                    <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                        <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                        
+                        <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" link="/register" allowed={[
+                            "2,000 Tokens",
+                            "Basic Data Extraction",
+                            "250 Character Limit"
+                        ]} unallowed={[
+                            "Batch Processing",
+                        ]} button="Get Started" id="trial" type={pricing == "monthly"?'/ Month':'/ Year'}/>
+                        <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/register" allowed={[
+                            "100,000 Tokens",
+                            "Basic Data Extraction",
+                            "250 Character Limit",
+                        ]} unallowed={[
+                            "Batch Processing"
+                        ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'}/>
+                        <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/register" allowed={[
+                            "4M Tokens",
+                            "Basic Data Extraction",
+                            "500 Character Limit",
+                            "100 Batch Limit"
+                        ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'}/>
+                        <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="/register" allowed={[
+                            "20M Tokens",
+                            "Basic Data Extraction",
+                            "1000 Character Limit",
+                            "500 Batch Limit",
+                        ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year'}/>
 
-                            </div>
-                        </div>
-                        <div className="sm:hidden flex justify-center gap-[11rem]">
-                            <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#trial"></a>
-                            <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#starter"></a>
-                            <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#standard"></a>
-                            <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#premium"></a>
                         </div>
                     </div>
+                    <div className="sm:hidden flex justify-center gap-[11rem]">
+                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#trial"></a>
+                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#starter"></a>
+                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#standard"></a>
+                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#premium"></a>
+                    </div>
+                </div>
 
             </>
             )}
 
             {logState && (
-            <>
-            <div>
-                TO DO: Add the Logged in Page View
+            <div id="insights" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] sm:mt-0 mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
+                <div className="flex flex-col items-center text-center">
+                    <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>Fetch Insights</p>
+                    <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
+                </div>
+                    
+                <div className="flex flex-col items-center justify-between gap-[12rem] sm:flex-row sm:gap-[16px] sm:h-[56rem]">
+                    <CustomCodeBlock leftTitle="INPUT" centerTitle="" code={insightInput}/>
+                    <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
+                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput}/>
+                </div>
+                <button onClick={fetch} className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn sm:block`}>Process</button>
+                <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] sm:top-[40rem] w-[4%] h-auto`}></Image>
+                <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[110rem] w-[4%] h-auto`}></Image>
             </div>
-            </>
             )}
             
-
             <p className={`${logState?'sm:pt-[15rem]':''} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
 
             <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">

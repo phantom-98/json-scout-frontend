@@ -360,3 +360,18 @@ export const createPortal = async (token:string): Promise<string> => {
         return error
     });
 }
+
+export const fetchInsight = async (apiKey:string, input:string): Promise<any> => {
+    return axios.post(`https://fetch.jsonscout.com/`, JSON.stringify(input), {
+        headers: {
+            'Content-Type': 'application/json',
+            'api_key': `${apiKey}`
+        }
+    })
+    .then((response) => {
+        return response.data
+    })
+    .catch((error) => {
+        return error
+    });
+}
