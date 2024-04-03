@@ -19,12 +19,9 @@ import frame1194 from "../../../public/Frame 118.svg"
 import check from "../../../public/CheckMark.svg"
 import laby from "../../../public/lyn.svg"
 import { CustomCodeBlock } from "../../components/CustomCodeBlock/page";
-import plus from "../../../public/Group 1000001523.svg"
 import { Step } from "../../components/Step/page";
 import { Card, CardCan, CardMembership } from "../../components/Card/page";
-import minus from "../../../public/minus.svg"
 import React, { useContext, useEffect, useState } from "react";
-import { Question } from "../../components/question/page";
 import { Context, useAuth } from "@/app/components/context/context";
 import Link from "next/link";
 import { fetchInsight } from "@/app/backendApis";
@@ -178,7 +175,6 @@ const codeRight:string[] = [
 export const Home = (props : any) => {
     const [num, setNum] = React.useState(0) 
 
-    const [order, setOrder] = React.useState(1)
 
     const [pricing, setPricing] = React.useState("monthly")
 
@@ -427,20 +423,6 @@ export const Home = (props : any) => {
                 <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[110rem] w-[4%] h-auto`}></Image>
             </div>
             )}
-            
-            <p className={`${logState?'sm:pt-[15rem]':''} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
-
-            <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="We leverage the power of LLMs to determine your desired content output." n = {1} selected = {order} change={setOrder}/>
-                    <Question img1={plus} img2={minus} question="Is it possible to specific an output format?" answer="Yes! If you require a date formatted in a specific manner, provide it after your desired output. Check the examples above." n = {2} selected = {order} change={setOrder} />
-                    
-                </div>
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How many tokens is an average request?" answer="We've found that an average request with a 250 character limit is about 300 tokens. This may change on your desired outputs." n = {3} selected = {order} change={setOrder} />
-                    <Question img1={plus} img2={minus} question="What happens if I go over my token limit?" answer="If you reach your token limit, you have two choices, the first is to wait for the monthly reset. The second is to upgrade your plan. However, if you are on the premium plan then contact sales@jsonscout.com" n = {4} selected = {order} change={setOrder} />
-                </div>
-            </div>
         </>
         
     )
