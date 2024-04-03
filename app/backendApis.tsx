@@ -362,12 +362,21 @@ export const createPortal = async (token:string): Promise<string> => {
 }
 
 export const fetchInsight = async (apiKey:string, input:string): Promise<any> => {
-    return axios.post(`https://fetch.jsonscout.com/`, JSON.stringify(input), {
-        headers: {
-            'Content-Type': 'application/json',
-            'api_key': `${apiKey}`
-        }
-    })
+
+    let data = JSON.stringify(input);
+
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: 'https://fetch.jsonscout.com/',
+        headers: { 
+          'Content-Type': 'application/json',
+          'api_key': `${apiKey}`
+        },
+        data : data
+    };
+
+    return axios.request(config)
     .then((response) => {
         return response.data
     })
