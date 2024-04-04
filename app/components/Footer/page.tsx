@@ -8,38 +8,15 @@ import linkedIn from "../../../public/social/linkedIn.svg";
 import twitter from "../../../public/social/twitter.svg";
 
 import background from "../../../public/Background.svg";
-import { Context, useAuth } from "../context/context";
-import { Space_Grotesk } from "next/font/google";
-import { Question } from "../../components/question/page";
-import plus from "../../../public/Group 1000001523.svg"
-import minus from "../../../public/minus.svg"
-
-const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
+import { Context } from "../context/context";
 
 export const Footer = () => {
 
     const currentYear = new Date().getFullYear();
     const {logState} = React.useContext(Context)
-    const [order, setOrder] = React.useState(1)
-    
+
     return (
         <>
-        <div className="sm:px-[14%] px-12rem">
-            <p className={`${logState?'sm:pt-[15rem]':''} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] px-40 text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
-
-            <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="We leverage the power of LLMs to determine your desired content output." n = {1} selected = {order} change={setOrder}/>
-                    <Question img1={plus} img2={minus} question="Is it possible to specific an output format?" answer="Yes! If you require a date formatted in a specific manner, provide it after your desired output. Check the examples above." n = {2} selected = {order} change={setOrder} />
-                    
-                </div>
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How many tokens is an average request?" answer="We've found that an average request with a 250 character limit is about 300 tokens. This may change on your desired outputs." n = {3} selected = {order} change={setOrder} />
-                    <Question img1={plus} img2={minus} question="What happens if I go over my token limit?" answer="If you reach your token limit, you have two choices, the first is to wait for the monthly reset. The second is to upgrade your plan. However, if you are on the premium plan then contact sales@jsonscout.com" n = {4} selected = {order} change={setOrder} />
-                </div>
-            </div>
-        </div>
-
         <div className={`${logState?'sm:pt-[5rem] pt-[12rem]':'sm:pt-[15rem]'}  sm:px-[14%] sm:w-full sm:pb-[5rem] pt-[34rem] pb-[10rem] bg-[#161C28] text-white relative`}>
             {!logState && <div className="flex flex-col items-center">
                 <p className=" sm:text-[8rem] sm:mb-[12rem] sm:leading-[10rem] text-[15rem] items-center leading-[23rem] mb-[19rem] font-semibold">Ready to Get Started</p>

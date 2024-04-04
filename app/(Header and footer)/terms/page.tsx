@@ -3,27 +3,9 @@ import { Header3 } from "@/app/components/Header3/page"
 import { Header4 } from "@/app/components/Header4/page"
 import { Content } from "@/app/components/content/page"
 import { Header1 } from "@/app/components/header1/page"
-import { Question } from "@/app/components/question/page"
 import React from "react"
 
-import minus from "../../../public/minus.svg"
-import plus from "../../../public/Group 1000001523.svg"
-import { Context } from "@/app/components/context/context"
-import { useContext } from "react"
-
-import { Space_Grotesk } from "next/font/google";
-
-
-const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
-
-
-
-
 export default () => {
-
-    const {logState} = useContext(Context)
-    const [order, setOrder] = React.useState(1)
-
 
     return (
         <>
@@ -51,20 +33,6 @@ export default () => {
                 <Content text = "To the maximum extent permitted by law, in no event shall JSON Scout be liable for any indirect, incidental, special, consequential, or punitive damages, or any loss of profits or revenues." />
                 <Header3 text = "8. Governing Law" />
                 <Content text = "These Terms are governed by and construed in accordance with the laws of Canada. Any legal action or proceeding arising out of or relating to these Terms shall be brought in the state or federal courts located in Canada, and you hereby consent to the jurisdiction of such courts." />
-            </div>
-            <p className={`${logState?'sm:pt-[15rem]':'sm:pt-[15rem]'} sm:text-[6rem] sm:leading-[8rem] sm:mt-[0rem] text-[16rem] mt-[27rem] text-center leading-[20rem] font-semibold ${space_grotesk.className}`}>Frequently Asked Questions</p>
-
-            <div className="sm:mt-[9rem] sm:items-center sm:flex-row sm:px-[10rem] sm:gap-[4rem] flex flex-col justify-start gap-[6rem] px-[20px] mt-[18rem] mb-[12rem]">
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {1} selected = {order} change={setOrder}/>
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {2} selected = {order} change={setOrder} />
-                    
-                </div>
-                <div className="sm:w-[48%] sm:gap-[4rem] sm:justify-start flex flex-col justify-start gap-[6rem]">
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {3} selected = {order} change={setOrder} />
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {4} selected = {order} change={setOrder} />
-                    <Question img1={plus} img2={minus} question="How do you determine the correct data to extract?" answer="Really boy law county she unable her sister. Feet you off its like like six. Among sex are leave law built now. In built table in an rapid blush. Merits behind on afraid or warmly." n = {5} selected = {order} change={setOrder} />
-                </div>
             </div>
         </>
     )

@@ -20,7 +20,10 @@ import check from "../../../public/CheckMark.svg"
 import laby from "../../../public/lyn.svg"
 import { CustomCodeBlock } from "../../components/CustomCodeBlock/page";
 import { Step } from "../../components/Step/page";
+
 import { Card, CardCan, CardMembership } from "../../components/Card/page";
+import { FAQ } from "../../components/FAQ/page";
+
 import React, { useContext, useEffect, useState } from "react";
 import { Context, useAuth } from "@/app/components/context/context";
 import Link from "next/link";
@@ -435,6 +438,8 @@ export const Home = (props : any) => {
                 <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[110rem] w-[4%] h-auto`}></Image>
             </div>
             )}
+
+            <FAQ/>
         </>
         
     )
