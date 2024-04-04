@@ -24,11 +24,13 @@ import { Step } from "../../components/Step/page";
 import { Card, CardCan, CardMembership } from "../../components/Card/page";
 import { FAQ } from "../../components/FAQ/page";
 
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Context, useAuth } from "@/app/components/context/context";
 import Link from "next/link";
 import { fetchInsight } from "@/app/backendApis";
-import { CircularProgress } from "@mui/material";
+import { CircularProgress, useStepContext } from "@mui/material";
+import { Slide, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -180,27 +182,56 @@ export const Home = (props : any) => {
     const [num, setNum] = React.useState(0) 
     const [pricing, setPricing] = React.useState("monthly");
     const [fetching, setFetching] = React.useState(false);
+    const lineRef = useRef<HTMLDivElement>(null);
+    const contentRef = useRef<HTMLTextAreaElement>(null);
+    const [lineNumber, setLineNumber] = React.useState("");
 
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context)
 
-    const [insightInput, setInsightInput] = useState(`{
-        "desired_output": "product, sentiment(good or bad or else)",
-        "content": "I've been using the Galaxy Explorer Smartwatch. The battery life is incredible, easily lasting three days on a single charge, even with heavy use. However, the touchscreen responsiveness leaves a lot to be desired."
-      }`);
+    const [desiredOutput, setDesiredOutput] = useState("product, sentiment(good or bad or else)");
+    const [content, setContent] = useState("I've been using the Galaxy Explorer Smartwatch. The battery life is incredible, easily lasting three days on a single charge, even with heavy use. However, the touchscreen responsiveness leaves a lot to be desired.");
+
+    // const [insightInput, setInsightInput] = useState({});
     const [insightOutput, setInsightOutput] = useState(codeRight[1]);
 
     React.useEffect(()=>{
-        
     },[])
+
+    React.useEffect(() => {
+        if (lineRef.current) {
+            const ary = [];
+            for (let i = 1; i <= 100; i++){
+                ary[i-1] = i;
+            }
+            lineRef.current.innerHTML = ary.join("<br/>")
+        }
+        if (contentRef.current && lineRef.current) {
+            contentRef.current.addEventListener("scroll", () => {
+                lineRef.current.scrollTop = contentRef.current.scrollTop;
+            })
+        }
+    }, [logState])
 
     const fetch = async () => {
         if (fetching) return;
         const api_key = localStorage.getItem("api_key");
         setFetching(true);
-        const res = await fetchInsight(api_key ?? "", insightInput);
+        const res = await fetchInsight(api_key ?? "", {desired_output: desiredOutput, content: content});
         
-        if (res) {
-            setInsightOutput(res);
+        if (res && res.data) {
+            setInsightOutput(JSON.stringify(res.data));
+        } else {
+            toast.error("Unknown error occurred.",{
+                position: "bottom-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+                transition: Slide,
+                })
         }
         setFetching(false);
     }
@@ -419,23 +450,47 @@ export const Home = (props : any) => {
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
                 </div>
                     
-                <div className="flex flex-col items-center justify-between gap-[12rem] sm:flex-row sm:gap-[16px] sm:h-[56rem]">
-                    <CustomCodeBlock leftTitle="INPUT" centerTitle="" code={insightInput}/>
-                    <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
-                    <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput}/>
+                <div className="flex flex-col items-start justify-center gap-[12rem] sm:flex-row sm:gap-[8rem] sm:h-[56rem] w-full">
+                    <div className="sm:w-[36%] w-[90%] flex flex-col justify-start gap-[3rem]">
+                        <div className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">
+                            <h4>DESIRED OUTPUT</h4>
+                            <div className="w-full rounded-[16px] bg-white sm:p-[3rem] p-[10rem] shadow-lg">
+                                <input className="w-full outline-none" placeholder="date purchased, customer name, item purchased" value={desiredOutput} onChange={e => setDesiredOutput(e.target.value)}/>
+                            </div>
+                        </div>
+
+                        <div className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">
+                            <h4>CONTENT</h4>
+                            <div className="w-full rounded-[16px] shadow-lg overflow-hidden">
+                                <div className="bg-[#F3F4F5] sm:px-[4rem] sm:py-[1rem] p-[10rem] text-[#828A91]">DATA</div>
+                                <div className="bg-white sm:px-[2rem] sm:py-[1rem] p-[8rem] flex overflow-hidden sm:h-[33rem]">
+                                    <div ref={lineRef} className="text-right mr-[20px] text-[#828A91] h-full overflow-hidden"></div>
+                                    <textarea ref={contentRef} className="w-full outline-none overflow-hidden" rows={7} onChange={e => setContent(e.target.value)}>{content}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* <Image src={frame355} alt="frame355" className="lg:top-[710px] w-[8rem] h-auto sm:w-[3%]"></Image> */}
+                    <div className="sm:w-[36%] w-[90%] sm:h-full">
+                        <h4 className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">YOUR DATA RESULT</h4>
+                        <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput} className="w-full" loading={fetching} copy={true}/>
+                    </div>
                 </div>
                 <button onClick={fetch} className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn sm:block`}>
-                    {fetching && (
+                    {fetching ? (
+                        <div className="flex items-center justify-between gap-8">
                         <CircularProgress sx={{
                             color: (theme) =>
                                 theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
                             }}
                             size={24}
-                            thickness={4} />
+                            thickness={4} /><span>Processing...</span></div>
+                    ): (
+                        <span>Process</span>
                     )}
-                    Process</button>
-                <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] sm:top-[40rem] w-[4%] h-auto`}></Image>
-                <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[110rem] w-[4%] h-auto`}></Image>
+                    </button>
+                <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[28rem] sm:top-[40rem] w-[4%] h-auto`}></Image>
+                <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[28rem] sm:top-[114rem] w-[4%] h-auto`}></Image>
             </div>
             )}
 

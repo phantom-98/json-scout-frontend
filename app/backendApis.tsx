@@ -380,7 +380,7 @@ export const createPortal = async (token:string): Promise<string> => {
     });
 }
 
-export const fetchInsight = async (apiKey:string, input:string): Promise<any> => {
+export const fetchInsight = async (apiKey:string, input:object): Promise<any> => {
 
     let data = JSON.stringify(input);
 
