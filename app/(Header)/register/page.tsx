@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import sms from "../../../public/sms-notification.svg"
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation"
 import erralert from "../../../public/warning-2.svg"
 import eye1 from "../../../public/visible.svg"
 import CircularProgress from '@mui/material/CircularProgress';
+import { Context } from "@/app/components/context/context"
 
 
 const roboto = Roboto({
@@ -30,6 +31,13 @@ export default (props : any) =>{
     const [visible, setVisible] = useState(false)
     const [checked, setChecked] = useState(false)
     const [loading, setLoding] = useState(false)
+    const {logState} = useContext(Context);
+
+    useEffect(() => {
+        if (logState) {
+            router.push("/");
+        }
+    }, [logState])
 
     const handleSubmit = async () => {
         if (loading) return;
