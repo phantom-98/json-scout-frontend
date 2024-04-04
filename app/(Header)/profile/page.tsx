@@ -22,9 +22,11 @@ import { getProfile, reset, updateProfile, reviewMembership, changeMembership, c
 import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
-import { Slide, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+
 import {CopyToClipboard} from 'react-copy-to-clipboard';
+
+import { Bounce, Slide, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 export default (props:any) => {
     const router = useRouter();
@@ -50,6 +52,8 @@ export default (props:any) => {
     const [is_plan_cancelled, setIsPlanCancelled] = useState(false);
     const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
     const [upcomingChargeAmount, setUpcomingChargeAmount] = useState<string | null>(null);
+    const [nextPaymentAmount, setNextPaymentAmount] = useState<string | null>(null);
+    const [nextPaymentDate, setNextPaymentDate] = useState<string | null>(null);
 
     function formatNumber(num: number) {
         if (num >= 1000000) {
@@ -61,15 +65,11 @@ export default (props:any) => {
         }
     }
 
-    const getUpcomingInvoice = async (event, price_id: string) => {
+    const getUpcomingInvoice = async (price_id: string) => {
         const token = getCookie("access_token");
         if(token != null) {
             const response = await reviewMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
-
-            // Using response data, set upcoming date and upcoming charge amount
-            setNextInvoiceDate(response.next_invoice_date);
-            setUpcomingChargeAmount(response.prorated_amount);
-
+            return response
         } else {
             console.error('No access token found');
         }
@@ -161,6 +161,7 @@ export default (props:any) => {
             // Handle successful cancellation
             localStorage.removeItem('current_plan');
             setCurrentPlan(null);
+            toast.success('Plan Cancelled Succesfully')
           }
         } else {
           console.error('No access token found');
@@ -185,11 +186,10 @@ export default (props:any) => {
         const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
         if(token != null) {
           const result = await restartMembership(token); // Replace with your actual function to create a portal
-          if(result !== "Success") {
-            console.error('Failed to create portal:', result);
+          
+          if (result === 'Success') {
+            toast.success('Plan Restarted Succesfully')
           }
-        } else {
-          console.error('No access token found');
         }
       }
 
@@ -204,6 +204,7 @@ export default (props:any) => {
                     })
                 }
             }
+
             const first = localStorage.getItem("first_name");
             const last = localStorage.getItem("last_name")
             const ema = localStorage.getItem("email")
@@ -214,6 +215,7 @@ export default (props:any) => {
             const tokens_used = localStorage.getItem("tokens_used")
             const current_plan = localStorage.getItem("current_plan")
             const is_plan_cancelled = localStorage.getItem('is_plan_cancelled') === 'true';
+
 
             if(first != null && last != null && ema != null && apikey != null && characterlimit != null && batchlimit != null && tokenlimit != null && tokens_used != null && is_plan_cancelled != null) {
                 setFirstName(first);
@@ -232,7 +234,20 @@ export default (props:any) => {
                 }
             }
 
-            console.log(api_key)
+            // Get the upcoming invoice data using the current plan
+            if (current_plan) {
+                const nextInvoiceData = await getUpcomingInvoice(current_plan);
+
+                if (nextInvoiceData) {
+                    const nextPaymentAmount = nextInvoiceData.new_price;
+                    const nextPaymentDate = nextInvoiceData.next_invoice_date;
+
+                    // Set the nextPaymentAmount and nextPaymentDate
+                    setNextPaymentAmount(nextPaymentAmount);
+                    setNextPaymentDate(nextPaymentDate);
+                }
+            }
+
         } else {
             router.push("/login")
         }
@@ -397,7 +412,7 @@ export default (props:any) => {
 
                         <div className="mb-2">
                             <span className="text-xl font-medium">Your next payment</span>
-                            <span className="text-xl block">$100.00 Due By Nov 12, 2024</span> {/* Replace with your actual data */}
+                            <span className="text-xl block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
                         </div>
                         
                         <div className="flex justify-end">
