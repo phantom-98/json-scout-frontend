@@ -12,6 +12,7 @@ import erralert from "../../../public/warning-2.svg"
 import { setCookie } from "cookies-next"
 import { getProfile, signin } from "@/app/backendApis"
 import { CircularProgress } from "@mui/material"
+import { Context } from "@/app/components/context/context"
 
 const roboto = Roboto({
     weight: '400',
@@ -24,6 +25,7 @@ export default () => {
     const [password, setPassword] = React.useState("")
     const [errorMessage, setErrorMessage] = React.useState("")
     const [visible, setVisible] = React.useState(false)
+    const {logState} = React.useContext(Context);
     
     const router = useRouter()
 
@@ -65,7 +67,10 @@ export default () => {
     }
 
     React.useEffect(()=>{
-    }, [])
+        if (logState) {
+            router.push("/");
+        }
+    }, [logState])
 
     return(
         <div className={`${roboto.className} sm:mb-[10rem] px-[14rem] mb-[18rem] mt-[5%]`}>

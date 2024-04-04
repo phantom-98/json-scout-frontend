@@ -25,6 +25,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context, useAuth } from "@/app/components/context/context";
 import Link from "next/link";
 import { fetchInsight } from "@/app/backendApis";
+import { CircularProgress } from "@mui/material";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 const manrop = Manrope({ subsets: ["latin"]})
@@ -174,9 +175,8 @@ const codeRight:string[] = [
 
 export const Home = (props : any) => {
     const [num, setNum] = React.useState(0) 
-
-
-    const [pricing, setPricing] = React.useState("monthly")
+    const [pricing, setPricing] = React.useState("monthly");
+    const [fetching, setFetching] = React.useState(false);
 
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context)
 
@@ -191,12 +191,15 @@ export const Home = (props : any) => {
     },[])
 
     const fetch = async () => {
+        if (fetching) return;
         const api_key = localStorage.getItem("api_key");
+        setFetching(true);
         const res = await fetchInsight(api_key ?? "", insightInput);
-        console.log(res)
+        
         if (res) {
-            setInsightOutput(JSON.stringify(res));
+            setInsightOutput(res);
         }
+        setFetching(false);
     }
 
     return (
@@ -418,7 +421,16 @@ export const Home = (props : any) => {
                     <Image src={frame355} alt="frame355" className="xl:w-[5%] lg:top-[710px] w-[16rem] h-auto sm:w-[8%] md:w-[6%]"></Image>
                     <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput}/>
                 </div>
-                <button onClick={fetch} className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn sm:block`}>Process</button>
+                <button onClick={fetch} className={`sm:text-[2rem] sm:px-[6rem] sm:py-[1.4rem] px-[20px] py-[10px] rounded-[8px] text-[8rem] font-semibold primary-btn sm:block`}>
+                    {fetching && (
+                        <CircularProgress sx={{
+                            color: (theme) =>
+                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                            }}
+                            size={24}
+                            thickness={4} />
+                    )}
+                    Process</button>
                 <Image src={highlightO} alt="highlight" className={`hidden sm:block absolute sm:left-[20rem] sm:top-[40rem] w-[4%] h-auto`}></Image>
                 <Image src={highlight1} alt="highlight" className={`hidden sm:block absolute sm:right-[20rem] sm:top-[110rem] w-[4%] h-auto`}></Image>
             </div>
