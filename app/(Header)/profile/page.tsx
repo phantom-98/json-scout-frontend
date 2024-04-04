@@ -18,7 +18,7 @@ import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { useRouter } from "next/navigation"
 import { getCookie, setCookie } from "cookies-next"
-import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership, getRequests, createPortal } from "@/app/backendApis"
+import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership, restartMembership, getRequests, createPortal } from "@/app/backendApis"
 import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
@@ -165,7 +165,33 @@ export default (props:any) => {
         } else {
           console.error('No access token found');
         }
-      };      
+      };
+
+      const openBillingPortal = async () => {
+        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        if(token != null) {
+          const result = await createPortal(token); // Replace with your actual function to create a portal
+          if(result) {
+            window.location.href = result;
+          } else {
+            console.error('Failed to create portal:', result);
+          }
+        } else {
+          console.error('No access token found');
+        }
+      }
+      
+    const restartSubscription = async () => {
+        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        if(token != null) {
+          const result = await restartMembership(token); // Replace with your actual function to create a portal
+          if(result !== "Success") {
+            console.error('Failed to create portal:', result);
+          }
+        } else {
+          console.error('No access token found');
+        }
+      }
 
     const settingProfile = async () => {
         if(getCookie("access_token")) {
@@ -364,53 +390,77 @@ export default (props:any) => {
                     </div>
                 </div>
 
-                <div className={`${state === 4 ?'':'hidden'} flex flex-col items-center`}>
-                    
-                {!is_plan_cancelled && (
-                    <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
-                        <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
-                        <a onClick={cancelPlan} className="sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full duration-100">Cancel Plan</a>
+                <div className={`${state === 4 ?'':'hidden'}`}>
+
+                    <div className="flex flex-col bg-white shadow-md rounded-lg p-6 mt-6">
+                        <h2 className="text-3xl font-bold mb-4">Billing Summary</h2>
+
+                        <div className="mb-2">
+                            <span className="text-xl font-medium">Your next payment</span>
+                            <span className="text-xl block">$100.00 Due By Nov 12, 2024</span> {/* Replace with your actual data */}
+                        </div>
+                        
+                        <div className="flex justify-end">
+                            <button onClick={openBillingPortal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ease-in-out">
+                            Billing Portal
+                            </button>
+                        </div>
+
+                        {is_plan_cancelled ? (
+                            <div className="flex justify-end">
+                            <button onClick={restartSubscription} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ease-in-out">
+                                Restart Subscription
+                            </button>
+                            </div>
+                        ) : (
+                            <div className="flex justify-end">
+                            <button onClick={cancelPlan} className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-200 ease-in-out">
+                                Cancel Plan
+                            </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col items-center">
+
+                        <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
+                            <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
+                            <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
+                        </div>                
+                        <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
+                            <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                                <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/" allowed={[
+                                    "100,000 Tokens",
+                                    "Basic Data Extraction",
+                                    "250 Character Limit",
+                                ]} unallowed={[
+                                    "Batch Processing"
+                                ]} 
+                                isCurrentPlan={currentPlan === 'price_1OSAI4GiLNj7uqwLT22xq8Ay' || currentPlan === 'price_1OSAI4GiLNj7uqwLH8uZPlTt'}
+                                button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
+                                <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
+                                    "4M Tokens",
+                                    "Basic Data Extraction",
+                                    "500 Character Limit",
+                                    "100 Batch Limit"
+                                ]} unallowed={[]} 
+                                isCurrentPlan={currentPlan === 'price_1Oja8kGiLNj7uqwLYaZTwdu0' || currentPlan === 'price_1Oja95GiLNj7uqwL3RkUYDt5'}
+                                button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
+                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
+                                <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
+                                    "20M Tokens",
+                                    "Basic Data Extraction",
+                                    "1000 Character Limit",
+                                    "500 Batch Limit",
+                                ]} unallowed={[]}
+                                isCurrentPlan={currentPlan === 'price_1OjaAMGiLNj7uqwL0N9JQYOm' || currentPlan === 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm'}
+                                button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
+                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
+
+                            </div>
                         </div>
                     </div>
-                )}
-
-                <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
-                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
-                    <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
-                </div>                
-                <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
-                    <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
-                        <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/" allowed={[
-                            "100,000 Tokens",
-                            "Basic Data Extraction",
-                            "250 Character Limit",
-                        ]} unallowed={[
-                            "Batch Processing"
-                        ]} 
-                        isCurrentPlan={currentPlan === 'price_1OSAI4GiLNj7uqwLT22xq8Ay' || currentPlan === 'price_1OSAI4GiLNj7uqwLH8uZPlTt'}
-                        button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
-                        <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
-                            "4M Tokens",
-                            "Basic Data Extraction",
-                            "500 Character Limit",
-                            "100 Batch Limit"
-                        ]} unallowed={[]} 
-                        isCurrentPlan={currentPlan === 'price_1Oja8kGiLNj7uqwLYaZTwdu0' || currentPlan === 'price_1Oja95GiLNj7uqwL3RkUYDt5'}
-                        button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
-                        <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
-                            "20M Tokens",
-                            "Basic Data Extraction",
-                            "1000 Character Limit",
-                            "500 Batch Limit",
-                        ]} unallowed={[]}
-                        isCurrentPlan={currentPlan === 'price_1OjaAMGiLNj7uqwL0N9JQYOm' || currentPlan === 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm'}
-                        button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
-                        onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
-
-                    </div>
-                </div>
                 </div>
             </div>
         </div>

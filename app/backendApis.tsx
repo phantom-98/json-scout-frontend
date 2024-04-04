@@ -323,6 +323,25 @@ export const cancelMembership = async (token:string): Promise<string> => {
     });
 }
 
+export const restartMembership = async (token:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/restart_subscription`,
+        headers: {
+            'Authorization': `Bearer ${token}`
+            }
+    };
+
+    return axios.request(config)
+    .then((response) => {
+        return "Success"
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
 export const getRequests = async (token:string): Promise<any> => {
     let config = {
         method: 'get',
