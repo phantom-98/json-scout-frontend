@@ -219,7 +219,7 @@ export const Home = (props : any) => {
         const res = await fetchInsight(api_key ?? "", {desired_output: desiredOutput, content: content});
         
         if (res && res.data) {
-            setInsightOutput(JSON.stringify(res.data));
+            setInsightOutput(JSON.stringify(res.data, null, 4));
         } else {
             toast.error("Unknown error occurred.",{
                 position: "bottom-right",
