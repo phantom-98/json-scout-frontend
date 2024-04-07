@@ -37,7 +37,7 @@ export const CardCan = (props:{title: string, description: string, font: string 
 export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, isCurrentPlan:boolean, type:string, link: string, onClick: () => void}) => {
 
     return (
-        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
+        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] p-[15rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
             <div className="flex flex-col gap-[2rem]">
                 <div className={`border-b-[1px] pb-[8rem] sm:pb-[3rem] ${props.standard?"":""}`}>
                     <p className={`sm:text-[2rem] text-[7rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
@@ -66,52 +66,22 @@ export const CardMembership = (props:{title: string, price: string, description:
                     })}
                 </div>
             </div>
-            <Link href={props.link}>
+            <Link href={props.link} className="flex justify-center items-center">
                 <button 
                     onClick={props.isCurrentPlan ? null : props.onClick} 
-                    className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] ${props.isCurrentPlan ? 'bg-gray-200 text-gray-700' : 'bg-white text-black'} border-[1px] rounded-full duration-100 ${props.standard ? "border-[#FFFFFF]" : "border-[#828A3]"}`}
+                    className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] sm:px-[4rem] px-[8rem] text-center 
+                        ${props.isCurrentPlan ? 'bg-gray-200 text-gray-700' 
+                        : 
+                        'bg-white text-black'} border-[1px] rounded-full duration-100 
+                        ${props.standard 
+                        ? 
+                        "border-[#FFFFFF]" : "border-[#828A3]"
+                    }`}
                     disabled={props.isCurrentPlan}
                 >
                     {props.isCurrentPlan ? 'Current Plan' : props.button}
                 </button>
             </Link>
-        </div>
-    );
-}
-
-export const ProfileCardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, type:string}) => {
-
-    return (
-        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] w-[24%] p-[15rem] rounded-[16px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
-            <div className="flex flex-col gap-[2rem]">
-                <div className={`border-b-[1px] pb-[8rem] sm:pb-[2rem] ${props.standard?"":"border-b-[#8593A3]"}`}>
-                    <p className={`sm:text-[1.5rem] text-[7rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
-                    <div className="sm:text-[1.6rem] text-[8rem]">
-                        <span className={`sm:text-[4.3rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
-                        {props.type}
-                    </div>
-                    <div className="sm:text-[1.4rem] text-[8rem]">{props.description}</div>
-                </div>
-                <div className="sm:mt-[1rem] mt-[12rem] flex flex-col gap-[1.5rem]">
-                    {props.allowed.map(item => {
-                        return (
-                            <div className="sm:gap-[2rem] flex justify-start gap-[7rem] items-center">
-                                <Image src={props.standard?checkLight:check} alt="" className="sm:h-[2rem] h-[15rem] w-auto"></Image>
-                                <span className="sm:text-[1.6rem] text-[7rem]">{item}</span>
-                            </div>
-                        );
-                    })}
-                    {props.unallowed.map(item => {
-                        return (
-                            <div className=" sm:gap-[2rem] flex justify-start gap-[7rem] items-center">
-                                <Image src={uncheck} alt="" className="sm:h-[2rem] h-[15rem] w-auto"></Image>
-                                <span className="sm:text-[1.6rem] text-[7rem]">{item}</span>
-                            </div>
-                        );
-                    })}
-                </div>
-            </div>
-            <button className={`sm:text-[1.9rem] text-[10rem] sm:py-[1.2rem] py-[4rem] bg-white border-[1px] rounded-full ${props.standard?"text-black standard ":" nostandard border-[#8593A3]"}`}>{props.button}</button>
         </div>
     );
 }

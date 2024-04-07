@@ -258,16 +258,13 @@ export const submitContactForm = async (email: string, contactType: string, mess
 
 }
 
-export const changeMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
+export const changeMembership = async (token:string, price_id:string): Promise<string> => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
         url: `https://api.jsonscout.com/update_plan?price_id=${price_id}`,
         headers: { 
           'Authorization': `Bearer ${token}`
-        },
-        data: {
-            membership: membership
         }
     };
       
@@ -282,16 +279,13 @@ export const changeMembership = async (token:string, membership:string, price_id
     });
 }
 
-export const reviewMembership = async (token:string, membership:string, price_id:string): Promise<string> => {
+export const reviewMembership = async (token:string, price_id:string): Promise<string> => {
     let config = {
         method: 'post',
         maxBodyLength: Infinity,
         url: `https://api.jsonscout.com/upcoming_invoice?price_id=${price_id}`,
         headers: { 
           'Authorization': `Bearer ${token}`
-        },
-        data: {
-            membership: membership
         }
     };
       
@@ -397,7 +391,7 @@ export const fetchInsight = async (apiKey:string, input:object): Promise<any> =>
 
     return axios.request(config)
     .then((response) => {
-        return response.data
+        return response
     })
     .catch((error) => {
         return error

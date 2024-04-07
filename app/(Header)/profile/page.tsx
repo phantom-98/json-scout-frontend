@@ -23,6 +23,8 @@ import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
 
+import { DialogWindow } from '@/app/components/Dialog/page'
+
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import { Bounce, Slide, toast } from 'react-toastify'
@@ -50,6 +52,8 @@ export default (props:any) => {
     const [apiState, setApiState] = React.useState("")
     const [currentPlan, setCurrentPlan] = useState<string | null>(null);
     const [is_plan_cancelled, setIsPlanCancelled] = useState(false);
+
+    const [showDialog, setShowDialog] = useState(false);
     const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
     const [upcomingChargeAmount, setUpcomingChargeAmount] = useState<string | null>(null);
     const [nextPaymentAmount, setNextPaymentAmount] = useState<string | null>(null);
@@ -68,34 +72,37 @@ export default (props:any) => {
     const getUpcomingInvoice = async (price_id: string) => {
         const token = getCookie("access_token");
         if(token != null) {
-            const response = await reviewMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
-            return response
+            const response = await reviewMembership(token, price_id);
+
+            return response;
         } else {
             console.error('No access token found');
         }
     }
 
-    const reviewChangeMembership = async (event, price_id: string) => {
+    const reviewChangeMembership = async (event: React.MouseEvent, price_id: string) => {
 
         event.preventDefault();
 
-        const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
+        const token = getCookie("access_token");
         if(token != null) {
-          const result = await reviewMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
-          if(result !== "Success") {
-            console.error('Failed to change membership:', result);
-          }
+            const result = await reviewMembership(token, price_id);
+            if(result !== "Success") {
+                console.error('Failed to change membership:', result);
+            } else {
+                setShowDialog(true); // Show the dialog
+            }
         } else {
-          console.error('No access token found');
+            console.error('No access token found');
         }
     }
 
-    const confirmChangeMembership = async (event, price_id: string) => {
+    const confirmChangeMembership = async (event: React.MouseEvent, price_id: string) => {
         event.preventDefault();
 
         const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
         if(token != null) {
-          const result = await changeMembership(token, 'membership', price_id); // Replace 'membership' with the actual membership value
+          const result = await changeMembership(token, price_id); // Replace 'membership' with the actual membership value
           if(result !== "Success") {
             console.error('Failed to change membership:', result);
           }
@@ -239,12 +246,9 @@ export default (props:any) => {
                 const nextInvoiceData = await getUpcomingInvoice(current_plan);
 
                 if (nextInvoiceData) {
-                    const nextPaymentAmount = nextInvoiceData.new_price;
-                    const nextPaymentDate = nextInvoiceData.next_invoice_date;
-
                     // Set the nextPaymentAmount and nextPaymentDate
-                    setNextPaymentAmount(nextPaymentAmount);
-                    setNextPaymentDate(nextPaymentDate);
+                    setNextPaymentAmount(nextInvoiceData.new_price);
+                    setNextPaymentDate(nextInvoiceData.next_invoice_date);
                 }
             }
 
@@ -406,36 +410,36 @@ export default (props:any) => {
                 </div>
 
                 <div className={`${state === 4 ?'':'hidden'}`}>
+                    {currentPlan && (
+                        <div className="flex flex-col bg-white shadow-md rounded-lg p-6 mt-6">
 
-                    <div className="flex flex-col bg-white shadow-md rounded-lg p-6 mt-6">
-                        <h2 className="text-3xl font-bold mb-4">Billing Summary</h2>
-
-                        <div className="mb-2">
-                            <span className="text-xl font-medium">Your next payment</span>
-                            <span className="text-xl block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
-                        </div>
-                        
-                        <div className="flex justify-end">
-                            <button onClick={openBillingPortal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ease-in-out">
-                            Billing Portal
-                            </button>
-                        </div>
-
-                        {is_plan_cancelled ? (
-                            <div className="flex justify-end">
-                            <button onClick={restartSubscription} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ease-in-out">
-                                Restart Subscription
-                            </button>
+                            <h2 className="text-3xl font-bold mb-4">Billing Summary</h2>
+                            <div className="mb-2">
+                                <span className="text-xl font-medium">Your next payment</span>
+                                <span className="text-xl block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
                             </div>
-                        ) : (
+                            
                             <div className="flex justify-end">
-                            <button onClick={cancelPlan} className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-200 ease-in-out">
-                                Cancel Plan
-                            </button>
+                                <button onClick={openBillingPortal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ease-in-out">
+                                Billing Portal
+                                </button>
                             </div>
-                        )}
-                    </div>
 
+                            {is_plan_cancelled ? (
+                                <div className="flex justify-end">
+                                <button onClick={restartSubscription} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ease-in-out">
+                                    Restart Subscription
+                                </button>
+                                </div>
+                            ) : (
+                                <div className="flex justify-end">
+                                <button onClick={cancelPlan} className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-200 ease-in-out">
+                                    Cancel Plan
+                                </button>
+                                </div>
+                            )}
+                        </div>
+                    )}
                     <div className="flex flex-col items-center">
 
                         <div className="flex sm:p-[0.5rem] p-[1.5rem] sm:mt-[7rem] mt-[20rem] bg-gray-200 border-[1px] border-gray-200 shadow-effect rounded-[0.7rem]">
@@ -444,7 +448,10 @@ export default (props:any) => {
                         </div>                
                         <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                             <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
-                                <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/" allowed={[
+
+                                <CardMembership
+                                    className="w-[33%]"
+                                    title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/" allowed={[
                                     "100,000 Tokens",
                                     "Basic Data Extraction",
                                     "250 Character Limit",
@@ -454,7 +461,9 @@ export default (props:any) => {
                                 isCurrentPlan={currentPlan === 'price_1OSAI4GiLNj7uqwLT22xq8Ay' || currentPlan === 'price_1OSAI4GiLNj7uqwLH8uZPlTt'}
                                 button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
                                 onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
-                                <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
+                                <CardMembership 
+                                    className="w-[33%]"
+                                    title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
                                     "4M Tokens",
                                     "Basic Data Extraction",
                                     "500 Character Limit",
@@ -463,7 +472,9 @@ export default (props:any) => {
                                 isCurrentPlan={currentPlan === 'price_1Oja8kGiLNj7uqwLYaZTwdu0' || currentPlan === 'price_1Oja95GiLNj7uqwL3RkUYDt5'}
                                 button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
                                 onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
-                                <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
+                                <CardMembership 
+                                    className="w-[33%]"
+                                    title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
                                     "20M Tokens",
                                     "Basic Data Extraction",
                                     "1000 Character Limit",

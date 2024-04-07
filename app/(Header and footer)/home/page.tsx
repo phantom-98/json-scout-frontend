@@ -403,27 +403,35 @@ export const Home = (props : any) => {
                     <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
                         <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
                         
-                        <CardMembership title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" link="/register" allowed={[
+                        <CardMembership 
+                            className="w-[25%]"
+                            title="FREE PLAN" price={pricing == "monthly"?'0':'0'} description="Try for free!" link="/register" allowed={[
                             "2,000 Tokens",
                             "Basic Data Extraction",
                             "250 Character Limit"
                         ]} unallowed={[
                             "Batch Processing",
                         ]} button="Get Started" id="trial" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                        <CardMembership title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/register" allowed={[
+                        <CardMembership 
+                            className="w-[25%]"
+                            title="STARTER"  price={pricing == "monthly"?'9':'99'} description="Great for getting started!" link="/register" allowed={[
                             "100,000 Tokens",
                             "Basic Data Extraction",
                             "250 Character Limit",
                         ]} unallowed={[
                             "Batch Processing"
                         ]} button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                        <CardMembership title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/register" allowed={[
+                        <CardMembership 
+                            className="w-[25%]"
+                            title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/register" allowed={[
                             "4M Tokens",
                             "Basic Data Extraction",
                             "500 Character Limit",
                             "100 Batch Limit"
                         ]} unallowed={[]} button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'}/>
-                        <CardMembership title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="/register" allowed={[
+                        <CardMembership
+                            className="w-[25%]"
+                            title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="/register" allowed={[
                             "20M Tokens",
                             "Basic Data Extraction",
                             "1000 Character Limit",
@@ -447,7 +455,7 @@ export const Home = (props : any) => {
             <div id="insights" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] sm:mt-0 mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>Fetch Insights</p>
-                    <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how json scout works by inserting an input and you will receive an input with the result.</p>
+                    <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how JSON Scout works by providing an input and you will receive an output with the result.</p>
                 </div>
                     
                 <div className="flex flex-col items-start justify-center gap-[12rem] sm:flex-row sm:gap-[8rem] sm:h-[56rem] w-full">
@@ -465,14 +473,14 @@ export const Home = (props : any) => {
                                 <div className="bg-[#F3F4F5] sm:px-[4rem] sm:py-[1rem] p-[10rem] text-[#828A91]">DATA</div>
                                 <div className="bg-white sm:px-[2rem] sm:py-[1rem] p-[8rem] flex overflow-hidden sm:h-[33rem]">
                                     <div ref={lineRef} className="text-right mr-[20px] text-[#828A91] h-full overflow-hidden"></div>
-                                    <textarea ref={contentRef} className="w-full outline-none overflow-hidden" rows={7} onChange={e => setContent(e.target.value)}>{content}</textarea>
+                                    <textarea ref={contentRef} className="w-full outline-none overflow-hidden" rows={7} style={{maxHeight: '15vh', resize: 'none'}} onChange={e => setContent(e.target.value)}>{content}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* <Image src={frame355} alt="frame355" className="lg:top-[710px] w-[8rem] h-auto sm:w-[3%]"></Image> */}
                     <div className="sm:w-[36%] w-[90%] sm:h-full">
-                        <h4 className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">YOUR DATA RESULT</h4>
+                        <h4 className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">YOUR RESULTS</h4>
                         <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput} className="w-full" loading={fetching} copy={true}/>
                     </div>
                 </div>
