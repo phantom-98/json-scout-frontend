@@ -459,7 +459,7 @@ export const Home = (props : any) => {
                 </div>
                     
                 <div className="flex flex-col items-start justify-center gap-[12rem] sm:flex-row sm:gap-[8rem] sm:h-[56rem] w-full">
-                    <div className="sm:w-[36%] w-[90%] flex flex-col justify-start gap-[3rem]">
+                    <div className="sm:w-[36%] w-full flex flex-col justify-start gap-[3rem]">
                         <div className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">
                             <h4>DESIRED OUTPUT</h4>
                             <div className="w-full rounded-[16px] bg-white sm:p-[3rem] p-[10rem] shadow-lg">
@@ -470,16 +470,16 @@ export const Home = (props : any) => {
                         <div className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">
                             <h4>CONTENT</h4>
                             <div className="w-full rounded-[16px] shadow-lg overflow-hidden">
-                                <div className="bg-[#F3F4F5] sm:px-[4rem] sm:py-[1rem] p-[10rem] text-[#828A91]">DATA</div>
-                                <div className="bg-white sm:px-[2rem] sm:py-[1rem] p-[8rem] flex overflow-hidden sm:h-[33rem]">
+                                <div className="bg-[#F3F4F5] sm:px-[4rem] sm:py-[1rem] sm:text-[1.6rem] sm:leading-[3.2rem] text-[7.2rem] leading-[13rem] p-[7.2rem] text-[#828A91]">DATA</div>
+                                <div className="bg-white sm:px-[2rem] sm:py-[1rem] p-[8rem] flex overflow-hidden sm:h-[34rem] h-[112rem] sm:text-[2rem] text-[6.8rem] sm:leading-[4rem] leading-[12rem]">
                                     <div ref={lineRef} className="text-right mr-[20px] text-[#828A91] h-full overflow-hidden"></div>
-                                    <textarea ref={contentRef} className="w-full outline-none overflow-hidden" rows={7} style={{maxHeight: '15vh', resize: 'none'}} onChange={e => setContent(e.target.value)}>{content}</textarea>
+                                    <textarea ref={contentRef} className="w-full outline-none overflow-hidden resize-none" rows={7} onChange={e => setContent(e.target.value)}>{content}</textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {/* <Image src={frame355} alt="frame355" className="lg:top-[710px] w-[8rem] h-auto sm:w-[3%]"></Image> */}
-                    <div className="sm:w-[36%] w-[90%] sm:h-full">
+                    <div className="sm:w-[36%] w-full sm:h-full">
                         <h4 className="w-full text-[9rem] leading-[20rem] font-normal sm:text-[2rem] sm:leading-[4rem] text-[#22252A]">YOUR RESULTS</h4>
                         <CustomCodeBlock leftTitle="OUTPUT" centerTitle="" code={insightOutput} className="w-full" loading={fetching} copy={true}/>
                     </div>
