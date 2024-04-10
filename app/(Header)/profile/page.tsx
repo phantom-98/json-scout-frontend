@@ -431,31 +431,27 @@ export default (props:any) => {
                 <div className={`${state === 4 ?'':'hidden'}`}>
                     {currentPlan && (
                         <div className="flex flex-col bg-white shadow-md rounded-lg p-6 mt-6">
-                            <h2 className="text-3xl font-bold mb-4">Billing Summary</h2>
-                            <div className="mb-2">
-                                <span className="text-xl font-medium">Your next payment</span>
-                                <span className="text-xl block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
+                            <h2 className="text-[2.4rem] font-bold mb-4">Billing Summary</h2>
+                            <div className="text-[2rem] mb-2">
+                                <span className="font-medium">Your next payment</span>
+                                <span className="block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
                             </div>
                             
-                            <div className="flex justify-end">
-                                <button onClick={openBillingPortal} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-200 ease-in-out">
-                                Billing Portal
+                            <div className="flex flex-row justify-end items-center sm:gap-[1rem] text-[1.8rem]">
+                                <button onClick={openBillingPortal} className="bg-[#FF8132] text-white py-2 px-4 rounded hover:bg-[#FDA235] transition duration-200 ease-in-out">
+                                    Billing Portal
                                 </button>
-                            </div>
 
-                            {is_plan_cancelled ? (
-                                <div className="flex justify-end">
-                                <button onClick={restartSubscription} className="mt-4 bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ease-in-out">
-                                    Restart Subscription
-                                </button>
-                                </div>
-                            ) : (
-                                <div className="flex justify-end">
-                                <button onClick={cancelPlan} className="mt-4 bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-200 ease-in-out">
-                                    Cancel Plan
-                                </button>
-                                </div>
-                            )}
+                                {is_plan_cancelled ? (
+                                    <button onClick={restartSubscription} className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600 transition duration-200 ease-in-out">
+                                        Restart Subscription
+                                    </button>
+                                ) : (
+                                    <button onClick={cancelPlan} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 transition duration-200 ease-in-out">
+                                        Cancel Plan
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     )}
                     <div className="flex flex-col items-center">
