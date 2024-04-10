@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import profile from "../../../public/profile1.svg"
 import profile1 from "../../../public/profile2.svg"
@@ -14,6 +14,7 @@ import sms from "../../../public/sms.svg"
 import unlock from "../../../public/unlock.svg"
 import eye from "../../../public/eye-slash.svg"
 import eye1 from "../../../public/visible.svg"
+import close from "../../../public/close-circle.png"
 import { Request } from "@/app/components/Request/page"
 import { Cell } from "@/app/components/Cell/page"
 import { useRouter } from "next/navigation"
@@ -23,13 +24,13 @@ import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
 
-import { DialogWindow } from '@/app/components/Dialog/page'
 import { Pagination } from '@/app/components/Pagination/page'
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
-import { Bounce, Slide, toast } from 'react-toastify'
+import { Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { CustomCodeBlock } from "@/app/components/CustomCodeBlock/page"
 
 export default (props:any) => {
     const router = useRouter();
@@ -43,7 +44,6 @@ export default (props:any) => {
     const [visible, setVisible] = React.useState(0)
     const [visible1, setVisible1] = React.useState(0)
     const [loading, setLoading] = React.useState(false)
-    const [logged, setLogged] = React.useState(true)
     const [api_key, setApi_Key] = React.useState("")
     const [token_limit, setToken_Limit] = React.useState("")
     const [tokens_used, setTokens_Used] = React.useState("")
@@ -56,6 +56,8 @@ export default (props:any) => {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [requests, setRequests] = useState([]);
+    const [content, setContent] = useState("");
+    const [show, setShow] = useState(false);
 
     const [showDialog, setShowDialog] = useState(false);
     const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
@@ -115,8 +117,10 @@ export default (props:any) => {
         }
     };
 
-    const viewRequest = (i:number) =>{
-        
+    const viewRequest = (id:number) =>{
+        const request = requests.data.find(item => item.id == id);
+        setContent(JSON.stringify(request, null, 4));
+        setShow(true);
     }
 
     useEffect(() => {
@@ -415,8 +419,13 @@ export default (props:any) => {
                             <Cell ID={request.id} Created={request.date_created} view={viewRequest} />
                         ))}
 
-                        <Pagination />
+                        <Pagination start={currentPage * 10 - 9} size={requests.items_per_page} total={requests.total_items} onNext={() => {
+                            currentPage < requests.total_pages && setCurrentPage(currentPage + 1);
+                        }} onPrevious={() => {
+                            currentPage > 1 && setCurrentPage(currentPage - 1);
+                        }}/>
                     </div>
+                    <ViewDetails content={content} setContent={setContent} show={show} setShow={setShow}/>
                 </div>
 
                 <div className={`${state === 4 ?'':'hidden'}`}>
@@ -501,4 +510,25 @@ export default (props:any) => {
         </div>
         </>
     )
+}
+
+const ViewDetails = (props:{show: boolean, setShow: Function, content: string, setContent: Function}) => {
+    const ref = useRef();
+    window.onclick = (e) => {
+        if (e.target == ref.current) {
+            props.setShow(false);
+            props.setContent("");
+        }
+    }
+    return (
+        <div ref={ref} className={`${props.show?"[display:block]":"[display:none]"} fixed z-[100] left-0 top-0 right-0 bottom-0 bg-[#00000078]`}>
+            <div className={`mx-auto my-[8%] bg-white sm:w-1/2 w-10/12 rounded-[16px] relative`}>
+                <CustomCodeBlock className="w-full" code={props.content} leftTitle="JSON" centerTitle="Request Details" loading={!props.content}/>
+                <Image onClick={() => {
+                    props.setShow(false);
+                    props.setContent("");
+                }} src={close} alt="" className="absolute top-0 right-0 sm:m-[1.4rem] sm:w-[3rem] m-[7.2rem] w-[12rem]"/>
+            </div>
+        </div>
+    );
 }

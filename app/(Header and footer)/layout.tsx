@@ -14,7 +14,7 @@ export default function RootLayout({
   return (
     <>
       <Header/>
-        <div className={`sm:mt-0 mt-[36rem] sm:px-[14%] sm:w-full px-[12rem] overflow-hidden ${inter.className}`}>
+        <div className={`mt-0 sm:px-[14%] sm:w-full px-[12rem] overflow-hidden ${inter.className}`}>
           {children}
         </div>
       <Footer/>

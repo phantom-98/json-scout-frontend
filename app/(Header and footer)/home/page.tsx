@@ -452,7 +452,7 @@ export const Home = (props : any) => {
             )}
 
             {logState && (
-            <div id="insights" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] sm:mt-0 mt-[96px] py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
+            <div id="insights" className={`items-center mx-[-12rem] px-[12%] sm:mx-[-20%] sm:py-[10rem] sm:pb-[15rem] sm:gap-[10rem] bg-[#F9FAFC] sm:pt-[15rem] mt-0 py-[80px] flex flex-col justify-center gap-[25rem] relative`}>
                 <div className="flex flex-col items-center text-center">
                     <p className={`text-[20rem] leading-[18rem] font-semibold sm:text-[5rem] sm:leading-[8rem] ${space_grotesk.className}`}>Fetch Insights</p>
                     <p className="text-[9rem] leading-[20rem] mt-[16px] font-normal sm:mt-[5rem] sm:text-[3rem] sm:w-[58%] sm:leading-[6rem] text-[#828A91] text-wrap">You can test how JSON Scout works by providing an input and you will receive an output with the result.</p>

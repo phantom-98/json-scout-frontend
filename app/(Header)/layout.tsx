@@ -26,7 +26,6 @@ export default function RootLayout({
               theme="light"
               transition={Bounce}
               />
-            <ToastContainer />
             <Header />
             <div className="sm:mt-0 mt-[32rem] sm:px-[14%] sm:w-full px-[12rem]">
             {children}
