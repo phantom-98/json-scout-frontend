@@ -24,6 +24,7 @@ import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
 
 import { DialogWindow } from '@/app/components/Dialog/page'
+import { Pagination } from '@/app/components/Pagination/page'
 
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 
@@ -52,6 +53,9 @@ export default (props:any) => {
     const [apiState, setApiState] = React.useState("")
     const [currentPlan, setCurrentPlan] = useState<string | null>(null);
     const [is_plan_cancelled, setIsPlanCancelled] = useState(false);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [requests, setRequests] = useState([]);
 
     const [showDialog, setShowDialog] = useState(false);
     const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
@@ -117,8 +121,13 @@ export default (props:any) => {
 
     useEffect(() => {
         settingProfile()
+
+        const token = getCookie("access_token");
+        if (token) {
+            getRequests(token, currentPage).then(data => setRequests(data));
+        }
         
-    }, [])
+    }, [currentPage])
 
     const saveChange = async () => {
         
@@ -399,20 +408,20 @@ export default (props:any) => {
                     <div className="sm:mt-[3rem]">
                         <div className="sm:flex sm:justify-start sm:px-[4rem] sm:py-[2rem] bg-[#F4F4F4]">
                             <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">ID</span>
-                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">Created</span>
+                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">Date Created</span>
                         </div>
-                        <Cell ID={111111} Created="Nov 12, 2024" view={viewRequest}/>
-                        <Cell ID={222222} Created="Nov 12, 2024" view={viewRequest} />
-                        <Cell ID={333333} Created="Nov 12, 2024" view={viewRequest} />
-                        <Cell ID={444444} Created="Nov 12, 2024" view={viewRequest} />
-                        <Cell ID={555555} Created="Nov 12, 2024" view={viewRequest} />
+
+                        {Array.isArray(requests.data) && requests.data.map((request: any) => (
+                            <Cell ID={request.id} Created={request.date_created} view={viewRequest} />
+                        ))}
+
+                        <Pagination />
                     </div>
                 </div>
 
                 <div className={`${state === 4 ?'':'hidden'}`}>
                     {currentPlan && (
                         <div className="flex flex-col bg-white shadow-md rounded-lg p-6 mt-6">
-
                             <h2 className="text-3xl font-bold mb-4">Billing Summary</h2>
                             <div className="mb-2">
                                 <span className="text-xl font-medium">Your next payment</span>

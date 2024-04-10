@@ -336,11 +336,11 @@ export const restartMembership = async (token:string): Promise<string> => {
     });
 }
 
-export const getRequests = async (token:string): Promise<any> => {
+export const getRequests = async (token: string, page: number): Promise<any> => {
     let config = {
         method: 'get',
         maxBodyLength: Infinity,
-        url: `https://api.jsonscout.com/requests`,
+        url: `https://api.jsonscout.com/requests?page=${page}`,
         headers: { 
           'Authorization': `Bearer ${token}`
         }

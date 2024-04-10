@@ -41,7 +41,7 @@ export const Footer = () => {
                 <div className="sm:w-[50%] flex flex-col items-center gap-[2rem]">
                     <p className="sm:text-[4rem] sm:leading-[8rem] text-[12rem] leading-[24rem]">Contact Us</p>
                     <div className=" sm:flex-row sm:justify-center sm:gap-[4rem] flex flex-col justify-start gap-[3rem] items-center">
-                    <Link href="#" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">contact@jsonscout.com</Link>
+                    <Link href="mailto:contact@jsonscout.com" className=" sm:text-[2.3rem] text-[8rem] text-[#828A91]">contact@jsonscout.com</Link>
                     </div>
                 </div>
                 

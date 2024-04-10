@@ -69,13 +69,21 @@ export const CardMembership = (props:{title: string, price: string, description:
             <Link href={props.link} className="flex justify-center items-center">
                 <button 
                     onClick={props.isCurrentPlan ? null : props.onClick} 
-                    className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] sm:px-[4rem] px-[8rem] text-center 
-                        ${props.isCurrentPlan ? 'bg-gray-200 text-gray-700' 
-                        : 
-                        'bg-white text-black'} border-[1px] rounded-full duration-100 
-                        ${props.standard 
+                    className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] sm:px-[4rem] px-[8rem] text-center border-[1px] rounded-full duration-100 
+                        ${props.isCurrentPlan 
                         ? 
-                        "border-[#FFFFFF]" : "border-[#828A3]"
+                        'bg-gray-200 text-gray-700' 
+                        : 
+                        'bg-white text-black'
+                        }
+                        ${props.standard && !props.isCurrentPlan
+                        ? 
+                        "border-[#FFFFFF] hover:shadow-lg" 
+                        :
+                        props.isCurrentPlan ? 
+                        "border-[#828A3]" 
+                        :
+                        "border-[#828A3] hover:border-[#FF8132] hover:text-white hover:bg-[#ff8132]"
                     }`}
                     disabled={props.isCurrentPlan}
                 >
