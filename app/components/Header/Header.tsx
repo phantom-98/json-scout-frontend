@@ -97,6 +97,7 @@ const Header = (props:any) => {
         const pathname = window.location.pathname;
         const hash = window.location.hash;
 
+        setShow(false);
         
         if (pathname === "/" && hash === "") {
             setActiveHeader("Home");

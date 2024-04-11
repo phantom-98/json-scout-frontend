@@ -25,8 +25,8 @@ export const Footer = () => {
             <div className=" sm:mt-[8rem] sm:flex-row sm:justify-between flex flex-col mt-[26rem] items-center gap-[8rem]">
                 <Image src={logo} alt="" className="sm:h-[6rem] h-[29rem] w-auto"></Image>
                 <div className=" sm:gap-[2rem] flex justify-center gap-[11rem] ">
-                    <Link href="#" className="cursor-pointer"><Image src={linkedIn} alt="" width={50} height={50}></Image></Link>
-                    <Link href="https://twitter.com/jsonscout" className="cursor-pointer" style={{zIndex: 1}}><Image src={twitter} alt="" width={50} height={50}></Image></Link>
+                    <Link href="#" className="cursor-pointer"><Image src={linkedIn} alt="" className="sm:w-[8rem] w-[24rem]"></Image></Link>
+                    <Link href="https://twitter.com/jsonscout" className="cursor-pointer" style={{zIndex: 1}}><Image src={twitter} alt="" className="sm:w-[8rem] w-[24rem]"></Image></Link>
                 </div>
             </div>
             <div className="sm:mb-[5rem] sm:mt-[5rem] sm:px-[4rem] sm:py-[3rem] sm:flex-row sm:justify-between sm:gap-0 flex flex-col py-[12rem] my-[17rem] border-t-[#828A91] border-t-[1px] border-b-[#828A91] border-b-[1px] gap-[5rem]">
