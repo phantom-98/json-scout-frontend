@@ -340,7 +340,7 @@ export default (props:any) => {
                     <span className="sm:text-[2rem] text-[7rem] text-[#828A91]">{state === 1?'Profile':state === 2?'API Key':state === 3?'Requests':'My Plan'}</span>
                 </div>
                 
-                <div className={`${state === 1?'':'hidden'}`}>
+                <div className={`${state === 1?'':'hidden'} sm:mb-[4rem] mb-[12rem]`}>
                     <div className={`border-b-[1px] border-b-[#EAEAEA] justify-start sm:gap-[4rem] sm:py-[4rem] gap-[10rem] py-[10rem]`}>
                         <div className="flex justify-between sm:flex-row flex-col sm:gap-0 gap-[6rem]">
                             <div className="sm:w-[46%] w-full">

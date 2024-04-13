@@ -20,7 +20,7 @@ export const CustomCodeBlock = (props:{ code: string, centerTitle: string, leftT
     }, [copied])
 
     return (
-        <div className={`relative shadow-lg rounded-[16px] overflow-hidden w-[min-content] flex flex-col justify-start sm:h-full ${props.className}`}>
+        <div className={`relative shadow-lg rounded-[6rem] sm:rounded-[1rem] overflow-hidden sm:w-[min-content] w-full flex flex-col justify-start h-full ${props.className}`}>
             <div className="bg-gray-100 flex justify-between sm:p-[1.6rem] p-[8rem] sm:text-[1.6rem] text-[6.4rem] items-center sm:px-[2.4rem] px-[12rem]">
                 <span className='flex items-center text-gray-400'>{props.leftTitle?props.leftTitle:(
                     <div className='flex items-center sm:gap-3'>
@@ -30,13 +30,13 @@ export const CustomCodeBlock = (props:{ code: string, centerTitle: string, leftT
                     </div>
                 )}</span>
                 <span className='text-black font-bold sm:text-[1.8rem] text-[7.2rem]'>{props.centerTitle}</span>
-                <div className='sm:pl-8 pl-[10rem] cursor-default relative border-l-[1px] border-l-gray-400 w-[10rem] flex justify-center items-center'>
-                    <span onClick={()=>{setIsPopup(!isPopup)}} className=' text-gray-500 sm:pr-[1rem]'>{right}</span>
-                    {props.rightTitle && props.rightTitle.length > 1 && (<Image onClick={()=>{setIsPopup(!isPopup)}} src={arrow} alt='' className='sm:h-[1rem] h-[6.4rem] w-auto'></Image>)}
+                <div className='sm:pl-8 pl-[10rem] cursor-default relative border-l-[1px] border-l-gray-400 sm:w-[10rem] w-[32rem] flex justify-center items-center'>
+                    <span onClick={()=>{setIsPopup(!isPopup)}} className=' text-gray-500 sm:pr-[1rem] pr-[4rem]'>{right}</span>
+                    {props.rightTitle && props.rightTitle.length > 1 && (<Image onClick={()=>{setIsPopup(!isPopup)}} src={arrow} alt='' className='sm:h-[1rem] h-[4rem] w-auto'></Image>)}
                     {props.rightTitle && props.rightTitle.length > 1 && (
-                    <div className={`absolute bg-gray-100 top-[4rem] sm:px-[1rem] -right-[1rem] rounded-[1px] sm:text-[1.6rem] text-[6.4rem] w-full ${isPopup?'':'hidden'}`}>
+                    <div className={`absolute shadow-lg bg-gray-100 top-[150%] sm:px-[1rem] right-[0.4%] rounded-[1px] sm:text-[1.6rem] text-[6.4rem] ${isPopup?'':'hidden'}`}>
                         {props.rightTitle.map((key, item)=>(
-                        <div className={`sm:p-[1rem] text-center text-gray-400 ${item == 0?'':'sm:border-t-[1px]'} sm:border-t-gray-200`} onClick={()=>{setRight(key);setIsPopup(false)}}>{key}</div>
+                        <div className={`sm:p-[1rem] p-[3rem] text-gray-400 ${item == 0?'':'border-t-[1px]'} border-t-gray-200`} onClick={()=>{setRight(key);setIsPopup(false)}}>{key}</div>
                     )
                     )}
                     </div>)}

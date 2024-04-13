@@ -69,7 +69,7 @@ export default (props:any)=> {
                     </div>
                 </div>
                 <div className="sm:w-[76%] w-full flex justify-between">
-                    <div className="sm:w-[75%]">
+                    <div className="sm:w-[75%] w-full">
                         <Header1 text = "Introduction" />
                         <Header4 text = "Welcome to JSONScout Documentation!" />
                         <Header2 text = "What is JSONScout?" />
