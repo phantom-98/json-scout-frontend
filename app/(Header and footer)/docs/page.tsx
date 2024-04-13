@@ -9,7 +9,7 @@ import { Session1 } from "@/app/components/session1/page"
 import { Session2 } from "@/app/components/session2/page"
 import { Session3 } from "@/app/components/session3/page"
 
-import React, { useContext } from "react"
+import React, { useContext, useRef, useState } from "react"
 import { Context } from "@/app/components/context/context"
 import { Header4 } from "@/app/components/Header4/page"
 import { FAQ } from "@/app/components/FAQ/page"
@@ -27,24 +27,48 @@ export default (props:any)=> {
 
     const {activeHeader, setActiveHeader} = useContext(Context)
 
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const [show, openSidebar] = useState(false);
+    let X = 10000;
+    window.addEventListener("click", (e) => {
+        if (e.target !== sidebarRef.current) {
+            openSidebar(false);
+        }
+    });
+    window.addEventListener("touchstart", (e) => {
+        if (e.changedTouches) {
+            X = e.changedTouches[0].pageX;
+        }
+    }, false)
+    window.addEventListener("touchend", (e) => {
+        if (e.changedTouches) {
+            if (e.changedTouches[0].pageX > X + 100) {
+                openSidebar(true);
+            } else if (X > e.changedTouches[0].pageX + 100) {
+                openSidebar(false);
+            }
+        }
+    }, false);
+
 
     React.useEffect(()=>{
         setActiveHeader("Docs")
     },[])
 
-
     return (
         <>
             <div className="w-full flex justify-between sm:pt-[8rem]">
-                <div className="w-[20%]">
-                    <Session1 text = "Getting Started" />
-                    <Session2 text = "Installation" />
-                    <Session2 text = "Installation" />
-                    <Session1 text = "Build your application" />
-                    <Session2 text = "Installation" />
-                    <Session2 text = "Installation" />
+                <div className={`sm:w-[20%] w-full sm:relative fixed left-0 top-0 bottom-0 bg-[#0007] z-[100] sm:block ${show?"":"hidden"}`}>
+                    <div ref={sidebarRef} className={`sm:w-full w-[max-content] h-full bg-white px-[10rem] pt-[20rem] sm:p-0 ${show?"animate-show":"animate-hide"}`}>
+                        <Session1 text = "Getting Started" />
+                        <Session2 text = "Installation" />
+                        <Session2 text = "Installation" />
+                        <Session1 text = "Build your application" />
+                        <Session2 text = "Installation" />
+                        <Session2 text = "Installation" />
+                    </div>
                 </div>
-                <div className="w-[76%] flex justify-between">
+                <div className="sm:w-[76%] w-full flex justify-between">
                     <div className="sm:w-[75%]">
                         <Header1 text = "Introduction" />
                         <Header4 text = "Welcome to JSONScout Documentation!" />

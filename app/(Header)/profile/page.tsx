@@ -286,133 +286,161 @@ export default (props:any) => {
             }}
     }
 
+    const sidebarRef = useRef<HTMLDivElement>(null);
+    const [opened, openSidebar] = useState(false);
+    let X = 10000;
+    window.addEventListener("click", (e) => {
+        if (e.target !== sidebarRef.current) {
+            openSidebar(false);
+        }
+    });
+    window.addEventListener("touchstart", (e) => {
+        if (e.changedTouches) {
+            X = e.changedTouches[0].pageX;
+        }
+    }, false)
+    window.addEventListener("touchend", (e) => {
+        if (e.changedTouches) {
+            if (e.changedTouches[0].pageX > X + 100) {
+                openSidebar(true);
+            } else if (X > e.changedTouches[0].pageX + 100) {
+                openSidebar(false);
+            }
+        }
+    }, false);
+
     return(
         <>
-        <div className="sm:flex sm:justify-between sm:pt-[7rem]">
-            <div className="sm:rounded-[2rem] sm:shadow-lg sm:w-[16%] sm:flex sm:flex-col sm:p-[2rem] sm:justify-start sm:gap-[2rem] sm:h-[40rem]">
-                <p className="sm:text-[3rem] sm:font-semibold sm:pl-[1rem]">Settings</p>
-                <div className={`sm:flex sm:items-center sm:justify-start sm:gap-[1rem] sm:p-[0.5rem] cursor-pointer ${state === 1?'sm:bg-[#F4F4F4] sm:text-black':'sm:text-[#828A91]'}`} onClick={()=>{setState(1);setVisible(0);}} >
-                    <Image src={state === 1?profile:profile1} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
-                    <span className="sm:text-[2.1rem]"> Profile</span>
-                </div>
-                <div className={`sm:flex sm:items-center sm:justify-start sm:gap-[1rem] sm:p-[0.5rem] cursor-pointer ${state === 2?'sm:bg-[#F4F4F4] sm:text-black':'sm:text-[#828A91]'}`} onClick={()=>{setState(2);setVisible(0);}}>
-                    <Image src={state === 2?key:key1} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
-                    <span  className="sm:text-[2.1rem]">API Key</span>
-                </div>
-                <div className={`sm:flex sm:items-center sm:justify-start sm:gap-[1rem] sm:p-[0.5rem] cursor-pointer ${state === 3?'sm:bg-[#F4F4F4] sm:text-black':'sm:text-[#828A91]'}`} onClick={()=>{setState(3);setVisible(0);}}>
-                    <Image src={state === 3?arrow:arrow1} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
-                    <span  className="sm:text-[2.1rem]">Requests</span>
-                </div>
-                <div className={`sm:flex sm:items-center sm:justify-start sm:gap-[1rem] sm:p-[0.5rem] cursor-pointer ${state === 4?'sm:bg-[#F4F4F4] sm:text-black':'sm:text-[#828A91]'}`} onClick={()=>{setState(4);setVisible(0);}}>
-                    <Image src={state === 4?personal:personal1} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
-                    <span  className="sm:text-[2.1rem]">My Plan</span>
+        <div className="flex justify-between sm:mt-[7rem] mt-[-30rem]">
+            <div className={`sm:w-[16%] w-full sm:relative fixed left-0 top-0 bottom-0 bg-[#0007] sm:bg-white z-[100] sm:block ${opened?"":"hidden"}`}>
+                <div className={`sm:w-full w-[max-content] h-full ${opened?"animate-show":"animate-hide"} bg-white sm:rounded-[2rem] sm:shadow-lg flex flex-col justify-start sm:p-[2rem] sm:gap-[2rem] sm:h-[40rem] px-[8rem] py-[24rem] gap-[10rem]`}>
+                    <p className="sm:text-[3rem] font-semibold sm:pl-[1rem] text-[16rem] pl-[6rem]">Settings</p>
+                    <div className={`flex items-center justify-start sm:gap-[1rem] gap-[5rem] sm:p-[0.5rem] p-[2rem] cursor-pointer ${state === 1?'bg-[#F4F4F4] text-black':'text-[#828A91]'}`} onClick={()=>{setState(1);setVisible(0);}} >
+                        <Image src={state === 1?profile:profile1} alt="" className="sm:h-[3rem] h-[10rem]"></Image>
+                        <span className="sm:text-[2.1rem] text-[9rem]">Profile</span>
+                    </div>
+                    <div className={`flex items-center justify-start sm:gap-[1rem] gap-[5rem] sm:p-[0.5rem] p-[2rem] cursor-pointer ${state === 2?'bg-[#F4F4F4] text-black':'text-[#828A91]'}`} onClick={()=>{setState(2);setVisible(0);}}>
+                        <Image src={state === 2?key:key1} alt="" className="sm:h-[3rem] h-[10rem]"></Image>
+                        <span  className="sm:text-[2.1rem] text-[9rem]">API Key</span>
+                    </div>
+                    <div className={`flex items-center justify-start sm:gap-[1rem] gap-[5rem] sm:p-[0.5rem] p-[2rem] cursor-pointer ${state === 3?'bg-[#F4F4F4] text-black':'text-[#828A91]'}`} onClick={()=>{setState(3);setVisible(0);}}>
+                        <Image src={state === 3?arrow:arrow1} alt="" className="sm:h-[3rem] h-[10rem]"></Image>
+                        <span  className="sm:text-[2.1rem] text-[9rem]">Requests</span>
+                    </div>
+                    <div className={`flex items-center justify-start sm:gap-[1rem] gap-[5rem] sm:p-[0.5rem] p-[2rem] cursor-pointer ${state === 4?'bg-[#F4F4F4] text-black':'text-[#828A91]'}`} onClick={()=>{setState(4);setVisible(0);}}>
+                        <Image src={state === 4?personal:personal1} alt="" className="sm:h-[3rem] h-[10rem]"></Image>
+                        <span  className="sm:text-[2.1rem] text-[9rem]">My Plan</span>
+                    </div>
                 </div>
             </div>
-            <div className="sm:w-[77%] sm:pb-[10rem]">
-                <div className="sm:pb-[3rem] sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:flex sm:items-center sm:gap-[1.5rem]">
-                    <span className="sm:text-[3rem] sm:font-semibold">Settings</span>
-                    <Image src={arrowright} alt="" className="sm:h-[3rem] sm:w-auto"></Image>
-                    <span className="sm:text-[2rem] sm:text-[#828A91]">{state === 1?'Profile':state === 2?'API Key':state === 3?'Requests':'My Plan'}</span>
-                </div>
-                <div className={`sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:justify-start sm:gap-[4rem] sm:py-[4rem] ${state === 1?'':'hidden'}`}>
-                    <div className="sm:flex sm:justify-between">
-                        <div className="sm:w-[46%]">
-                            <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">First name</p>
-                            <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
-                                <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e =>{setErrorMessage(""); setFirstName(e.target.value)} } type="text" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={firstName}></input>
-                            </div>
-                        </div>
-                        <div className="sm:w-[46%]">
-                            <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Last name</p>
-                            <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
-                                <Image src={profile1} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setLastName(e.target.value)}} type="text" placeholder="Doe" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={lastName}></input>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-
-                <div className={`sm:border-b-[1px] sm:border-b-[#EAEAEA] sm:py-[4rem]  ${state === 1?'':'hidden'}`}>
-                    <p className="sm:text-[2.5rem] sm:font-medium">Contact email</p>
-                    <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[2rem]">Manage your accounts email address for the invoices</p>
-                    <div className="sm:flex sm:justify-between sm:items-end">
-                        <div className="sm:w-[46%]">
-                            <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Email</p>
-                            <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
-                                <Image src={sms} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage("");setEmail(e.target.value)}} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] sm:w-[87%] sm:focus:outline-none" value={email}></input>
-                            </div>
-                        </div>
-                        {/* <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div> */}
-                    </div>
-                </div>
-
-                <div className={`sm:py-[4rem] ${state === 1?'':'hidden'}`}>
-                    <p className="sm:text-[2.5rem] sm:font-medium">Password</p>
-                    <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[2rem]">Modify your current password</p>
-                    <div className="sm:flex sm:justify-between">
-                        <div className="sm:w-[46%]">
-                            <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">Current password</p>
-                            <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
-                                <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setCurrentPassword(e.target.value)}} type={visible === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={current_password}></input>
-                                <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
-                            </div>
-                        </div>
-                        <div className="sm:w-[46%]">
-                            <p className="sm:text-[2rem] sm:text-[#828A91] sm:mb-[1rem]">New password</p>
-                            <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:rounded-[1rem]">
-                                <Image src={unlock} alt="" className="sm:h-[3.5rem] sm:w-auto"></Image>
-                                <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setNewPassword(e.target.value)}} type={visible1 === 0?'password':''} placeholder="" className="sm:text-[2.3rem] sm:w-[77%] sm:focus:outline-none" value={new_password}></input>
-                                <Image src={visible1 === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible1 === 0?setVisible1(1):setVisible1(0)}}></Image>
-                            </div>
-                        </div>
-                    </div>
+            <div className="sm:w-[77%] w-full sm:pb-[10rem]">
+                <div className="sm:pb-[3rem] pb-[4rem] border-b-[1px] border-b-[#EAEAEA] flex items-center sm:gap-[1.5rem] gap-[5rem]">
+                    <span className="sm:text-[3rem] text-[9rem] font-semibold">Settings</span>
+                    <Image src={arrowright} alt="" className="sm:h-[3rem] h-[8rem]"></Image>
+                    <span className="sm:text-[2rem] text-[7rem] text-[#828A91]">{state === 1?'Profile':state === 2?'API Key':state === 3?'Requests':'My Plan'}</span>
                 </div>
                 
-                <div className={`${!errorMessage?'hidden':''} ${state === 1?'':'hidden'} sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start items-center sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
-                    <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errorMessage}</span>
-                    <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
-                </div>   
-                
-                <button className={`flex justify-center sm:gap-[1rem] items-center sm:text-[2.5rem] sm:px-[2.5rem] sm:py-[1.3rem] sm:rounded-[1rem] sm:mt-[3rem] primary-btn ${state === 1?'':'hidden'} `} onClick={saveChange}>
+                <div className={`${state === 1?'':'hidden'}`}>
+                    <div className={`border-b-[1px] border-b-[#EAEAEA] justify-start sm:gap-[4rem] sm:py-[4rem] gap-[10rem] py-[10rem]`}>
+                        <div className="flex justify-between sm:flex-row flex-col sm:gap-0 gap-[6rem]">
+                            <div className="sm:w-[46%] w-full">
+                                <p className="sm:text-[2rem] text-[#828A91] sm:mb-[1rem] text-[11rem] mb-[4rem]">First name</p>
+                                <div className="flex sm:px-[2rem] sm:py-[1.2rem] items-center justify-start sm:gap-[2rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] px-[6rem] py-[4rem] gap-[6rem] rounded-[4rem]">
+                                    <Image src={profile1} alt="" className="sm:h-[3.5rem] h-[16rem]"></Image>
+                                    <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e =>{setErrorMessage(""); setFirstName(e.target.value)} } type="text" placeholder="John" className="sm:text-[2.3rem] text-[12rem] w-full outline-none" value={firstName}></input>
+                                </div>
+                            </div>
+                            <div className="sm:w-[46%] w-full">
+                                <p className="sm:text-[2rem] text-[#828A91] sm:mb-[1rem] text-[11rem] mb-[4rem]">Last name</p>
+                                <div className="flex sm:px-[2rem] sm:py-[1.2rem] items-center justify-start sm:gap-[2rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] px-[6rem] py-[4rem] gap-[6rem] rounded-[4rem]">
+                                    <Image src={profile1} alt="" className="sm:h-[3.5rem] h-[16rem]"></Image>
+                                    <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setLastName(e.target.value)}} type="text" placeholder="Doe" className="sm:text-[2.3rem] text-[12rem] w-full outline-none" value={lastName}></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    <div className={`border-b-[1px] border-b-[#EAEAEA] sm:py-[4rem] py-[12rem] `}>
+                        <p className="sm:text-[2.5rem] text-[12rem] font-medium">Contact email</p>
+                        <p className="sm:text-[2rem] text-[8rem] text-[#828A91] sm:mb-[2rem] mb-[3rem]">Manage your accounts email address for the invoices</p>
+                        <div className="flex justify-between items-end">
+                            <div className="sm:w-[46%] w-full">
+                                <p className="sm:text-[2rem] text-[10rem] text-[#828A91] sm:mb-[1rem] mb-[4rem]">Email</p>
+                                <div className="flex sm:px-[2rem] sm:py-[1.2rem] items-center justify-start sm:gap-[2rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] px-[6rem] py-[4rem] gap-[6rem] rounded-[4rem]">
+                                    <Image src={sms} alt="" className="sm:h-[3.5rem] h-[12rem]"></Image>
+                                    <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage("");setEmail(e.target.value)}} type="email" placeholder="jdoe@email.com" className="sm:text-[2.3rem] text-[11rem] w-full outline-none" value={email}></input>
+                                </div>
+                            </div>
+                            {/* <div className="sm:h-[5rem] sm:leading-[3rem] sm:text-[2rem] sm:font-medium sm:px-[1.5rem] sm:py-[1rem] sm:shadow-lg">Add another email</div> */}
+                        </div>
+                    </div>
+
+                    <div className={`sm:py-[4rem] py-[6rem]`}>
+                        <p className="sm:text-[2.5rem] text-[12rem] font-medium">Password</p>
+                        <p className="sm:text-[2rem] text-[8rem] text-[#828A91] sm:mb-[2rem] mb-[3rem]">Modify your current password</p>
+                        <div className="flex justify-between sm:flex-row flex-col sm:gap-0 gap-[6rem]">
+                            <div className="sm:w-[46%] w-full">
+                                <p className="sm:text-[2rem] text-[10rem] text-[#828A91] sm:mb-[1rem] mb-[4rem]">Current password</p>
+                                <div className="flex sm:px-[2rem] sm:py-[1.2rem] items-center justify-start sm:gap-[2rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] px-[6rem] py-[4rem] gap-[6rem] rounded-[4rem]">
+                                    <Image src={unlock} alt="" className="sm:h-[3.5rem] h-[12rem]"></Image>
+                                    <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setCurrentPassword(e.target.value)}} type={visible === 0?'password':''} placeholder="" className="sm:text-[2.3rem] text-[12rem] w-[77%] outline-none" value={current_password}></input>
+                                    <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] h-[12rem] cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
+                                </div>
+                            </div>
+                            <div className="sm:w-[46%] w-full">
+                                <p className="sm:text-[2rem] text-[10rem] text-[#828A91] sm:mb-[1rem] mb-[4rem]">New password</p>
+                                <div className="flex sm:px-[2rem] sm:py-[1.2rem] items-center justify-start sm:gap-[2rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] px-[6rem] py-[4rem] gap-[6rem] rounded-[4rem]">
+                                    <Image src={unlock} alt="" className="sm:h-[3.5rem] h-[12rem]"></Image>
+                                    <input onKeyDown={(e)=>{if(e.key == "Enter") saveChange()}} onChange={e => {setErrorMessage(""); setNewPassword(e.target.value)}} type={visible1 === 0?'password':''} placeholder="" className="sm:text-[2.3rem] text-[12rem] w-[77%] outline-none" value={new_password}></input>
+                                    <Image src={visible1 === 0?eye:eye1} alt="" className="sm:h-[3.5rem] h-[12rem] cursor-pointer" onClick={()=>{visible1 === 0?setVisible1(1):setVisible1(0)}}></Image>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     
-                {loading && (
-                        <CircularProgress sx={{
-                            color: (theme) =>
-                                theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
-                            }}
-                            size={21}
-                            thickness={4} />
-                    )}Save Changes</button>
+                    <div className={`${!errorMessage?'hidden':''} sm:mb-[3rem] mb-[6rem] sm:rounded-[1rem] rounded-[2rem] flex justify-start items-center sm:gap-[1rem] w-[fit-content] sm:py-[1rem] py-[3rem] sm:px-[2rem] px-[5rem] shadow-lg`}>
+                        <span className="text-[#FF2F52] sm:text-[2.5rem] text-[7rem] font-medium sm:leading-[3rem] leading-[8rem]">{errorMessage}</span>
+                        <div className="sm:h-[3rem] h-[8rem] sm:w-[3rem] w-[8rem] rounded-full sm:bg-[#FFECEF] flex justify-center items-center"><Image src={erralert} alt="" className="sm:h-[2rem] h-[7rem] w-auto"></Image></div>
+                    </div>
+                    
+                    <button className={`flex justify-center sm:gap-[1rem] gap-[4rem] items-center sm:text-[2.5rem] text-[8rem] sm:px-[2.5rem] px-[8rem] sm:py-[1.3rem] py-[6rem] sm:rounded-[1rem] rounded-[4rem] sm:mt-[3rem] mt-[6rem] primary-btn `} onClick={saveChange}>
+                        
+                    {loading && (
+                            <CircularProgress sx={{
+                                color: (theme) =>
+                                    theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+                                }}
+                                size={21}
+                                thickness={4} />
+                        )}Save Changes</button>
+                </div>
 
 
                 <div className={`mt-[6rem] ${state === 2?'':'hidden'} sm:h-[80rem]`}>
                     <div className="flex justify-between items-center">
-                    <div className="sm:flex sm:px-[2rem] sm:py-[1.2rem] sm:items-center sm:w-[70%] sm:justify-start sm:gap-[2rem] sm:border-[2px] sm:border-[#F2F3F5] sm:h-[7rem] sm:rounded-[1rem] relative">
-                        <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] sm:w-auto cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
-                        <input type={visible === 1? "text":"password"} placeholder="" className="sm:text-[2.3rem] sm:w-[90%] sm:focus:outline-none" value={api_key} readOnly></input>
+                    <div className="flex sm:px-[2rem] sm:py-[1.2rem] px-[6rem] py-[4rem] items-center w-[74%] justify-start sm:gap-[2rem] gap-[4rem] border-[2px] border-[#F2F3F5] sm:rounded-[1rem] rounded-[4rem] relative">
+                        <Image src={visible === 0?eye:eye1} alt="" className="sm:h-[3.5rem] cursor-pointer" onClick={()=>{visible === 0?setVisible(1):setVisible(0)}}></Image>
+                        <input type={visible === 1? "text":"password"} placeholder="" className="sm:text-[2.3rem] text-[10rem] w-[94%] outline-none" value={api_key} readOnly></input>
                         <div className="sm:mt-[5rem] flex justify-center absolute left-[36%] bottom-[-120%]">
-                            {apiState && (<span className="sm:text-[#449D5D] sm:text-[2.5rem] sm:font-medium text-center sm:py-[1rem] sm:px-[2rem] rounded-[1rem] shadow-effect ">{apiState}</span>)}
+                            {apiState && (<span className="text-[#449D5D] sm:text-[2.5rem] text-[8rem] font-medium text-center sm:py-[1rem] sm:px-[2rem] sm:rounded-[1rem] py-[3rem] px-[5rem] rounded-[4rem] shadow-effect ">{apiState}</span>)}
                         </div>
                     </div>
-                    <CopyToClipboard text={api_key} onCopy={(text, result) => {setApiState("Copied to clipboard");setTimeout(()=>{setApiState("")}, 2000)}}><div className="primary-btn sm:w-[15%] sm:text-[2.5rem] cursor-pointer sm:text-center sm:leading-[7rem] sm:rounded-[1rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
-                        <div className="bg-[#F4F4F4] sm:w-[12%] text-[#828A91] cursor-pointer sm:text-[2.5rem] sm:text-center sm:leading-[7rem] sm:rounded-[1rem] reset-button" onClick={()=>{resetAPI()}}>Reset</div>
+                    <CopyToClipboard text={api_key} onCopy={(text, result) => {setApiState("Copied to clipboard");setTimeout(()=>{setApiState("")}, 2000)}}><div className="primary-btn w-[12%] sm:text-[2.5rem] text-[6rem] cursor-pointer text-center sm:leading-[7rem] leading-[23rem] sm:rounded-[1rem] rounded-[4rem]" onClick={()=>{ }}>Copy</div></CopyToClipboard>
+                        <div className="bg-[#F4F4F4] w-[12%] text-[#828A91] cursor-pointer sm:text-[2.5rem] text-[6rem] text-center sm:leading-[7rem] leading-[23rem] sm:rounded-[1rem] rounded-[4rem] reset-button" onClick={()=>{resetAPI()}}>Reset</div>
                     </div>
                 </div>
 
                 <div className={`${state === 3 ?'':'hidden'}`}>
-                    <div className="sm:flex sm:justify-start sm:gap-[3rem] sm:py-[3rem]">
+                    <div className="flex justify-start sm:gap-[3rem] sm:py-[3rem] gap-[6rem] py-[9rem]">
                         <Request text = "Tokens Available" num = {formatNumber(Number(token_limit) - Number(tokens_used))} color = "#449D5D" />
                         <Request text = "Batch Limit" num = {Number(batch_limit)} color = "#FDA235" />
                         <Request text = "Character Limit" num = {Number(character_limit)} color = "#FDA235" />
                     </div>
-                    <p className="sm:text-[3rem] sm:font-semibold">Request history</p>
-                    <div className="sm:mt-[3rem]">
-                        <div className="sm:flex sm:justify-start sm:px-[4rem] sm:py-[2rem] bg-[#F4F4F4]">
-                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">ID</span>
-                            <span className="sm:text-[2.3rem] sm:leading-[3rem] sm:font-medium sm:w-[50rem]">Date Created</span>
+                    <p className="sm:text-[3rem] text-[12rem] font-semibold">Request history</p>
+                    <div className="sm:mt-[3rem] mt-[8rem]">
+                        <div className="flex justify-start sm:px-[4rem] p-[4rem] sm:py-[2rem] bg-[#F4F4F4] sm:text-[2.3rem] sm:leading-[3rem] text-[10rem] leading-[18rem] font-medium">
+                            <span className="sm:w-[50rem] w-[28rem]">ID</span>
+                            <span className="sm:w-[50rem]">Date Created</span>
                         </div>
 
                         {Array.isArray(requests.data) && requests.data.map((request: any) => (
@@ -431,23 +459,23 @@ export default (props:any) => {
                 <div className={`${state === 4 ?'':'hidden'}`}>
                     {currentPlan && (
                         <div className="flex flex-col bg-white shadow-md rounded-lg py-6 px-12 mt-6">
-                            <h2 className="text-[2.4rem] font-bold mb-4">Billing Summary</h2>
-                            <div className="text-[2rem] mb-2">
+                            <h2 className="sm:text-[2.4rem] text-[10rem] font-bold mb-4">Billing Summary</h2>
+                            <div className="sm:text-[2rem] text-[8rem] mb-2">
                                 <span className="font-medium">Your next payment</span>
                                 <span className="block">${nextPaymentAmount} Due By {nextPaymentDate}</span>
                             </div>
                             
-                            <div className="flex flex-row justify-end items-center sm:gap-[1rem] text-[1.8rem]">
-                                <button onClick={openBillingPortal} className="bg-[#FF8132] text-white py-2 px-4 rounded-[4px] hover:bg-[#FDA235] transition duration-200 ease-in-out">
+                            <div className="flex flex-row justify-end items-center sm:gap-[1rem] sm:text-[1.8rem] text-[6rem] gap-[2rem]">
+                                <button onClick={openBillingPortal} className="bg-[#FF8132] text-white sm:py-2 sm:px-4 px-12 py-8 rounded-[4px] hover:bg-[#FDA235] transition duration-200 ease-in-out">
                                     Billing Portal
                                 </button>
 
                                 {is_plan_cancelled ? (
-                                    <button onClick={restartSubscription} className="bg-green-500 text-white py-2 px-4 rounded-[4px] hover:bg-green-600 transition duration-200 ease-in-out">
+                                    <button onClick={restartSubscription} className="bg-green-500 text-white sm:py-2 sm:px-4 px-12 py-8 rounded-[4px] hover:bg-green-600 transition duration-200 ease-in-out">
                                         Restart Subscription
                                     </button>
                                 ) : (
-                                    <button onClick={cancelPlan} className="bg-red-500 text-white py-2 px-4 rounded-[4px] hover:bg-red-600 transition duration-200 ease-in-out">
+                                    <button onClick={cancelPlan} className="bg-red-500 text-white sm:py-2 sm:px-4 px-12 py-8 rounded-[4px] hover:bg-red-600 transition duration-200 ease-in-out">
                                         Cancel Plan
                                     </button>
                                 )}
@@ -460,8 +488,8 @@ export default (props:any) => {
                             <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
                             <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
                         </div>                
-                        <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
-                            <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                        <div className="scroll-bar-step flex justify-around sm:gap-16 gap-[8rem] sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] sm:py-[7rem] px-16 py-[10rem]">
+                            {/* <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between"> */}
 
                                 <CardMembership
                                     className="w-[33%]"
@@ -498,7 +526,7 @@ export default (props:any) => {
                                 button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
                                 onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
 
-                            </div>
+                            {/* </div> */}
                         </div>
                     </div>
                 </div>
@@ -517,8 +545,8 @@ const ViewDetails = (props:{show: boolean, setShow: Function, content: string, s
         }
     }
     return (
-        <div ref={ref} className={`${props.show?"[display:block]":"[display:none]"} fixed z-[100] left-0 top-0 right-0 bottom-0 bg-[#00000078]`}>
-            <div className={`mx-auto my-[8%] bg-white sm:w-1/2 w-10/12 rounded-[16px] relative`}>
+        <div ref={ref} className={`${props.show?"[display:block]":"[display:none]"} fixed z-[100] left-0 top-0 right-0 bottom-0 bg-[#0007]`}>
+            <div className={`mx-auto sm:my-[8%] my-[16%] bg-white sm:w-1/2 w-10/12 rounded-[16px] relative`}>
                 <CustomCodeBlock className="w-full" code={props.content} leftTitle="JSON" centerTitle="Request Details" loading={!props.content}/>
                 <Image onClick={() => {
                     props.setShow(false);
