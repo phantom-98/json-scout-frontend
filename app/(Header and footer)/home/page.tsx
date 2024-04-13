@@ -184,7 +184,8 @@ export const Home = (props : any) => {
     const [fetching, setFetching] = React.useState(false);
     const lineRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLTextAreaElement>(null);
-    const [lineNumber, setLineNumber] = React.useState("");
+    const membershipRef = useRef<HTMLDivElement>(null);
+    const [membershipNumber, setNumber] = React.useState(0);
 
     const {activeHeader, setActiveHeader, logState, setLogState} = useContext(Context)
 
@@ -208,6 +209,12 @@ export const Home = (props : any) => {
         if (contentRef.current && lineRef.current) {
             contentRef.current.addEventListener("scroll", () => {
                 lineRef.current.scrollTop = contentRef.current.scrollTop;
+            })
+        }
+        if (membershipRef.current) {
+            membershipRef.current.addEventListener("scroll", (e) => {
+                const scrollPercentage = 100 * e.target.scrollLeft / (e.target.scrollWidth-e.target.clientWidth);
+                setNumber(Math.floor(scrollPercentage/25));
             })
         }
     }, [logState])
@@ -400,8 +407,8 @@ export const Home = (props : any) => {
                         <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "monthly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly Plan</div>
                         <div className={`sm:text-[2rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[5rem] px-[6rem] sm:py-[2rem] py-[3rem] rounded-[1rem] font-semibold cursor-pointer ${pricing == "yearly" ? 'bg-[#FF8132] text-white' : 'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Annual Plan</div>
                     </div>           
-                    <div className="sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] overflow-auto sm:py-[7rem] px-0 py-[10rem] scroll-smooth">
-                        <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between">
+                    <div ref={membershipRef} className="scroll-bar-step sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] sm:py-[7rem] sm:px-[1rem] px-[10rem] py-[10rem] flex justify-between sm:gap-[3rem] gap-[10rem]">
+                        {/* <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between"> */}
                         
                         <CardMembership 
                             className="w-[25%]"
@@ -438,13 +445,13 @@ export const Home = (props : any) => {
                             "500 Batch Limit",
                         ]} unallowed={[]} button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year'}/>
 
-                        </div>
+                        {/* </div> */}
                     </div>
                     <div className="sm:hidden flex justify-center gap-[11rem]">
-                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#trial"></a>
-                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#starter"></a>
-                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#standard"></a>
-                        <a className="w-[10rem] h-[10rem] bg-[#D9D9D9] rounded-full" href="#premium"></a>
+                        <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 0 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#trial"/>
+                        <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 1 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#starter"/>
+                        <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 2 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#standard"/>
+                        <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 3 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#premium"/>
                     </div>
                 </div>
 

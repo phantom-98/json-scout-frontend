@@ -37,22 +37,22 @@ export const CardCan = (props:{title: string, description: string, font: string 
 export const CardMembership = (props:{title: string, price: string, description: string, allowed: string[], unallowed: string[], button:string, standard?:any, id?:string, isCurrentPlan:boolean, type:string, link: string, onClick: () => void}) => {
 
     return (
-        <div id={props.id} className={`flex flex-col justify-between gap-[3rem] sm:px-[4rem] sm:py-[4rem] p-[15rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
-            <div className="flex flex-col gap-[2rem]">
+        <div id={props.id} className={`flex w-full flex-col justify-between sm:gap-[3rem] gap-[20rem] sm:px-[4rem] sm:py-[4rem] p-[18rem] rounded-[5px] shadow-lg ${props.standard?"text-white bg-[#FF8132]":"text-[#8593A3]"}`}>
+            <div className="flex flex-col sm:gap-[2rem] gap-[8rem]">
                 <div className={`border-b-[1px] pb-[8rem] sm:pb-[3rem] ${props.standard?"":""}`}>
-                    <p className={`sm:text-[2rem] text-[7rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
-                    <div className="sm:text-[2rem] text-[8rem]">
+                    <p className={`sm:text-[2rem] text-[10rem] ${props.standard?"":"text-[#5E5E5E]"}`}>{props.title}</p>
+                    <div className="sm:text-[2rem] text-[12rem]">
                         <span className={`sm:text-[5.2rem] text-[30rem] mr-[2rem] font-semibold ${props.standard?"":"text-[#282828]"}`}>${props.price}</span>
                         {props.type}
                     </div>
-                    <div className="sm:text-[2rem] text-[8rem]">{props.description}</div>
+                    <div className="sm:text-[2rem] text-[10rem]">{props.description}</div>
                 </div>
-                <div className="sm:mt-[2rem] mt-[12rem] flex flex-col gap-[2rem]">
+                <div className="sm:mt-[2rem] mt-[12rem] flex flex-col sm:gap-[2rem] gap-[8rem]">
                     {props.allowed.map(item => {
                         return (
-                            <div className="sm:gap-[2rem] flex justify-start gap-[7rem] items-center">
+                            <div className="sm:gap-[2rem] flex justify-start gap-[10rem] items-center">
                                 <Image src={props.standard?checkLight:check} alt="" className="sm:h-[3rem] h-[15rem] w-auto"></Image>
-                                <span className="sm:text-[2rem] text-[7rem]">{item}</span>
+                                <span className="sm:text-[2rem] text-[10rem]">{item}</span>
                             </div>
                         );
                     })}
@@ -60,7 +60,7 @@ export const CardMembership = (props:{title: string, price: string, description:
                         return (
                             <div className=" sm:gap-[2rem] flex justify-start gap-[7rem] items-center">
                                 <Image src={uncheck} alt="" className="sm:h-[3rem] h-[15rem] w-auto"></Image>
-                                <span className="sm:text-[2rem] text-[7rem]">{item}</span>
+                                <span className="sm:text-[2rem] text-[10rem]">{item}</span>
                             </div>
                         );
                     })}
@@ -69,7 +69,7 @@ export const CardMembership = (props:{title: string, price: string, description:
             <Link href={props.link} className="flex justify-center items-center">
                 <button 
                     onClick={props.isCurrentPlan ? null : props.onClick} 
-                    className={`sm:text-[2.4rem] text-[10rem] sm:py-[1.2rem] py-[4rem] sm:px-[4rem] px-[8rem] text-center border-[1px] rounded-full duration-100 
+                    className={`sm:text-[2.4rem] text-[12rem] sm:py-[1.2rem] py-[4rem] sm:px-[4rem] px-[14rem] text-center border-[1px] rounded-full duration-100 
                         ${props.isCurrentPlan 
                         ? 
                         'bg-gray-200 text-gray-700' 
