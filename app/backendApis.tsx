@@ -336,6 +336,25 @@ export const restartMembership = async (token:string): Promise<string> => {
     });
 }
 
+export const purchasePlan = async (token:string, price_id:string): Promise<string> => {
+    let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `https://api.jsonscout.com/subscribe?price_id=${price_id}`,
+        headers: { 
+          'Authorization': `Bearer ${token}`
+        }
+    };
+      
+    return axios.request(config)
+    .then((response) => {
+        return response.data
+    })
+    .catch((error) => {
+        return error
+    });
+}
+
 export const getRequests = async (token: string, page: number): Promise<any> => {
     let config = {
         method: 'get',

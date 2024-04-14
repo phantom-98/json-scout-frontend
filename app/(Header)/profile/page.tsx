@@ -20,6 +20,8 @@ import { Cell } from "@/app/components/Cell/page"
 import { useRouter } from "next/navigation"
 import { getCookie, setCookie } from "cookies-next"
 import { getProfile, reset, updateProfile, reviewMembership, changeMembership, cancelMembership, restartMembership, getRequests, createPortal } from "@/app/backendApis"
+import { purchasePlan } from "@/app/backendApis"
+
 import { CardMembership } from "@/app/components/Card/page"
 import erralert from "../../../public/warning-2.svg"
 import { CircularProgress } from "@mui/material"
@@ -85,6 +87,19 @@ export default (props:any) => {
             console.error('No access token found');
         }
     }
+    
+    const subscribeToPlan = async (event: React.MouseEvent, price_id: string) => {
+        event.preventDefault();
+
+        const token = getCookie("access_token");
+        if(token != null) {
+            const result = await purchasePlan(token, price_id);
+            // Redirect to the result url
+            window.location.href = result;
+        } else {
+            console.error('No access token found');
+        }
+    }
 
     const reviewChangeMembership = async (event: React.MouseEvent, price_id: string) => {
 
@@ -93,7 +108,7 @@ export default (props:any) => {
         const token = getCookie("access_token");
         if(token != null) {
             const result = await reviewMembership(token, price_id);
-            if(result !== "Success") {
+            if(!result.hasOwnProperty('next_invoice_date')) {
                 console.error('Failed to change membership:', result);
             } else {
                 setShowDialog(true); // Show the dialog
@@ -502,7 +517,15 @@ export default (props:any) => {
                                 ]} 
                                 isCurrentPlan={currentPlan === 'price_1OSAI4GiLNj7uqwLT22xq8Ay' || currentPlan === 'price_1OSAI4GiLNj7uqwLH8uZPlTt'}
                                 button="Choose Starter" id="starter" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt')} />
+                                onClick={(event) => {
+                                    console.log(currentPlan)
+                                    if (currentPlan === "null") {
+                                        subscribeToPlan(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt');
+                                    } else {
+                                        reviewChangeMembership(event, pricing == "monthly" ? 'price_1OSAI4GiLNj7uqwLT22xq8Ay' : 'price_1OSAI4GiLNj7uqwLH8uZPlTt');
+                                    }
+                                }}
+                                 />
                                 <CardMembership 
                                     className="w-[33%]"
                                     title="STANDARD"  price={pricing == "monthly"?'99':'1,089'} description="Our most popular plan!" link="/" allowed={[
@@ -512,8 +535,15 @@ export default (props:any) => {
                                     "100 Batch Limit"
                                 ]} unallowed={[]} 
                                 isCurrentPlan={currentPlan === 'price_1Oja8kGiLNj7uqwLYaZTwdu0' || currentPlan === 'price_1Oja95GiLNj7uqwL3RkUYDt5'}
-                                button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'} 
-                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5')} />
+                                button="Choose Standard" standard id="standard" type={pricing == "monthly"?'/ Month':'/ Year'}
+                                onClick={(event) => {
+                                    if (currentPlan === "null") {
+                                        subscribeToPlan(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5');
+                                    } else {
+                                        reviewChangeMembership(event, pricing == "monthly" ? 'price_1Oja8kGiLNj7uqwLYaZTwdu0' : 'price_1Oja95GiLNj7uqwL3RkUYDt5');
+                                    }
+                                }}
+                                />
                                 <CardMembership 
                                     className="w-[33%]"
                                     title="PREMIUM" price={pricing == "monthly"?'499':'5,489'} description="For the power user!" link="" allowed={[
@@ -523,9 +553,15 @@ export default (props:any) => {
                                     "500 Batch Limit",
                                 ]} unallowed={[]}
                                 isCurrentPlan={currentPlan === 'price_1OjaAMGiLNj7uqwL0N9JQYOm' || currentPlan === 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm'}
-                                button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' } 
-                                onClick={(event) => reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm')} />
-
+                                button="Choose Premium" id="premium" type={pricing == "monthly"?'/ Month':'/ Year' }
+                                onClick={(event) => {
+                                    if (currentPlan === "null") {
+                                        subscribeToPlan(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm');
+                                    } else {
+                                        reviewChangeMembership(event, pricing == "monthly" ? 'price_1OjaAMGiLNj7uqwL0N9JQYOm' : 'price_1OjaAUGiLNj7uqwLK0Bmu8Vm');
+                                    }
+                                }}
+                                />
                             {/* </div> */}
                         </div>
                     </div>
