@@ -62,8 +62,12 @@ export default (props:any) => {
     const [show, setShow] = useState(false);
 
     const [showDialog, setShowDialog] = useState(false);
-    const [nextInvoiceDate, setNextInvoiceDate] = useState<string | null>(null);
-    const [upcomingChargeAmount, setUpcomingChargeAmount] = useState<string | null>(null);
+    const [message, setMessage] = useState("");
+    const [nextInvoiceDate, setNextInvoiceDate] = useState("");
+    const [newPrice, setNewPrice] = useState("");
+    const [upcomingChargeAmount, setUpcomingChargeAmount] = useState("");
+    const [upcomingPriceId, setUpcomingPriceId] = useState("");
+
     const [nextPaymentAmount, setNextPaymentAmount] = useState<string | null>(null);
     const [nextPaymentDate, setNextPaymentDate] = useState<string | null>(null);
 
@@ -111,6 +115,11 @@ export default (props:any) => {
             if(!result.hasOwnProperty('next_invoice_date')) {
                 console.error('Failed to change membership:', result);
             } else {
+                setMessage(result.message);
+                setNewPrice(result.new_price);
+                setNextInvoiceDate(result.next_invoice_date);
+                setUpcomingChargeAmount(result.prorated_amount);
+                setUpcomingPriceId(price_id);
                 setShowDialog(true); // Show the dialog
             }
         } else {
@@ -118,14 +127,23 @@ export default (props:any) => {
         }
     }
 
-    const confirmChangeMembership = async (event: React.MouseEvent, price_id: string) => {
-        event.preventDefault();
+    const confirmChangeMembership = async () => {
 
         const token = getCookie("access_token"); // Assuming you have a function getCookie to get the access token
         if(token != null) {
-          const result = await changeMembership(token, price_id); // Replace 'membership' with the actual membership value
-          if(result !== "Success") {
-            console.error('Failed to change membership:', result);
+          const result = await changeMembership(token, upcomingPriceId); // Replace 'membership' with the actual membership value
+          if(result !== "failed") {
+            console.log("success", result);
+            // Redirect the user to the response link
+            // router.push(result);
+            toast.success(result,{
+                position: "bottom-right",
+                autoClose: 2000,
+                theme: "colored",
+                transition: Slide,
+                })
+          } else {
+            console.error("failed");
           }
         } else {
           console.error('No access token found');
@@ -564,6 +582,19 @@ export default (props:any) => {
                                 />
                             {/* </div> */}
                         </div>
+                        <ViewPricing
+                            show={showDialog}
+                            setShow={setShowDialog}
+                            message={message}
+                            setMessage={setMessage}
+                            date={nextInvoiceDate}
+                            setDate={setNextInvoiceDate}
+                            newPrice={newPrice}
+                            setNewPrice={setNewPrice}
+                            upcomingAmount={upcomingChargeAmount}
+                            setUpcomingAmount={setUpcomingChargeAmount}
+                            onConfirm={confirmChangeMembership}
+                        />
                     </div>
                 </div>
             </div>
@@ -588,6 +619,57 @@ const ViewDetails = (props:{show: boolean, setShow: Function, content: string, s
                     props.setShow(false);
                     props.setContent("");
                 }} src={close} alt="" className="absolute top-0 right-0 sm:m-[1.4rem] sm:w-[3rem] m-[7.2rem] w-[12rem]"/>
+            </div>
+        </div>
+    );
+}
+
+
+const ViewPricing = (props:{
+        show: boolean, 
+        setShow: Function,
+        onConfirm: Function,
+        message: string, 
+        setMessage: Function, 
+        date: string, 
+        setDate: Function, 
+        newPrice: string, 
+        setNewPrice: Function,
+        upcomingAmount: string,
+        setUpcomingAmount: Function
+    }) => {
+    const close = () => {
+        props.setShow(false);
+        props.setMessage("");
+        props.setDate("");
+        props.setNewPrice("");
+    }
+    const ref = useRef();
+    window.onclick = (e) => {
+        if (e.target == ref.current) {
+            close();
+        }
+    }
+    return (
+        <div ref={ref} className={`${props.show?"[display:block]":"[display:none]"} fixed z-[100] left-0 top-0 right-0 bottom-0 bg-[#0007]`}>
+            <div className={`mx-auto sm:my-[10%] my-[24%] bg-white sm:w-1/3 w-10/12 sm:p-[4rem] p-[10rem] rounded-[8px] relative`}>
+                <h1 className="sm:text-[4.4rem] text-[10rem] font-semibold">Changing your plan</h1>
+                <span className="sm:text-[3rem] text-[7.2rem] font-medium">{props.message}</span>
+                <div className="grid grid-cols-2 sm:gap-[2.4rem] gap-[5rem] sm:p-[2rem] p-[6rem] my-[10px] sm:text-[2.4rem] text-[5.6rem] border-gray-400 border-[1px] rounded-[8px]">
+                    <label className="font-normal">New Price: </label>
+                    <span className="font-medium text-right"> ${props.newPrice}</span>
+                    <label className="font-normal">Prorated Amount: </label>
+                    <span className="font-medium text-right"> ${props.upcomingAmount}</span>
+                    <label className="font-normal">Next Invoice Date: </label>
+                    <span className="font-medium text-right"> {props.date}</span>
+                </div>
+                <div className="flex justify-end">
+                    <button className="primary-btn sm:text-[3rem] text-[6.4rem] sm:px-[3rem] sm:py-[1rem] px-[5rem] py-[2rem] rounded-[8px]"
+                        onClick={() => {
+                            close();
+                            props.onConfirm();
+                        }}>Confirm</button>
+                </div>
             </div>
         </div>
     );

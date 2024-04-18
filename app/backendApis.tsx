@@ -270,12 +270,10 @@ export const changeMembership = async (token:string, price_id:string): Promise<s
       
     return axios.request(config)
     .then((response) => {
-        // Redirect the user to the response link
-        useRouter().push(response.data.link);
-        return "Success"
+        return response.data;
     })
     .catch((error) => {
-        return error
+        return "failed"
     });
 }
 
