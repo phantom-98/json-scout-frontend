@@ -33,6 +33,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 import { Slide, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import { CustomCodeBlock } from "@/app/components/CustomCodeBlock/page"
+import Link from "next/link"
 
 export default (props:any) => {
     const router = useRouter();
@@ -70,6 +71,17 @@ export default (props:any) => {
 
     const [nextPaymentAmount, setNextPaymentAmount] = useState<string | null>(null);
     const [nextPaymentDate, setNextPaymentDate] = useState<string | null>(null);
+    const membershipRef = useRef<HTMLDivElement>(null);
+    const [membershipNumber, setNumber] = React.useState(0);
+
+    React.useEffect(() => {
+        if (membershipRef.current) {
+            membershipRef.current.addEventListener("scroll", (e) => {
+                const scrollPercentage = 100 * e.target.scrollLeft / (e.target.scrollWidth-e.target.clientWidth);
+                setNumber(Math.floor(scrollPercentage/34));
+            })
+        }
+    }, []);
 
     function formatNumber(num: number) {
         if (num >= 1000000) {
@@ -333,7 +345,7 @@ export default (props:any) => {
         }
     }, false)
     window.addEventListener("touchend", (e) => {
-        if (e.changedTouches) {
+        if (e.changedTouches && !membershipRef.current?.contains(e.target)) {
             if (e.changedTouches[0].pageX > X + 100) {
                 openSidebar(true);
             } else if (X > e.changedTouches[0].pageX + 100) {
@@ -521,7 +533,7 @@ export default (props:any) => {
                             <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "monthly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("monthly")}}>Monthly billing</div>
                             <div className={`sm:text-[1.7rem] text-[6.5rem]  sm:leading-[3rem] leading-[10rem] sm:px-[1.7rem] px-[6rem] sm:py-[1rem] py-[3rem] rounded-[0.7rem] font-semibold cursor-pointer ${pricing == "yearly"?'bg-[#FF8132] text-white':'text-[#828A91]'}`} onClick={()=>{setPricing("yearly")}}>Yearly billing</div>
                         </div>                
-                        <div className="scroll-bar-step flex justify-around sm:gap-16 gap-[8rem] sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[20rem] sm:py-[7rem] px-16 py-[10rem]">
+                        <div ref={membershipRef} className="scroll-bar-step flex justify-around sm:gap-16 gap-[8rem] sm:mt-[3rem] sm:mb-[13rem] sm:w-full w-[90%] mt-[5rem] mb-[4rem] sm:py-[7rem] px-16 py-[10rem]">
                             {/* <div className="sm:px-[2rem] flex sm:w-full w-[720rem] sm:gap-[1rem] justify-between"> */}
 
                                 <CardMembership
@@ -581,6 +593,11 @@ export default (props:any) => {
                                 }}
                                 />
                             {/* </div> */}
+                        </div>
+                        <div className="sm:hidden flex justify-center gap-[11rem] mb-[20rem]">
+                            <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 0 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#starter"/>
+                            <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 1 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#standard"/>
+                            <Link className={`w-[10rem] h-[10rem] ${membershipNumber == 2 ? "bg-[#313131]":"bg-[#D9D9D9]"} rounded-full`} href="#premium"/>
                         </div>
                         <ViewPricing
                             show={showDialog}
